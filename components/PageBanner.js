@@ -1,10 +1,14 @@
 import Link from "next/link";
 
-const PageBanner = ({ pageTitle, pageName }) => {
+const PageBanner = ({ pageTitle, pageName, backgroundImage }) => {
   return (
     <section
       className="page-banner-area overlay pt-215 rpt-150 pb-160 rpb-120 rel z-1 bgs-cover text-center"
-      style={{ backgroundImage: "url(assets/images/background/banner.jpg)" }}
+      style={{
+        backgroundImage: backgroundImage
+          ? `url(${backgroundImage})`
+          : "url(assets/images/background/banner.jpg)",
+      }}
     >
       <div className="container">
         <div className="banner-inner text-white">

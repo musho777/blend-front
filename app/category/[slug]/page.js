@@ -4,7 +4,10 @@ import WellFoodLayout from "@/layout/WellFoodLayout";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { useState, useMemo } from "react";
-import { useCategories } from "@/hooks/queries/useCategoriesQuery";
+import {
+  useCategories,
+  useCategoryById,
+} from "@/hooks/queries/useCategoriesQuery";
 import { useProductsByCategory } from "@/hooks/queries/useProductsByCategoryQuery";
 
 const CategoryPage = () => {
@@ -14,12 +17,10 @@ const CategoryPage = () => {
 
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
   const [currentPage, setCurrentPage] = useState(pageFromUrl);
-  const [limit] = useState(12); // 12 products per page
+  const [limit] = useState(12);
 
   const decodedSlug = decodeURIComponent(categorySlug);
-
   const { data: categories, isLoading: categoriesLoading } = useCategories();
-
   const currentCategory = useMemo(() => {
     if (!categories) return null;
     return categories.find(
@@ -30,13 +31,18 @@ const CategoryPage = () => {
     );
   }, [categories, decodedSlug]);
 
+  const { data: categoryData, isLoading: categoryLoading } = useCategoryById(
+    currentCategory?.id
+  );
+
   const {
     data: productsData,
     isLoading: productsLoading,
     isError: productsError,
   } = useProductsByCategory(currentCategory?.id, currentPage, limit);
 
-  const isLoading = categoriesLoading || productsLoading;
+  const isLoading = categoriesLoading || categoryLoading || productsLoading;
+  const category = categoryData || currentCategory;
   const products = productsData?.data || [];
   const meta = productsData?.meta || {
     page: 1,
@@ -54,7 +60,16 @@ const CategoryPage = () => {
 
   return (
     <WellFoodLayout>
-      <PageBanner pageTitle={decodedSlug} />
+      <PageBanner
+        pageTitle={category?.name || category?.title || decodedSlug}
+        backgroundImage={
+          category?.image
+            ? `http://localhost:3000/${category.image}`
+            : category?.imageUrl
+            ? `http://localhost:3000/${category.imageUrl}`
+            : undefined
+        }
+      />
       <section className="shop-area py-130 rpy-100">
         <div className="container">
           <div className="row">
@@ -156,7 +171,9 @@ const CategoryPage = () => {
                       : `Showing ${(meta.page - 1) * meta.limit + 1}–${Math.min(
                           meta.page * meta.limit,
                           meta.total
-                        )} of ${meta.total} results for ${decodedSlug}`}
+                        )} of ${meta.total} results for ${
+                          category?.name || category?.title || decodedSlug
+                        }`}
                   </div>
                   <div
                     className="products-dropdown mb-15"

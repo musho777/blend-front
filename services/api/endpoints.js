@@ -2,6 +2,7 @@ export const ENDPOINTS = {
   // Categories endpoints
   CATEGORIES: {
     LIST: "/categories",
+    ITEM: (id) => `/categories/${id}`,
   },
 
   // Menu endpoints

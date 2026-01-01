@@ -9,3 +9,12 @@ export function useCategories() {
     staleTime: 1000 * 60 * 10, // 10 minutes - categories don't change frequently
   });
 }
+
+export function useCategoryById(id) {
+  return useQuery({
+    queryKey: queryKeys.categories.detail(id),
+    queryFn: () => categoriesService.getCategoryById(id),
+    enabled: !!id,
+    staleTime: 1000 * 60 * 10,
+  });
+}
