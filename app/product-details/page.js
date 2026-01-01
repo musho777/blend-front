@@ -60,7 +60,7 @@ const page = () => {
                     required=""
                   />
                   <button type="submit" className="theme-btn mb-15">
-                    Add to Cart <i className="far fa-arrow-alt-right" />
+                    Add to Cart2 <i className="far fa-arrow-alt-right" />
                   </button>
                 </form>
                 <ul className="category-tags pt-20 pb-30">

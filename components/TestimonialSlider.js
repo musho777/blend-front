@@ -187,7 +187,7 @@ export default TestimonialSlider;
 export const TestimonialSlider2 = () => {
   return (
     <Slider {...sliderProps.testimonialsActive} className="testimonials-active">
-      <div
+      {/* <div
         className="testimonial-item"
         data-aos="fade-up"
         data-aos-duration={1500}
@@ -305,7 +305,7 @@ export const TestimonialSlider2 = () => {
             <span>CEO &amp; Founder</span>
           </div>
         </div>
-      </div>
+      </div> */}
     </Slider>
   );
 };

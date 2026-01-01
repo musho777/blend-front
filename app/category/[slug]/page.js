@@ -9,6 +9,7 @@ import {
   useCategoryById,
 } from "@/hooks/queries/useCategoriesQuery";
 import { useProductsByCategory } from "@/hooks/queries/useProductsByCategoryQuery";
+import ProductCard from "@/components/ProductCard";
 
 const CategoryPage = () => {
   const params = useParams();
@@ -213,69 +214,7 @@ const CategoryPage = () => {
                     </div>
                   ) : (
                     products.map((product, index) => (
-                      <div
-                        key={product.id || index}
-                        className="col-xl-4 col-sm-6"
-                        data-aos="fade-up"
-                        data-aos-delay={
-                          index % 3 === 0 ? 0 : index % 3 === 1 ? 50 : 100
-                        }
-                        data-aos-duration={1500}
-                        data-aos-offset={50}
-                      >
-                        <div className="product-item-two">
-                          <div className="image">
-                            <img
-                              src={
-                                `http://localhost:3000/${product.imageUrls[0]}` ||
-                                "assets/images/dishes/dish1.png"
-                              }
-                              alt={product.name || product.title}
-                            />
-                          </div>
-                          <div className="content">
-                            {product.rating && (
-                              <div className="ratting">
-                                {[...Array(5)].map((_, i) => (
-                                  <i
-                                    key={i}
-                                    className={`fas fa-star${
-                                      i < Math.floor(product.rating) ? "" : "-o"
-                                    }`}
-                                  />
-                                ))}
-                                {product.reviewCount && (
-                                  <span>({product.reviewCount})</span>
-                                )}
-                              </div>
-                            )}
-                            <h5>
-                              <Link
-                                href={`/product-details/${
-                                  product.id || product.slug
-                                }`}
-                              >
-                                {product.name || product.title}
-                              </Link>
-                            </h5>
-                            <span className="price">
-                              {product.originalPrice &&
-                                product.originalPrice > product.price && (
-                                  <del>${product.originalPrice}</del>
-                                )}{" "}
-                              ${product.price}
-                            </span>
-                          </div>
-                          <Link
-                            href={`/product-details/${
-                              product.id || product.slug
-                            }`}
-                            className="theme-btn"
-                          >
-                            add to cart <i className="far fa-arrow-alt-right" />
-                          </Link>
-                        </div>
-                      </div>
+                      <ProductCard index={index} product={product} />
                     ))
                   )}
                 </div>

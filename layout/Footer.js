@@ -26,7 +26,7 @@ const DefaultFooter = () => {
         backgroundImage: "url(assets/images/background/footer-bg.png)",
       }}
     >
-      <div className="footer-top py-130 rpy-100">
+      {/* <div className="footer-top py-130 rpy-100">
         <div className="container">
           <div className="row justify-content-center">
             <div
@@ -56,7 +56,7 @@ const DefaultFooter = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="widget-area pb-70">
         <div className="container">
           <div className="row justify-content-between">
@@ -224,17 +224,6 @@ const DefaultFooter = () => {
           <button className="scroll-top scroll-to-target" data-target="html">
             <i className="fas fa-arrow-alt-up" />
           </button>
-        </div>
-      </div>
-      <div className="footer-shapes">
-        <div className="shape one">
-          <img src="assets/images/shapes/hero-shape5.png" alt="Shape" />
-        </div>
-        <div className="shape two">
-          <img src="assets/images/shapes/tomato.png" alt="Shape" />
-        </div>
-        <div className="shape three">
-          <img src="assets/images/shapes/pizza-two.png" alt="Shape" />
         </div>
       </div>
     </footer>

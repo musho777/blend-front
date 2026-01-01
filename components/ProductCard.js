@@ -19,12 +19,21 @@ const ProductCard = ({ product, index }) => {
             }
             alt={product.name || product.title}
           />
-          {(product.category?.name || product.categoryName || product.category?.title) && (
+          {(product.category?.name ||
+            product.categoryName ||
+            product.category?.title) && (
             <Link
-              href={`/category/${product.category?.slug || product.categorySlug || product.category?.id || product.categoryId}`}
+              href={`/category/${
+                product.category?.slug ||
+                product.categorySlug ||
+                product.category?.id ||
+                product.categoryId
+              }`}
               className="category-badge"
             >
-              {product.category?.name || product.categoryName || product.category?.title}
+              {product.category?.name ||
+                product.categoryName ||
+                product.category?.title}
             </Link>
           )}
         </div>
