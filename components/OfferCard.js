@@ -9,15 +9,15 @@ const OfferCard = () => {
           data-aos-offset={50}
         >
           <div className="offer-card-item">
-            <img src="assets/images/offer/good-food.png" alt="Good Food" />
-            <div className="badge">Hot</div>
+            <span className="title">‎ </span>
+
             <div className="image">
-              <img src="assets/images/offer/offer-card1.png" alt="Food" />
+              <img src="assets/images/offer/tobacco.png" alt="tobacco" />
             </div>
-            <span className="title">Burger</span>
-            <span className="available-item">35+ Burger menu items</span>
+            <span className="title">‎ </span>
+
             <div className="bg-text">
-              <span>Burger</span> <span>Burger</span> <span>Burger</span>
+              <span>Tobacco</span> <span>Tobacco</span> <span>Tobacco</span>
             </div>
           </div>
         </div>
@@ -29,15 +29,14 @@ const OfferCard = () => {
           data-aos-offset={50}
         >
           <div className="offer-card-item style-two">
-            <img src="assets/images/offer/good-food.png" alt="Good Food" />
-            <div className="badge">-10%</div>
+            <span className="title">‎ </span>
             <div className="image">
-              <img src="assets/images/offer/offer-card2.png" alt="Food" />
+              <img src="assets/images/offer/accessories.png" alt="Food" />
             </div>
-            <span className="title">Pizza</span>
-            <span className="available-item">35+ Burger menu items</span>
+            <span className="title">‎ </span>
             <div className="bg-text">
-              <span>Pizza</span> <span>Pizza</span> <span>Pizza</span>
+              <span>Accessories</span> <span>Accessories</span>{" "}
+              <span>Accessories</span>
             </div>
           </div>
         </div>
@@ -49,13 +48,12 @@ const OfferCard = () => {
           data-aos-offset={50}
         >
           <div className="offer-card-item">
-            <img src="assets/images/offer/good-food.png" alt="Good Food" />
-            <div className="badge">Hot</div>
+            <span className="title">‎ </span>
             <div className="image">
               <img src="assets/images/offer/offer-card3.png" alt="Food" />
             </div>
-            <span className="title">hotdog</span>
-            <span className="available-item">35+ Burger menu items</span>
+            <span className="title">‎ </span>
+
             <div className="bg-text">
               <span>hotdog</span> <span>hotdog</span> <span>hotdog</span>
             </div>
@@ -69,13 +67,14 @@ const OfferCard = () => {
           data-aos-offset={50}
         >
           <div className="offer-card-item style-two">
-            <img src="assets/images/offer/good-food.png" alt="Good Food" />
-            <div className="badge">-15%</div>
+            {/* <div className="badge">-15%</div> */}
+            <span className="title">‎ </span>
+
             <div className="image">
               <img src="assets/images/offer/offer-card4.png" alt="Food" />
             </div>
-            <span className="title">chickens</span>
-            <span className="available-item">35+ Burger menu items</span>
+            <span className="title">‎ </span>
+
             <div className="bg-text">
               <span>chickens</span> <span>chickens</span> <span>chickens</span>
             </div>
@@ -89,13 +88,13 @@ const OfferCard = () => {
           data-aos-offset={50}
         >
           <div className="offer-card-item">
-            <img src="assets/images/offer/good-food.png" alt="Good Food" />
-            <div className="badge">Hot</div>
+            <span className="title">‎ </span>
+
             <div className="image">
               <img src="assets/images/offer/offer-card5.png" alt="Food" />
             </div>
-            <span className="title">seafood</span>
-            <span className="available-item">35+ Burger menu items</span>
+            <span className="title">‎ </span>
+
             <div className="bg-text">
               <span>seafood</span> <span>seafood</span> <span>seafood</span>
             </div>

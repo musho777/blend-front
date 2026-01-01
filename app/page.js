@@ -21,18 +21,12 @@ const page = () => {
                 data-aos-duration={1500}
                 data-aos-offset={50}
               >
-                <span className="sub-title mb-35">
-                  <i className="far fa-hamburger" /> Start price Only $25
-                </span>
-                <h1>delicious food near your town</h1>
+                <h1>PREMIUM HOOKAH</h1>
                 <p>
-                  Welcome to our culinary sanctuary, where every dish tells a
-                  story every bite is an adventure at our food website, we
-                  invite
+                  Welcome to your local hookah destination, where rich flavors,
+                  smooth clouds, and a relaxing atmosphere come together for the
+                  perfect smoke experience.
                 </p>
-                <Link href="menu-chicken" className="theme-btn">
-                  View All Menu <i className="far fa-arrow-alt-right" />
-                </Link>
               </div>
             </div>
             <div
@@ -42,35 +36,29 @@ const page = () => {
               data-aos-offset={50}
             >
               <div className="hero-images rmt-60">
-                <img src="assets/images/hero/hero-right.png" alt="Hero" />
-                <div className="price">
-                  <img src="assets/images/hero/price.png" alt="Hero" />
-                </div>
+                <img src="assets/images/hero/hero-right.webp" alt="Hero" />
               </div>
             </div>
           </div>
         </div>
         <div className="hero-shapes">
-          <div className="shape one">
+          {/* <div className="shape one">
             <img src="assets/images/shapes/hero-shape1.png" alt="Hero Shape" />
-          </div>
-          <div className="shape two">
-            <img src="assets/images/shapes/hero-shape2.png" alt="Hero Shape" />
-          </div>
-          <div className="shape three">
+          </div> */}
+          {/* <div className="shape three">
             <img src="assets/images/shapes/hero-shape3.png" alt="Hero Shape" />
-          </div>
-          <div className="shape four">
+          </div> */}
+          {/* <div className="shape four">
             <img src="assets/images/shapes/hero-shape4.png" alt="Hero Shape" />
           </div>
           <div className="shape five">
             <img src="assets/images/shapes/hero-shape5.png" alt="Hero Shape" />
-          </div>
+          </div> */}
         </div>
       </section>
       {/* Hero Area End */}
       {/* Headline area start */}
-      <div className="headline-area pt-120 rpt-90 rel z-1">
+      {/* <div className="headline-area pt-120 rpt-90 rel z-1">
         <span className="marquee-wrap">
           <span className="marquee-inner left">
             <span className="marquee-item">Italian pizza</span>
@@ -123,10 +111,10 @@ const page = () => {
             <img src="assets/images/shapes/tomato.png" alt="Shape" />
           </div>
         </div>
-      </div>
+      </div> */}
       {/* Headline Area end */}
       {/* About Us Area start */}
-      <section className="about-us-area pt-130 rpt-85 pb-100 rpb-70 rel z-1">
+      {/* <section className="about-us-area pt-130 rpt-85 pb-100 rpb-70 rel z-1">
         <div className="container">
           <div className="row align-items-end">
             <div className="col-lg-6">
@@ -224,7 +212,7 @@ const page = () => {
             <img src="assets/images/shapes/pizza-three.png" alt="Shape" />
           </div>
         </div>
-      </section>
+      </section> */}
       {/* About Us Area end */}
       {/* Offer Card Area start */}
       <OfferCard />
@@ -310,29 +298,29 @@ const page = () => {
       <div className="headline-area pt-120 rpt-90 rel z-1">
         <span className="marquee-wrap">
           <span className="marquee-inner left">
-            <span className="marquee-item">Italian pizza</span>
+            <span className="marquee-item">Blend</span>
             <span className="marquee-item">
               <i className="flaticon-star" />
             </span>
-            <span className="marquee-item">delicious foods</span>
+            <span className="marquee-item">Blend</span>
             <span className="marquee-item">
               <i className="flaticon-star" />
             </span>
-            <span className="marquee-item">burger king</span>
+            <span className="marquee-item">Blend</span>
             <span className="marquee-item">
               <i className="flaticon-star" />
             </span>
           </span>
           <span className="marquee-inner left">
-            <span className="marquee-item">Italian pizza</span>
+            <span className="marquee-item">Blend</span>
             <span className="marquee-item">
               <i className="flaticon-star" />
             </span>
-            <span className="marquee-item">delicious foods</span>
+            <span className="marquee-item">Blend</span>
             <span className="marquee-item">
               <i className="flaticon-star" />
             </span>
-            <span className="marquee-item">burger king</span>
+            <span className="marquee-item">Blend</span>
             <span className="marquee-item">
               <i className="flaticon-star" />
             </span>
@@ -363,7 +351,7 @@ const page = () => {
       </div>
       {/* Headline Area end */}
       {/* Popular Menu Area start */}
-      <section className="popular-menu-area pt-105 rpt-85 pb-100 rpb-70 rel z-1">
+      {/* <section className="popular-menu-area pt-105 rpt-85 pb-100 rpb-70 rel z-1">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-xl-7 col-lg-8">
@@ -617,7 +605,7 @@ const page = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* Popular Menu Area end */}
       {/* Gallery Area Start */}
       <div className="gallery-area rel z-1">
@@ -836,29 +824,29 @@ const page = () => {
       <div className="headline-area bgc-black pt-120 rpt-90 rel z-2">
         <span className="marquee-wrap white-text">
           <span className="marquee-inner left">
-            <span className="marquee-item">Italian pizza</span>
+            <span className="marquee-item">Blend</span>
             <span className="marquee-item">
               <i className="flaticon-star" />
             </span>
-            <span className="marquee-item">our Testimonials</span>
+            <span className="marquee-item">Blend</span>
             <span className="marquee-item">
               <i className="flaticon-star" />
             </span>
-            <span className="marquee-item">burger king</span>
+            <span className="marquee-item">Blend</span>
             <span className="marquee-item">
               <i className="flaticon-star" />
             </span>
           </span>
           <span className="marquee-inner left">
-            <span className="marquee-item">Italian pizza</span>
+            <span className="marquee-item">Blend</span>
             <span className="marquee-item">
               <i className="flaticon-star" />
             </span>
-            <span className="marquee-item">our Testimonials</span>
+            <span className="marquee-item">Blend</span>
             <span className="marquee-item">
               <i className="flaticon-star" />
             </span>
-            <span className="marquee-item">burger king</span>
+            <span className="marquee-item">Blend</span>
             <span className="marquee-item">
               <i className="flaticon-star" />
             </span>
@@ -915,9 +903,7 @@ const page = () => {
           </div>
         </div>
       </section>
-      {/* Testimonials Area end */}
-      {/* Call To Action Area start */}
-      <section className="cta-area py-100 rel z-1">
+      {/* <section className="cta-area py-100 rel z-1">
         <div className="container">
           <div className="row">
             <div className="col-lg-5 col-md-8">
@@ -948,9 +934,7 @@ const page = () => {
           className="cta-bg"
           style={{ backgroundImage: "url(assets/images/background/cta.jpg)" }}
         />
-      </section>
-      {/* Call To Action Area end */}
-      {/* Dishes Area start */}
+      </section> */}
       <section className="dishes-area pt-130 rpt-100 rel z-1">
         <div className="container">
           <div className="row justify-content-center">
@@ -1089,7 +1073,7 @@ const page = () => {
       </section>
       {/* Dishes Area end */}
       {/* Blog Area start */}
-      <section className="blog-area pt-100 rpt-70 pb-90 rpb-60 rel z-1">
+      {/* <section className="blog-area pt-100 rpt-70 pb-90 rpb-60 rel z-1">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-12">
@@ -1224,7 +1208,7 @@ const page = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* Blog Area end */}
     </WellFoodLayout>
   );
