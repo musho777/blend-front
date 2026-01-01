@@ -1,0 +1,12 @@
+import { useQuery } from "@tanstack/react-query";
+import { productsService } from "@/services/products/productsService";
+import { queryKeys } from "@/lib/queryKeys";
+
+export function useProductsByCategory(categoryId, page = 1, limit = 10) {
+  return useQuery({
+    queryKey: queryKeys.products.byCategory(categoryId, page, limit),
+    queryFn: () => productsService.getProductsByCategory(categoryId, page, limit),
+    enabled: !!categoryId, // Only run query if categoryId is provided
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+}

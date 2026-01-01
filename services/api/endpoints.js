@@ -1,4 +1,9 @@
 export const ENDPOINTS = {
+  // Categories endpoints
+  CATEGORIES: {
+    LIST: "/categories",
+  },
+
   // Menu endpoints
   MENU: {
     LIST: "/menu",
@@ -18,6 +23,8 @@ export const ENDPOINTS = {
     LIST: "/products",
     ITEM: (id) => `/products/${id}`,
     SEARCH: "/products/search",
+    BY_CATEGORY: (categoryId, page = 1, limit = 10) =>
+      `/categories/${categoryId}/products?page=${page}&limit=${limit}`,
   },
 
   // Blog endpoints

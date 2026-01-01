@@ -3,6 +3,7 @@ import { wellfoodUtility } from "@/utility";
 import useClickOutside from "@/utility/useClickOutside";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
+import { useCategories } from "@/hooks/queries/useCategoriesQuery";
 
 const Sidebar = () => {
   return (
@@ -126,6 +127,8 @@ const SearchBtn = () => {
 const MobileMenu = () => {
   const [toggle, setToggle] = useState(false);
   const [activeMenu, setActiveMenu] = useState("");
+  const { data: categories, isLoading, isError } = useCategories();
+  console.log(categories);
   const activeMenuSet = (value) =>
       setActiveMenu(activeMenu === value ? "" : value),
     activeLi = (value) =>
@@ -149,7 +152,6 @@ const MobileMenu = () => {
                 </div>
               </div>
               <div className="nav-outer ms-lg-5 ps-xxl-4 clearfix">
-                {/* Main Menu */}
                 <nav className="main-menu navbar-expand-lg">
                   <div className="navbar-header py-10">
                     <div className="mobile-logo">
@@ -161,7 +163,6 @@ const MobileMenu = () => {
                         />
                       </Link>
                     </div>
-                    {/* Toggle Button */}
                     <button
                       type="button"
                       className="navbar-toggle"
@@ -211,26 +212,20 @@ const MobileMenu = () => {
                       </li>
                       <li className="dropdown">
                         <a href="#">Menu</a>
-                        <ul style={activeLi("Menu")}>
-                          <li>
-                            <Link href="menu-restaurant">Menu Restaurant</Link>
-                          </li>
-                          <li>
-                            <Link href="menu-pizza">Menu Pizza</Link>
-                          </li>
-                          <li>
-                            <Link href="menu-grill">Menu Gril</Link>
-                          </li>
-                          <li>
-                            <Link href="menu-burger">Menu Burger</Link>
-                          </li>
-                          <li>
-                            <Link href="menu-sea-food">Menu Sea Food</Link>
-                          </li>
-                          <li>
-                            <Link href="menu-chicken">Menu Chicken</Link>
-                          </li>
-                        </ul>
+                        {/* <ul style={activeLi("Menu")}>
+                          {categories?.length > 0 &&
+                            categories.map((category) => (
+                              <li key={category.id}>
+                                <Link
+                                  href={`/category/${
+                                    category.slug || category.id
+                                  }`}
+                                >
+                                  {category.title}
+                                </Link>
+                              </li>
+                            ))}
+                        </ul> */}
                         <div
                           className="dropdown-btn"
                           onClick={() => activeMenuSet("Menu")}
@@ -316,7 +311,6 @@ const MobileMenu = () => {
                     </ul>
                   </div>
                 </nav>
-                {/* Main Menu End*/}
               </div>
               <div className="header-number">
                 <i className="far fa-phone" />
@@ -360,6 +354,8 @@ const MobileMenu = () => {
 };
 
 const Header = () => {
+  const { data: categories, isLoading, isError } = useCategories();
+
   useEffect(() => {
     wellfoodUtility.fixedHeader();
   }, []);
@@ -383,7 +379,6 @@ const Header = () => {
                 </div>
               </div>
               <div className="nav-outer ms-lg-5 ps-xxl-4 clearfix">
-                {/* Main Menu */}
                 <nav className="main-menu navbar-expand-lg">
                   <div className="navbar-header py-10">
                     <div className="mobile-logo">
@@ -409,7 +404,16 @@ const Header = () => {
                   </div>
                   <div className="navbar-collapse collapse clearfix">
                     <ul className="navigation clearfix">
-                      <li className="dropdown">
+                      {categories?.map((elm, i) => {
+                        return (
+                          <li key={i}>
+                            <Link href={`/category/${elm?.slug}`}>
+                              {elm.title}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                      {/* <li className="dropdown">
                         <a href="#">Home</a>
                         <ul>
                           <li>
@@ -438,24 +442,29 @@ const Header = () => {
                       <li className="dropdown">
                         <a href="#">Menu</a>
                         <ul>
-                          <li>
-                            <Link href="menu-restaurant">Menu Restaurant</Link>
-                          </li>
-                          <li>
-                            <Link href="menu-pizza">Menu Pizza</Link>
-                          </li>
-                          <li>
-                            <Link href="menu-grill">Menu Gril</Link>
-                          </li>
-                          <li>
-                            <Link href="menu-burger">Menu Burger</Link>
-                          </li>
-                          <li>
-                            <Link href="menu-sea-food">Menu Sea Food</Link>
-                          </li>
-                          <li>
-                            <Link href="menu-chicken">Menu Chicken</Link>
-                          </li>
+                          {isLoading ? (
+                            <li>
+                              <span>Loading...</span>
+                            </li>
+                          ) : isError ? (
+                            <li>
+                              <span>Error loading categories</span>
+                            </li>
+                          ) : categories && categories.length > 0 ? (
+                            categories.map((category) => (
+                              <li key={category.id}>
+                                <Link
+                                  href={`/menu/${category.slug || category.id}`}
+                                >
+                                  {category.name}
+                                </Link>
+                              </li>
+                            ))
+                          ) : (
+                            <li>
+                              <span>No categories available</span>
+                            </li>
+                          )}
                         </ul>
                         <div className="dropdown-btn">
                           <span className="far fa-angle-down" />
@@ -531,38 +540,16 @@ const Header = () => {
                       </li>
                       <li>
                         <Link href="contact">Contact</Link>
-                      </li>
+                      </li> */}
                     </ul>
                   </div>
                 </nav>
-                {/* Main Menu End*/}
               </div>
               <div className="header-number">
                 <i className="far fa-phone" />
                 Call : <a href="callto:+88012345688">+880 123 456 88</a>
               </div>
-              {/* Nav Search */}
               <SearchBtn />
-              {/* Menu Button */}
-              <div className="menu-btns">
-                <button>
-                  <i className="far fa-shopping-cart" /> <span>2</span>
-                </button>
-                <Link href="contact" className="theme-btn">
-                  Book now <i className="far fa-arrow-alt-right" />
-                </Link>
-                {/* menu sidbar */}
-                <div className="menu-sidebar">
-                  <button
-                    className="bg-transparent"
-                    onClick={() =>
-                      document
-                        .querySelector("body")
-                        .classList.add("side-content-visible")
-                    }
-                  />
-                </div>
-              </div>
             </div>
           </div>
           <div className="bg-lines">
