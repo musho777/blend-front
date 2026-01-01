@@ -220,7 +220,6 @@ const DefaultFooter = () => {
               </ul>
             </div>
           </div>
-          {/* Scroll Top Button */}
           <button className="scroll-top scroll-to-target" data-target="html">
             <i className="fas fa-arrow-alt-up" />
           </button>
