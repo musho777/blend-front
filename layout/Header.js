@@ -362,12 +362,12 @@ const Header = () => {
   const subcategoriesByCategory = useMemo(() => {
     if (!subcategories) return {};
 
-    return subcategories.reduce((acc, subcategory) => {
-      const categoryId = subcategory.categoryId;
+    return subcategories.reduce((acc, subcategoryId) => {
+      const categoryId = subcategoryId.categoryId;
       if (!acc[categoryId]) {
         acc[categoryId] = [];
       }
-      acc[categoryId].push(subcategory);
+      acc[categoryId].push(subcategoryId);
       return acc;
     }, {});
   }, [subcategories]);
@@ -438,19 +438,23 @@ const Header = () => {
                             {hasSubcategories && (
                               <>
                                 <ul>
-                                  {categorySubcategories.map((subcategory) => (
-                                    <li key={subcategory.id}>
-                                      <Link
-                                        href={`/category/${
-                                          elm?.slug
-                                        }?subcategory=${
-                                          subcategory.slug || subcategory.id
-                                        }`}
-                                      >
-                                        {subcategory.title || subcategory.name}
-                                      </Link>
-                                    </li>
-                                  ))}
+                                  {categorySubcategories.map(
+                                    (subcategoryId) => (
+                                      <li key={subcategoryId.id}>
+                                        <Link
+                                          href={`/category/${
+                                            elm?.slug
+                                          }?subcategoryId=${
+                                            subcategoryId.slug ||
+                                            subcategoryId.id
+                                          }`}
+                                        >
+                                          {subcategoryId.title ||
+                                            subcategoryId.name}
+                                        </Link>
+                                      </li>
+                                    )
+                                  )}
                                 </ul>
                                 <div className="dropdown-btn">
                                   <span className="far fa-angle-down" />

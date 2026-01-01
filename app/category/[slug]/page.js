@@ -14,7 +14,8 @@ const CategoryPage = () => {
   const params = useParams();
   const searchParams = useSearchParams();
   const categorySlug = params.slug;
-
+  const subcategoryId = searchParams.get("subcategoryId");
+  console.log(subcategoryId);
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
   const [currentPage, setCurrentPage] = useState(pageFromUrl);
   const [limit] = useState(12);
@@ -39,7 +40,12 @@ const CategoryPage = () => {
     data: productsData,
     isLoading: productsLoading,
     isError: productsError,
-  } = useProductsByCategory(currentCategory?.id, currentPage, limit);
+  } = useProductsByCategory(
+    currentCategory?.id,
+    currentPage,
+    limit,
+    subcategoryId
+  );
 
   const isLoading = categoriesLoading || categoryLoading || productsLoading;
   const category = categoryData || currentCategory;
