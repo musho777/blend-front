@@ -5,6 +5,12 @@ export const ENDPOINTS = {
     ITEM: (id) => `/categories/${id}`,
   },
 
+  // Subcategories endpoints
+  SUBCATEGORIES: {
+    LIST: "/subcategories",
+    BY_CATEGORY: (categoryId) => `/subcategories?categoryId=${categoryId}`,
+  },
+
   // Menu endpoints
   MENU: {
     LIST: "/menu",

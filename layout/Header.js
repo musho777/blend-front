@@ -2,8 +2,9 @@
 import { wellfoodUtility } from "@/utility";
 import useClickOutside from "@/utility/useClickOutside";
 import Link from "next/link";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useMemo } from "react";
 import { useCategories } from "@/hooks/queries/useCategoriesQuery";
+import { useSubcategories } from "@/hooks/queries/useSubcategoriesQuery";
 
 const Sidebar = () => {
   return (
@@ -355,6 +356,21 @@ const MobileMenu = () => {
 
 const Header = () => {
   const { data: categories, isLoading, isError } = useCategories();
+  const { data: subcategories } = useSubcategories();
+
+  // Group subcategories by categoryId for efficient lookup
+  const subcategoriesByCategory = useMemo(() => {
+    if (!subcategories) return {};
+
+    return subcategories.reduce((acc, subcategory) => {
+      const categoryId = subcategory.categoryId;
+      if (!acc[categoryId]) {
+        acc[categoryId] = [];
+      }
+      acc[categoryId].push(subcategory);
+      return acc;
+    }, {});
+  }, [subcategories]);
 
   useEffect(() => {
     wellfoodUtility.fixedHeader();
@@ -405,11 +421,42 @@ const Header = () => {
                   <div className="navbar-collapse collapse clearfix">
                     <ul className="navigation clearfix">
                       {categories?.map((elm, i) => {
+                        const categorySubcategories =
+                          subcategoriesByCategory[elm?.id] || [];
+                        console.log(elm, "elm", categorySubcategories);
+                        const hasSubcategories =
+                          categorySubcategories.length > 0;
+
                         return (
-                          <li key={i}>
+                          <li
+                            key={i}
+                            className={hasSubcategories ? "dropdown" : ""}
+                          >
                             <Link href={`/category/${elm?.slug}`}>
                               {elm.title}
                             </Link>
+                            {hasSubcategories && (
+                              <>
+                                <ul>
+                                  {categorySubcategories.map((subcategory) => (
+                                    <li key={subcategory.id}>
+                                      <Link
+                                        href={`/category/${
+                                          elm?.slug
+                                        }?subcategory=${
+                                          subcategory.slug || subcategory.id
+                                        }`}
+                                      >
+                                        {subcategory.title || subcategory.name}
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                                <div className="dropdown-btn">
+                                  <span className="far fa-angle-down" />
+                                </div>
+                              </>
+                            )}
                           </li>
                         );
                       })}
