@@ -125,7 +125,7 @@ const SearchBtn = () => {
   );
 };
 
-const MobileMenu = () => {
+const MobileMenu = ({ black }) => {
   const [toggle, setToggle] = useState(false);
   const [activeMenu, setActiveMenu] = useState("");
   const { data: categories, isLoading, isError } = useCategories();
@@ -138,7 +138,7 @@ const MobileMenu = () => {
     <Fragment>
       <header className="main-header white-menu menu-absolute d-block d-xl-none">
         {/*Header-Upper*/}
-        <div className="header-upper">
+        <div className="header-upper" style={black ? { backgroundColor: 'black' } : {}}>
           <div className="container-fluid clearfix">
             <div className="header-inner rel d-flex align-items-center">
               <div className="logo-outer">
@@ -354,7 +354,7 @@ const MobileMenu = () => {
   );
 };
 
-const Header = () => {
+const Header = ({ black }) => {
   const { data: categories, isLoading, isError } = useCategories();
   const { data: subcategories } = useSubcategories();
 
@@ -380,7 +380,7 @@ const Header = () => {
     <Fragment>
       <header className="main-header white-menu menu-absolute d-none d-xl-block">
         {/*Header-Upper*/}
-        <div className="header-upper">
+        <div className="header-upper" style={black ? { backgroundColor: 'black' } : {}}>
           <div className="container-fluid clearfix">
             <div className="header-inner rel d-flex align-items-center">
               <div className="logo-outer">
@@ -612,7 +612,7 @@ const Header = () => {
         </div>
         {/*End Header Upper*/}
       </header>
-      <MobileMenu />
+      <MobileMenu black={black} />
       <Sidebar />
     </Fragment>
   );

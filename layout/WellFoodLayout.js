@@ -5,11 +5,10 @@ import niceSelect from "react-nice-select";
 import Footer from "./Footer";
 import Header from "./Header";
 
-const WellFoodLayout = ({ children, bgBlack, footer }) => {
+const WellFoodLayout = ({ children, bgBlack, footer, headerBlack }) => {
   useEffect(() => {
     niceSelect();
     wellfoodUtility.animation();
-    console.log(bgBlack);
     if (bgBlack) {
       document.querySelector(".page-wrapper").classList.add("bg-black");
     } else {
@@ -23,7 +22,7 @@ const WellFoodLayout = ({ children, bgBlack, footer }) => {
 
   return (
     <div className="page-wrapper">
-      <Header />
+      <Header black={headerBlack} />
       {children}
       <Footer footer={footer} />
     </div>

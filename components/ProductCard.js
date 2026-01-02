@@ -1,6 +1,10 @@
 import Link from "next/link";
 
 const ProductCard = ({ product, index }) => {
+  const handleCardClick = () => {
+    window.location.href = `/product-details/${product.id || product.slug}`;
+  };
+
   return (
     <div
       key={product.id || index}
@@ -10,7 +14,7 @@ const ProductCard = ({ product, index }) => {
       data-aos-duration={1500}
       data-aos-offset={50}
     >
-      <div className="product-item-two">
+      <div className="product-item-two" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
         <div className="image">
           <img
             src={
@@ -30,6 +34,7 @@ const ProductCard = ({ product, index }) => {
                 product.categoryId
               }`}
               className="category-badge"
+              onClick={(e) => e.stopPropagation()}
             >
               {product.category?.name ||
                 product.categoryName ||
@@ -66,6 +71,7 @@ const ProductCard = ({ product, index }) => {
         <Link
           href={`/product-details/${product.id || product.slug}`}
           className="theme-btn"
+          onClick={(e) => e.stopPropagation()}
         >
           add to cart <i className="far fa-arrow-alt-right" />
         </Link>
