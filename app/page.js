@@ -1,13 +1,34 @@
 "use client";
+import { useState, useEffect } from "react";
 import Counter from "@/components/Counter";
 import OfferCard from "@/components/OfferCard";
 import ProductCard from "@/components/ProductCard";
 import WellFoodLayout from "@/layout/WellFoodLayout";
 import Link from "next/link";
 import { useBestSellers } from "@/hooks/queries/useBestSellersQuery";
+import { useBanners } from "@/hooks/queries/useBannersQuery";
 
 const page = () => {
   const { data: bestSellers, isLoading, error } = useBestSellers();
+  const { data: banners, isLoading: isBannersLoading } = useBanners();
+  const [activeBannerIndex, setActiveBannerIndex] = useState(0);
+
+  // Auto-rotation effect
+  useEffect(() => {
+    if (!banners || banners.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setActiveBannerIndex((prevIndex) =>
+        prevIndex === banners.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 15000); // Change banner every 15 seconds
+
+    return () => clearInterval(interval);
+  }, [banners]);
+
+  const handleDotClick = (index) => {
+    setActiveBannerIndex(index);
+  };
 
   return (
     <WellFoodLayout>
@@ -63,54 +84,150 @@ const page = () => {
         </span>
 
         <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-6">
-              <div
-                className="offer-content text-white rmb-55"
-                data-aos="fade-left"
-                data-aos-delay={50}
-                data-aos-duration={1500}
-                data-aos-offset={50}
-              >
-                <h2>Exclusive hookah deal of the week</h2>
-                <p>
-                  Upgrade your smoking experience with high-quality hookahs,
-                  premium accessories, and carefully selected flavors —
-                  available for a limited time.
-                </p>
-                <Link href="shop" className="theme-btn">
-                  shop now <i className="far fa-arrow-alt-right" />
-                </Link>
-              </div>
+          {isBannersLoading ? (
+            <div className="text-white text-center py-5">
+              <p>Loading offers...</p>
             </div>
+          ) : banners && banners.length > 0 ? (
+            <>
+              <div className="row align-items-center">
+                <div className="col-lg-6">
+                  <div
+                    className="offer-content text-white rmb-55"
+                    data-aos="fade-left"
+                    data-aos-delay={50}
+                    data-aos-duration={1500}
+                    data-aos-offset={50}
+                  >
+                    <h2>
+                      {banners[activeBannerIndex].title ||
+                        "Exclusive hookah deal of the week"}
+                    </h2>
+                    {console.log(banners)}
+                    <p>
+                      {banners[activeBannerIndex].text ||
+                        "Upgrade your smoking experience with high-quality hookahs, premium accessories, and carefully selected flavors — available for a limited time."}
+                    </p>
+                    <Link href="shop" className="theme-btn">
+                      shop now <i className="far fa-arrow-alt-right" />
+                    </Link>
+                  </div>
+                </div>
 
-            <div className="col-lg-6">
-              <div
-                className="offer-image"
-                data-aos="fade-right"
-                data-aos-delay={50}
-                data-aos-duration={1500}
-                data-aos-offset={50}
-              >
-                <img
-                  src="assets/images/offer/offer-img.png"
-                  alt="Offer Image"
-                />
+                <div className="col-lg-6 ">
+                  <div
+                    style={{ display: "flex", justifyContent: "flex-end" }}
+                    data-aos="fade-right"
+                    data-aos-delay={50}
+                    data-aos-duration={1500}
+                    data-aos-offset={50}
+                  >
+                    <img
+                      src={
+                        `http://localhost:3000/${banners[activeBannerIndex].image}` ||
+                        "assets/images/offer/offer-img.png"
+                      }
+                      alt={banners[activeBannerIndex].title || "Offer Image"}
+                    />
+                    {banners[activeBannerIndex].price && (
+                      <div
+                        className="offer-badge"
+                        style={{
+                          backgroundImage:
+                            "url(assets/images/shapes/offer-circle-shape.png)",
+                        }}
+                      >
+                        <span>
+                          only <br />
+                          <span className="price">
+                            ${banners[activeBannerIndex].price}
+                          </span>
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Banner Indicators */}
+              {banners.length > 1 && (
                 <div
-                  className="offer-badge"
+                  className="row mt-4"
                   style={{
-                    backgroundImage:
-                      "url(assets/images/shapes/offer-circle-shape.png)",
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "10px",
                   }}
                 >
-                  <span>
-                    only <br />
-                    <span className="price">$59</span>
-                  </span>
+                  {banners.map((_, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleDotClick(index)}
+                      style={{
+                        width: "12px",
+                        height: "12px",
+                        borderRadius: "50%",
+                        backgroundColor:
+                          index === activeBannerIndex ? "#ff6b6b" : "#ffffff",
+                        cursor: "pointer",
+                        transition: "all 0.3s ease",
+                        opacity: index === activeBannerIndex ? 1 : 0.5,
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="row align-items-center">
+              <div className="col-lg-6">
+                <div
+                  className="offer-content text-white rmb-55"
+                  data-aos="fade-left"
+                  data-aos-delay={50}
+                  data-aos-duration={1500}
+                  data-aos-offset={50}
+                >
+                  <h2>Exclusive hookah deal of the week</h2>
+                  <p>
+                    Upgrade your smoking experience with high-quality hookahs,
+                    premium accessories, and carefully selected flavors —
+                    available for a limited time.
+                  </p>
+                  <Link href="shop" className="theme-btn">
+                    shop now <i className="far fa-arrow-alt-right" />
+                  </Link>
+                </div>
+              </div>
+
+              <div className="col-lg-6">
+                <div
+                  className="offer-image"
+                  data-aos="fade-right"
+                  data-aos-delay={50}
+                  data-aos-duration={1500}
+                  data-aos-offset={50}
+                >
+                  <img
+                    src="assets/images/offer/offer-img.png"
+                    alt="Offer Image"
+                  />
+                  <div
+                    className="offer-badge"
+                    style={{
+                      backgroundImage:
+                        "url(assets/images/shapes/offer-circle-shape.png)",
+                    }}
+                  >
+                    <span>
+                      only <br />
+                      <span className="price">$59</span>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 

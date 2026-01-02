@@ -56,4 +56,9 @@ export const ENDPOINTS = {
     LIST: "/gallery",
     BY_CATEGORY: (category) => `/gallery/category/${category}`,
   },
+
+  // Banner endpoints
+  BANNERS: {
+    LIST: "/banners",
+  },
 };
