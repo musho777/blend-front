@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const Footer = ({ footer = 1 }) => {
+const Footer = ({ footer = 6 }) => {
   switch (footer) {
     case 1:
       return <DefaultFooter />;
@@ -69,7 +69,7 @@ const DefaultFooter = () => {
               <div className="footer-widget footer-text">
                 <div className="footer-logo mb-25">
                   <Link href="/">
-                    <img src="assets/images/logos/logo.png" alt="Logo" />
+                    <img src="/assets/images/logos/logo.png" alt="Logo" />
                   </Link>
                 </div>
                 <p>
@@ -247,7 +247,7 @@ const Footer2 = () => {
               >
                 <div className="footer-logo mb-25">
                   <Link href="/">
-                    <img src="assets/images/logos/logo-white.png" alt="Logo" />
+                    <img src="/assets/images/logos/logo-white.png" alt="Logo" />
                   </Link>
                 </div>
                 <p>

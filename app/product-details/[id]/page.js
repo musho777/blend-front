@@ -12,12 +12,14 @@ const ProductDetailsPage = ({ params }) => {
 
   const sliderSettings = {
     dots: true,
-    infinite: true,
+    infinite: product?.imageUrls?.length > 1,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
     autoplay: false,
+    fade: false,
+    adaptiveHeight: true,
   };
 
   if (isLoading) {
@@ -46,18 +48,24 @@ const ProductDetailsPage = ({ params }) => {
                 data-aos-duration={1500}
                 data-aos-offset={50}
               >
-                {product.imageUrls && product.imageUrls.length > 0 ? (
-                  <Slider {...sliderSettings}>
+                {product.imageUrls && product.imageUrls.length > 1 ? (
+                  <Slider {...sliderSettings} className="product-image-slider">
                     {product.imageUrls.map((imageUrl, index) => (
-                      <div key={index}>
+                      <div key={index} className="slider-item">
                         <img
                           src={`http://localhost:3000/${imageUrl}`}
                           alt={`${product.name || product.title} - Image ${index + 1}`}
-                          style={{ width: "100%", height: "auto" }}
+                          style={{ width: "100%", height: "auto", display: "block" }}
                         />
                       </div>
                     ))}
                   </Slider>
+                ) : product.imageUrls && product.imageUrls.length === 1 ? (
+                  <img
+                    src={`http://localhost:3000/${product.imageUrls[0]}`}
+                    alt={product.name || product.title}
+                    style={{ width: "100%", height: "auto" }}
+                  />
                 ) : (
                   <img
                     src="assets/images/products/product-details.jpg"
@@ -100,10 +108,13 @@ const ProductDetailsPage = ({ params }) => {
                     </span>
                   </div>
                 )}
-                <p>
-                  {product.description ||
-                    "Delicious and freshly prepared. Perfect for any occasion."}
-                </p>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      product.description ||
+                      "<p>Delicious and freshly prepared. Perfect for any occasion.</p>",
+                  }}
+                />
                 <form action="#" className="add-to-cart py-25">
                   <h5>Quantity</h5>
                   <input
