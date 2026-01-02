@@ -72,11 +72,7 @@ const page = () => {
                 data-aos-duration={1500}
                 data-aos-offset={50}
               >
-                <img src="assets/images/offer/delicious.png" alt="Image" />
                 <h2>Exclusive hookah deal of the week</h2>
-                <h3>
-                  Premium hookah set only <span>$59</span>
-                </h3>
                 <p>
                   Upgrade your smoking experience with high-quality hookahs,
                   premium accessories, and carefully selected flavors —
