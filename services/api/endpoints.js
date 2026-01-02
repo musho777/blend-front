@@ -37,6 +37,7 @@ export const ENDPOINTS = {
       }
       return url;
     },
+    BEST_SELLERS: "/home/best-seller",
   },
 
   // Blog endpoints

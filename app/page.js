@@ -1,22 +1,16 @@
 "use client";
 import Counter from "@/components/Counter";
 import OfferCard from "@/components/OfferCard";
-import { useProductsByCategory } from "@/hooks/queries/useProductsByCategoryQuery";
+import ProductCard from "@/components/ProductCard";
 import WellFoodLayout from "@/layout/WellFoodLayout";
 import Link from "next/link";
+import { useBestSellers } from "@/hooks/queries/useBestSellersQuery";
+
 const page = () => {
-  const currentPage = 1;
-  const limit = 10;
-  const {
-    data: productsData,
-    isLoading: productsLoading,
-    isError: productsError,
-  } = useProductsByCategory(currentPage, limit);
-  const products = productsData?.data || [];
+  const { data: bestSellers, isLoading, error } = useBestSellers();
 
   return (
     <WellFoodLayout>
-      {/* Hero Area Start */}
       <section
         className="hero-area bgs-cover pt-180 rpt-150 pb-100 rel z-1"
         style={{ backgroundImage: "url(assets/images/background/hero.jpg)" }}
@@ -250,16 +244,32 @@ const page = () => {
                 data-aos-duration={1500}
                 data-aos-offset={50}
               >
-                <span className="sub-title mb-5">customer feedback</span>
-                <h2>what have lot’s off happy customer explore feedback</h2>
+                <span className="sub-title mb-5">BEST SELLERS</span>
+                <h2>Most popular products chosen by our customers</h2>
               </div>
             </div>
           </div>
           <div>
-            <div className="row justify-content-center">
-              {products.map((product, index) => (
-                <ProductCard index={index} product={product} />
-              ))}
+            <div className="row">
+              {isLoading && (
+                <div className="text-white text-center py-5">
+                  <p>Loading best sellers...</p>
+                </div>
+              )}
+              {bestSellers && bestSellers.length > 0
+                ? bestSellers.map((product, index) => (
+                    <ProductCard
+                      key={product.id || index}
+                      index={index}
+                      product={product}
+                    />
+                  ))
+                : !isLoading &&
+                  !error && (
+                    <div className="text-white text-center py-5">
+                      <p>No best sellers available at the moment.</p>
+                    </div>
+                  )}
             </div>
           </div>
         </div>

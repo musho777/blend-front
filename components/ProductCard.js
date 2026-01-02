@@ -4,9 +4,9 @@ const ProductCard = ({ product, index }) => {
   return (
     <div
       key={product.id || index}
-      className="col-xl-4 col-sm-6"
+      className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3"
       data-aos="fade-up"
-      data-aos-delay={index % 3 === 0 ? 0 : index % 3 === 1 ? 50 : 100}
+      data-aos-delay={index % 4 === 0 ? 0 : index % 4 === 1 ? 50 : index % 4 === 2 ? 100 : 150}
       data-aos-duration={1500}
       data-aos-offset={50}
     >

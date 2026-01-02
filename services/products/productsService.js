@@ -17,4 +17,8 @@ export const productsService = {
   searchProducts: async (query) => {
     return apiClient(`${ENDPOINTS.PRODUCTS.SEARCH}?q=${query}`);
   },
+
+  getBestSellers: async () => {
+    return apiClient(ENDPOINTS.PRODUCTS.BEST_SELLERS);
+  },
 };
