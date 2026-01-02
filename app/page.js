@@ -11,6 +11,7 @@ const page = () => {
 
   return (
     <WellFoodLayout>
+      {/* HERO SECTION */}
       <section
         className="hero-area bgs-cover pt-180 rpt-150 pb-100 rel z-1"
         style={{ backgroundImage: "url(assets/images/background/hero.jpg)" }}
@@ -24,11 +25,11 @@ const page = () => {
                 data-aos-duration={1500}
                 data-aos-offset={50}
               >
-                <h1>PREMIUM HOOKAH</h1>
+                <h1>PREMIUM HOOKAH EXPERIENCE</h1>
                 <p>
-                  Welcome to your local hookah destination, where rich flavors,
-                  smooth clouds, and a relaxing atmosphere come together for the
-                  perfect smoke experience.
+                  Discover premium hookahs, rich tobacco flavors, and smooth
+                  clouds. Everything you need for the perfect hookah session —
+                  quality, style, and authentic taste in one place.
                 </p>
               </div>
             </div>
@@ -45,7 +46,10 @@ const page = () => {
           </div>
         </div>
       </section>
+
       <OfferCard />
+
+      {/* SPECIAL OFFER */}
       <section
         className="offer-area bgc-black pt-160 rpt-100 pb-150 rpb-120 rel z-1"
         style={{
@@ -53,10 +57,11 @@ const page = () => {
         }}
       >
         <span className="marquee-wrap style-two text-white">
-          <span className="marquee-inner left">special deal</span>
-          <span className="marquee-inner left">special deal</span>
-          <span className="marquee-inner left">special deal</span>
+          <span className="marquee-inner left">special hookah deal</span>
+          <span className="marquee-inner left">special hookah deal</span>
+          <span className="marquee-inner left">special hookah deal</span>
         </span>
+
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-6">
@@ -68,19 +73,21 @@ const page = () => {
                 data-aos-offset={50}
               >
                 <img src="assets/images/offer/delicious.png" alt="Image" />
-                <h2>Special deal offer for this week</h2>
+                <h2>Exclusive hookah deal of the week</h2>
                 <h3>
-                  grilled beef meat only <span>$59</span>
+                  Premium hookah set only <span>$59</span>
                 </h3>
                 <p>
-                  Restaurant, where culinary excellence meets warm hospitality
-                  in every dish we serve nestled in the heart of city
+                  Upgrade your smoking experience with high-quality hookahs,
+                  premium accessories, and carefully selected flavors —
+                  available for a limited time.
                 </p>
                 <Link href="shop" className="theme-btn">
-                  order now <i className="far fa-arrow-alt-right" />
+                  shop now <i className="far fa-arrow-alt-right" />
                 </Link>
               </div>
             </div>
+
             <div className="col-lg-6">
               <div
                 className="offer-image"
@@ -110,12 +117,15 @@ const page = () => {
           </div>
         </div>
       </section>
+
+      {/* WHY CHOOSE US */}
       <section className="why-choose-area bgc-lighter pt-240 rpt-150 pb-100 rpb-70 rel z-1">
         <span className="marquee-wrap style-two">
-          <span className="marquee-inner left">Why choose Us</span>
-          <span className="marquee-inner left">Why choose Us</span>
-          <span className="marquee-inner left">Why choose Us</span>
+          <span className="marquee-inner left">Why choose us</span>
+          <span className="marquee-inner left">Why choose us</span>
+          <span className="marquee-inner left">Why choose us</span>
         </span>
+
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-6">
@@ -127,59 +137,40 @@ const page = () => {
               >
                 <div className="section-title mb-25">
                   <span className="sub-title mb-5">Why choose us</span>
-                  <h2>We Offer quality service That Customers Needs</h2>
+                  <h2>Premium Quality & Unmatched Hookah Experience</h2>
                 </div>
+
                 <p>
-                  Welcome too restaurant, where culinary excellence meets warm
-                  hospitality in every dish we serve. Nestled in the heart of
-                  City Name our eatery invites you on a journey
+                  We bring together the finest hookahs, authentic tobacco
+                  flavors, and premium accessories. Trusted by hookah lovers who
+                  value smooth smoke, durability, and modern design.
                 </p>
-                <div className="about-btn-author mb-60">
-                  <Link href="about" className="theme-btn">
-                    learn more us <i className="far fa-arrow-alt-right" />
-                  </Link>
-                  <div className="author">
-                    <img src="assets/images/about/author.jpg" alt="Author" />
-                    <h6>
-                      Ben A. Conners / <span>CEO &amp; Founder</span>
-                    </h6>
-                  </div>
-                </div>
+
                 <div className="row">
                   <div className="col-sm-4 col-6">
                     <div className="counter-item counter-text-wrap">
-                      <span
-                        className="count-text k-plus"
-                        data-speed={3000}
-                        data-stop={34}
-                      >
+                      <span className="count-text k-plus">
                         <Counter end={34} />
                       </span>
-                      <span className="counter-title">Organic Planting</span>
+                      <span className="counter-title">Premium Flavors</span>
                     </div>
                   </div>
+
                   <div className="col-sm-4 col-6">
                     <div className="counter-item counter-text-wrap">
-                      <span
-                        className="count-text plus"
-                        data-speed={3000}
-                        data-stop={356}
-                      >
+                      <span className="count-text plus">
                         <Counter end={356} />
                       </span>
-                      <span className="counter-title">Passionate Chef’s</span>
+                      <span className="counter-title">Satisfied Customers</span>
                     </div>
                   </div>
+
                   <div className="col-sm-4 col-6">
                     <div className="counter-item counter-text-wrap">
-                      <span
-                        className="count-text plus"
-                        data-speed={3000}
-                        data-stop={853}
-                      >
+                      <span className="count-text plus">
                         <Counter end={853} />
                       </span>
-                      <span className="counter-title">Favourite Dishes</span>
+                      <span className="counter-title">Hookah Accessories</span>
                     </div>
                   </div>
                 </div>
@@ -188,93 +179,65 @@ const page = () => {
           </div>
         </div>
       </section>
+
+      {/* MARQUEE */}
       <div className="headline-area bgc-black pt-120 rpt-90 rel z-2">
         <span className="marquee-wrap white-text">
           <span className="marquee-inner left">
-            <span className="marquee-item">Blend</span>
+            <span className="marquee-item">Hookah</span>
             <span className="marquee-item">
               <i className="flaticon-star" />
             </span>
-            <span className="marquee-item">Blend</span>
+            <span className="marquee-item">Premium Smoke</span>
             <span className="marquee-item">
               <i className="flaticon-star" />
             </span>
-            <span className="marquee-item">Blend</span>
-            <span className="marquee-item">
-              <i className="flaticon-star" />
-            </span>
-          </span>
-          <span className="marquee-inner left">
-            <span className="marquee-item">Blend</span>
-            <span className="marquee-item">
-              <i className="flaticon-star" />
-            </span>
-            <span className="marquee-item">Blend</span>
-            <span className="marquee-item">
-              <i className="flaticon-star" />
-            </span>
-            <span className="marquee-item">Blend</span>
-            <span className="marquee-item">
-              <i className="flaticon-star" />
-            </span>
-          </span>
-          <span className="marquee-inner left">
-            <span className="marquee-item">Italian pizza</span>
-            <span className="marquee-item">
-              <i className="flaticon-star" />
-            </span>
-            <span className="marquee-item">our Testimonials</span>
-            <span className="marquee-item">
-              <i className="flaticon-star" />
-            </span>
-            <span className="marquee-item">burger king</span>
+            <span className="marquee-item">Clouds</span>
             <span className="marquee-item">
               <i className="flaticon-star" />
             </span>
           </span>
         </span>
       </div>
+
+      {/* BEST SELLERS */}
       <section className="testimonials-area bgc-black pt-105 rpt-85 pb-130 rpb-100 rel z-1">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-xl-7 col-lg-8">
-              <div
-                className="section-title text-white text-center mb-50"
-                data-aos="fade-up"
-                data-aos-duration={1500}
-                data-aos-offset={50}
-              >
+              <div className="section-title text-white text-center mb-50">
                 <span className="sub-title mb-5">BEST SELLERS</span>
-                <h2>Most popular products chosen by our customers</h2>
+                <h2>Top hookah products loved by our customers</h2>
               </div>
             </div>
           </div>
-          <div>
-            <div className="row">
-              {isLoading && (
-                <div className="text-white text-center py-5">
-                  <p>Loading best sellers...</p>
-                </div>
-              )}
-              {bestSellers && bestSellers.length > 0
-                ? bestSellers.map((product, index) => (
-                    <ProductCard
-                      key={product.id || index}
-                      index={index}
-                      product={product}
-                    />
-                  ))
-                : !isLoading &&
-                  !error && (
-                    <div className="text-white text-center py-5">
-                      <p>No best sellers available at the moment.</p>
-                    </div>
-                  )}
-            </div>
+
+          <div className="row">
+            {isLoading && (
+              <div className="text-white text-center py-5">
+                <p>Loading best-selling hookah products...</p>
+              </div>
+            )}
+
+            {bestSellers && bestSellers.length > 0
+              ? bestSellers.map((product, index) => (
+                  <ProductCard
+                    key={product.id || index}
+                    index={index}
+                    product={product}
+                  />
+                ))
+              : !isLoading &&
+                !error && (
+                  <div className="text-white text-center py-5">
+                    <p>No best-selling hookah products available right now.</p>
+                  </div>
+                )}
           </div>
         </div>
       </section>
     </WellFoodLayout>
   );
 };
+
 export default page;
