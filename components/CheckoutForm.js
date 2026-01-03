@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Accordion } from "react-bootstrap";
+import { Accordion, Modal } from "react-bootstrap";
 import { useCart } from "@/hooks/useCart";
 import { useCreateOrder } from "@/hooks/mutations/useOrderMutation";
 
@@ -17,7 +17,7 @@ const CheckoutForm = () => {
 
   const [paymentMethod, setPaymentMethod] = useState("cash_on_delivery");
   const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +27,7 @@ const CheckoutForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setSuccessMessage("");
+    setShowSuccessModal(false);
 
     try {
       const orderData = {
@@ -42,13 +42,14 @@ const CheckoutForm = () => {
       };
 
       await createOrder.mutateAsync(orderData);
-      setSuccessMessage("Order placed successfully!");
+      setShowSuccessModal(true);
 
       // Clear cart and close modal after short delay
       setTimeout(() => {
+        setShowSuccessModal(false);
         clearCart();
         closeCartModal();
-      }, 1500);
+      }, 2000);
     } catch (err) {
       setError(err.message || "Failed to place order. Please try again.");
     }
@@ -57,10 +58,6 @@ const CheckoutForm = () => {
   return (
     <div className="checkout-form-wrapper">
       <h5 className="mb-20">Checkout Information</h5>
-
-      {successMessage && (
-        <div className="alert alert-success mb-20">{successMessage}</div>
-      )}
 
       {error && <div className="alert alert-danger mb-20">{error}</div>}
 
@@ -207,6 +204,25 @@ const CheckoutForm = () => {
           <i className="far fa-arrow-alt-right" />
         </button>
       </form>
+
+      <Modal
+        show={showSuccessModal}
+        onHide={() => setShowSuccessModal(false)}
+        centered
+      >
+        <Modal.Body className="text-center py-4">
+          <div
+            className="success-icon mb-3"
+            style={{ fontSize: "64px", color: "#28a745" }}
+          >
+            <i className="far fa-check-circle" />
+          </div>
+          <h4 className="mb-2">Order Placed Successfully!</h4>
+          <p className="text-muted">
+            Thank you for your order. We'll prepare it right away!
+          </p>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { Modal } from "react-bootstrap";
 import { useCreateBooking } from "@/hooks";
 
 const BookTableForm = () => {
@@ -8,7 +9,7 @@ const BookTableForm = () => {
     date: "",
     time: "",
   });
-  const [successMessage, setSuccessMessage] = useState("");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const createBooking = useCreateBooking();
 
@@ -19,13 +20,18 @@ const BookTableForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSuccessMessage("");
+    setShowSuccessModal(false);
 
     try {
       await createBooking.mutateAsync(formData);
-      setSuccessMessage("Booking confirmed! We look forward to seeing you.");
+      setShowSuccessModal(true);
       // Reset form
       setFormData({ person: "2", date: "", time: "" });
+
+      // Auto-close modal after 3 seconds
+      setTimeout(() => {
+        setShowSuccessModal(false);
+      }, 3000);
     } catch (error) {
       // Error is logged in the mutation hook
     }
@@ -42,11 +48,6 @@ const BookTableForm = () => {
         <h2>book a table</h2>
       </div>
       <p>Enjoy your food to book your table</p>
-      {successMessage && (
-        <div className="alert alert-success" role="alert">
-          {successMessage}
-        </div>
-      )}
       {createBooking.isError && (
         <div className="alert alert-danger" role="alert">
           {createBooking.error?.message || "Booking failed. Please try again."}
@@ -121,6 +122,25 @@ const BookTableForm = () => {
           </div>
         </div>
       </form>
+
+      <Modal
+        show={showSuccessModal}
+        onHide={() => setShowSuccessModal(false)}
+        centered
+      >
+        <Modal.Body className="text-center py-4">
+          <div
+            className="success-icon mb-3"
+            style={{ fontSize: "64px", color: "#28a745" }}
+          >
+            <i className="far fa-check-circle" />
+          </div>
+          <h4 className="mb-2">Booking Confirmed!</h4>
+          <p className="text-muted">
+            We look forward to seeing you. Your table is reserved!
+          </p>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
