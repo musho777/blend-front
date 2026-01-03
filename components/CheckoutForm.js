@@ -76,6 +76,7 @@ const CheckoutForm = () => {
                 placeholder="First Name *"
                 value={formData.name}
                 onChange={handleChange}
+                style={{ border: "1px solid #ddd" }}
                 required
               />
             </div>
@@ -90,6 +91,7 @@ const CheckoutForm = () => {
                 placeholder="Last Name *"
                 value={formData.surname}
                 onChange={handleChange}
+                style={{ border: "1px solid #ddd" }}
                 required
               />
             </div>
@@ -105,6 +107,7 @@ const CheckoutForm = () => {
             placeholder="Address *"
             value={formData.address}
             onChange={handleChange}
+            style={{ border: "1px solid #ddd" }}
             required
           />
         </div>
@@ -119,6 +122,7 @@ const CheckoutForm = () => {
             value={formData.phone}
             onChange={handleChange}
             pattern="[0-9+\s\-()]+"
+            style={{ border: "1px solid #ddd" }}
             required
           />
         </div>
@@ -126,7 +130,10 @@ const CheckoutForm = () => {
         <div className="payment-method mb-30">
           <h6 className="mb-15">Select Payment Method</h6>
           <Accordion defaultActiveKey="cash_on_delivery">
-            <div className="custom-control custom-radio mb-10">
+            <div
+              className="custom-control custom-radio mb-10"
+              style={{ gap: "10px" }}
+            >
               <input
                 type="radio"
                 className="custom-control-input"
@@ -135,6 +142,7 @@ const CheckoutForm = () => {
                 value="cash_on_delivery"
                 checked={paymentMethod === "cash_on_delivery"}
                 onChange={(e) => setPaymentMethod(e.target.value)}
+                style={{ marginRight: 10 }}
               />
               <Accordion.Toggle
                 as="label"
@@ -142,11 +150,8 @@ const CheckoutForm = () => {
                 htmlFor="cash_on_delivery"
                 eventKey="cash_on_delivery"
               >
-                Cash on Delivery <i className="fas fa-truck" />
+                Cash on Delivery
               </Accordion.Toggle>
-              <Accordion.Collapse eventKey="cash_on_delivery">
-                <p className="mt-10">Pay with cash when your order is delivered.</p>
-              </Accordion.Collapse>
             </div>
 
             <div className="custom-control custom-radio mb-10">
@@ -158,6 +163,7 @@ const CheckoutForm = () => {
                 value="credit_card"
                 checked={paymentMethod === "credit_card"}
                 onChange={(e) => setPaymentMethod(e.target.value)}
+                style={{ marginRight: 10 }}
               />
               <Accordion.Toggle
                 as="label"
@@ -165,11 +171,8 @@ const CheckoutForm = () => {
                 htmlFor="credit_card"
                 eventKey="credit_card"
               >
-                Credit/Debit Card <i className="fas fa-credit-card" />
+                Credit/Debit Card
               </Accordion.Toggle>
-              <Accordion.Collapse eventKey="credit_card">
-                <p className="mt-10">Pay securely with your credit or debit card.</p>
-              </Accordion.Collapse>
             </div>
 
             <div className="custom-control custom-radio mb-10">
@@ -181,6 +184,7 @@ const CheckoutForm = () => {
                 value="bank_transfer"
                 checked={paymentMethod === "bank_transfer"}
                 onChange={(e) => setPaymentMethod(e.target.value)}
+                style={{ marginRight: 10 }}
               />
               <Accordion.Toggle
                 as="label"
@@ -188,13 +192,8 @@ const CheckoutForm = () => {
                 htmlFor="bank_transfer"
                 eventKey="bank_transfer"
               >
-                Bank Transfer <i className="fas fa-money-check" />
+                Bank Transfer
               </Accordion.Toggle>
-              <Accordion.Collapse eventKey="bank_transfer">
-                <p className="mt-10">
-                  Make your payment directly into our bank account.
-                </p>
-              </Accordion.Collapse>
             </div>
           </Accordion>
         </div>

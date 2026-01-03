@@ -17,7 +17,7 @@ const CartModal = () => {
 
   return (
     <Modal show={isModalOpen} onHide={closeCartModal} size="lg" centered>
-      <Modal.Header closeButton>
+      <Modal.Header>
         <Modal.Title>Shopping Cart</Modal.Title>
       </Modal.Header>
 
@@ -26,7 +26,11 @@ const CartModal = () => {
           <div className="empty-cart text-center py-5">
             <i
               className="far fa-shopping-cart"
-              style={{ fontSize: "64px", color: "#ccc", marginBottom: "20px" }}
+              style={{
+                fontSize: "64px",
+                color: "#ccc",
+                marginBottom: "20px",
+              }}
             />
             <h4>Your cart is empty</h4>
             <p>Add some delicious items to get started!</p>
@@ -40,6 +44,7 @@ const CartModal = () => {
                   className="cart-item d-flex align-items-center mb-3 pb-3"
                   style={{ borderBottom: "1px solid #eee" }}
                 >
+                  {console.log(item)}
                   <div className="cart-item-image me-3">
                     <img
                       src={
@@ -72,7 +77,9 @@ const CartModal = () => {
 
                   <div className="cart-item-total text-end">
                     <div className="item-total mb-2">
-                      <strong>${(item.price * item.quantity).toFixed(2)}</strong>
+                      <strong>
+                        ${(item.price * item.quantity).toFixed(2)}
+                      </strong>
                     </div>
                     <button
                       className="btn btn-sm btn-danger"
@@ -86,7 +93,10 @@ const CartModal = () => {
               ))}
             </div>
 
-            <div className="cart-summary mb-4 p-3" style={{ background: "#f8f9fa", borderRadius: "4px" }}>
+            <div
+              className="cart-summary mb-4 p-3"
+              style={{ background: "#f8f9fa", borderRadius: "4px" }}
+            >
               <div className="d-flex justify-content-between mb-2">
                 <span>Subtotal:</span>
                 <strong>${subtotal.toFixed(2)}</strong>
