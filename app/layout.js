@@ -8,6 +8,7 @@ import "@css/slick.min.css";
 import "@css/style.css";
 import "./globals.css";
 import QueryProvider from "@/providers/QueryProvider";
+import { CartProvider } from "@/contexts/CartContext";
 
 export const metadata = {
   title: "WellFood - Resturent React NextJS Template",
@@ -18,7 +19,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <CartProvider>{children}</CartProvider>
+        </QueryProvider>
       </body>
     </html>
   );

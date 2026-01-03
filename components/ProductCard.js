@@ -1,6 +1,9 @@
+"use client";
 import Link from "next/link";
+import { useCart } from "@/hooks/useCart";
 
 const ProductCard = ({ product, index }) => {
+  const { addToCart } = useCart();
   const handleCardClick = () => {
     window.location.href = `/product-details/${product.id || product.slug}`;
   };
@@ -68,13 +71,15 @@ const ProductCard = ({ product, index }) => {
             ${product.price}
           </span>
         </div>
-        <Link
-          href={`/product-details/${product.id || product.slug}`}
+        <button
           className="theme-btn"
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            e.stopPropagation();
+            addToCart(product, 1);
+          }}
         >
           add to cart <i className="far fa-arrow-alt-right" />
-        </Link>
+        </button>
       </div>
     </div>
   );

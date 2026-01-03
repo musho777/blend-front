@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import niceSelect from "react-nice-select";
 import Footer from "./Footer";
 import Header from "./Header";
+import CartModal from "@/components/CartModal";
 
 const WellFoodLayout = ({ children, bgBlack, footer, headerBlack }) => {
   useEffect(() => {
@@ -25,6 +26,7 @@ const WellFoodLayout = ({ children, bgBlack, footer, headerBlack }) => {
       <Header black={headerBlack} />
       {children}
       <Footer footer={footer} />
+      <CartModal />
     </div>
   );
 };

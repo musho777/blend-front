@@ -61,4 +61,11 @@ export const ENDPOINTS = {
   BANNERS: {
     LIST: "/banners",
   },
+
+  // Order endpoints
+  ORDERS: {
+    CREATE: "/orders",
+    LIST: "/orders",
+    ITEM: (id) => `/orders/${id}`,
+  },
 };

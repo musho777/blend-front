@@ -5,10 +5,21 @@ import Link from "next/link";
 import { Nav, Tab } from "react-bootstrap";
 import { useProduct } from "@/hooks/queries/useProductQuery";
 import Slider from "react-slick";
+import { useState } from "react";
+import { useCart } from "@/hooks/useCart";
+import QuantityControl from "@/components/QuantityControl";
 
 const ProductDetailsPage = ({ params }) => {
   const { id } = params;
   const { data: product, isLoading, error } = useProduct(id);
+  const [quantity, setQuantity] = useState(1);
+  const { addToCart, openCartModal } = useCart();
+
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    addToCart(product, quantity);
+    openCartModal();
+  };
 
   const sliderSettings = {
     dots: true,
@@ -115,15 +126,9 @@ const ProductDetailsPage = ({ params }) => {
                       "<p>Delicious and freshly prepared. Perfect for any occasion.</p>",
                   }}
                 />
-                <form action="#" className="add-to-cart py-25">
+                <form onSubmit={handleAddToCart} className="add-to-cart py-25">
                   <h5>Quantity</h5>
-                  <input
-                    type="number"
-                    defaultValue={1}
-                    min={1}
-                    max={20}
-                    required=""
-                  />
+                  <QuantityControl value={quantity} onChange={setQuantity} />
                   <button type="submit" className="theme-btn mb-15">
                     Add to Cart <i className="far fa-arrow-alt-right" />
                   </button>

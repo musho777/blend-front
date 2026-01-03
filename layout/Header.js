@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Fragment, useEffect, useState, useMemo } from "react";
 import { useCategories } from "@/hooks/queries/useCategoriesQuery";
 import { useSubcategories } from "@/hooks/queries/useSubcategoriesQuery";
+import CartIcon from "@/components/CartIcon";
 
 const Sidebar = () => {
   return (
@@ -321,9 +322,7 @@ const MobileMenu = ({ black }) => {
               <SearchBtn />
               {/* Menu Button */}
               <div className="menu-btns">
-                <button>
-                  <i className="far fa-shopping-cart" /> <span>2</span>
-                </button>
+                <CartIcon />
                 <Link href="contact" className="theme-btn">
                   Book now <i className="far fa-arrow-alt-right" />
                 </Link>
@@ -601,6 +600,9 @@ const Header = ({ black }) => {
                 Call : <a href="callto:+88012345688">+880 123 456 88</a>
               </div>
               <SearchBtn />
+              <div style={{ marginLeft: "15px" }}>
+                <CartIcon />
+              </div>
             </div>
           </div>
           <div className="bg-lines">
