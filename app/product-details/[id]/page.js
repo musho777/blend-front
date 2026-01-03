@@ -65,8 +65,14 @@ const ProductDetailsPage = ({ params }) => {
                       <div key={index} className="slider-item">
                         <img
                           src={`http://localhost:3000/${imageUrl}`}
-                          alt={`${product.name || product.title} - Image ${index + 1}`}
-                          style={{ width: "100%", height: "auto", display: "block" }}
+                          alt={`${product.name || product.title} - Image ${
+                            index + 1
+                          }`}
+                          style={{
+                            width: "100%",
+                            height: "auto",
+                            display: "block",
+                          }}
                         />
                       </div>
                     ))}
@@ -129,7 +135,7 @@ const ProductDetailsPage = ({ params }) => {
                 <form onSubmit={handleAddToCart} className="add-to-cart py-25">
                   <h5>Quantity</h5>
                   <QuantityControl value={quantity} onChange={setQuantity} />
-                  <button type="submit" className="theme-btn mb-15">
+                  <button type="submit" className="theme-btn">
                     Add to Cart <i className="far fa-arrow-alt-right" />
                   </button>
                 </form>

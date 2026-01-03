@@ -31,18 +31,14 @@ const CheckoutForm = () => {
 
     try {
       const orderData = {
+        customer: formData,
         items: cart.items.map((item) => ({
           productId: item.productId,
           quantity: item.quantity,
           price: item.price,
           name: item.name,
         })),
-        customer: formData,
         paymentMethod,
-        totals: {
-          subtotal,
-          grandTotal,
-        },
       };
 
       await createOrder.mutateAsync(orderData);
