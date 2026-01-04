@@ -13,6 +13,7 @@ const CheckoutForm = () => {
     surname: "",
     address: "",
     phone: "",
+    email: "",
   });
 
   const [paymentMethod, setPaymentMethod] = useState("cash_on_delivery");
@@ -119,6 +120,20 @@ const CheckoutForm = () => {
             value={formData.phone}
             onChange={handleChange}
             pattern="[0-9+\s\-()]+"
+            style={{ border: "1px solid #ddd" }}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            className="form-control"
+            placeholder="Email Address *"
+            value={formData.email}
+            onChange={handleChange}
             style={{ border: "1px solid #ddd" }}
             required
           />
