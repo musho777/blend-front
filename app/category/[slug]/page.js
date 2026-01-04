@@ -2,8 +2,8 @@
 import PageBanner from "@/components/PageBanner";
 import WellFoodLayout from "@/layout/WellFoodLayout";
 import Link from "next/link";
-import { useParams, useSearchParams } from "next/navigation";
-import { useState, useMemo } from "react";
+import { useParams, useSearchParams, useRouter } from "next/navigation";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import {
   useCategories,
   useCategoryById,
@@ -14,12 +14,17 @@ import ProductCard from "@/components/ProductCard";
 const CategoryPage = () => {
   const params = useParams();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const categorySlug = params.slug;
   const subcategoryId = searchParams.get("subcategoryId");
-  console.log(subcategoryId);
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
+  const limitFromUrl = parseInt(searchParams.get("limit")) || 12;
+  const searchFromUrl = searchParams.get("search") || "";
+
   const [currentPage, setCurrentPage] = useState(pageFromUrl);
-  const [limit] = useState(12);
+  const [limit] = useState(limitFromUrl);
+  const [searchInput, setSearchInput] = useState(searchFromUrl);
+  const [debouncedSearch, setDebouncedSearch] = useState(searchFromUrl);
 
   const decodedSlug = decodeURIComponent(categorySlug);
   const { data: categories, isLoading: categoriesLoading } = useCategories();
@@ -45,7 +50,8 @@ const CategoryPage = () => {
     currentCategory?.id,
     currentPage,
     limit,
-    subcategoryId
+    subcategoryId,
+    debouncedSearch
   );
 
   const isLoading = categoriesLoading || categoryLoading || productsLoading;
@@ -60,9 +66,60 @@ const CategoryPage = () => {
     hasPrevious: false,
   };
 
+  // Debounce search input (300ms delay)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchInput);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchInput]);
+
+  // Update URL query parameters
+  const updateURL = useCallback(() => {
+    const params = new URLSearchParams();
+
+    if (currentPage > 1) {
+      params.set("page", currentPage.toString());
+    }
+
+    params.set("limit", limit.toString());
+
+    if (debouncedSearch) {
+      params.set("search", debouncedSearch);
+    }
+
+    if (subcategoryId) {
+      params.set("subcategoryId", subcategoryId);
+    }
+
+    const queryString = params.toString();
+    const newURL = queryString
+      ? `${window.location.pathname}?${queryString}`
+      : window.location.pathname;
+
+    router.push(newURL, { scroll: false });
+  }, [currentPage, limit, debouncedSearch, subcategoryId, router]);
+
+  // Update URL when search, page, or filters change
+  useEffect(() => {
+    updateURL();
+  }, [updateURL]);
+
+  // Reset to page 1 when search changes
+  useEffect(() => {
+    if (debouncedSearch !== searchFromUrl) {
+      setCurrentPage(1);
+    }
+  }, [debouncedSearch]);
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchInput(e.target.value);
   };
 
   return (
@@ -89,8 +146,17 @@ const CategoryPage = () => {
                   data-aos-offset={50}
                 >
                   <h4 className="widget-title">Search</h4>
-                  <form action="#" className="default-search-form">
-                    <input type="text" placeholder="Search here" required="" />
+                  <form
+                    action="#"
+                    className="default-search-form"
+                    onSubmit={(e) => e.preventDefault()}
+                  >
+                    <input
+                      type="text"
+                      placeholder="Search here"
+                      value={searchInput}
+                      onChange={handleSearchChange}
+                    />
                     <button
                       type="submit"
                       className="searchbutton far fa-search"
