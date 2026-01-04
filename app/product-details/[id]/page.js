@@ -24,6 +24,76 @@ const ProductDetailsPage = ({ params }) => {
     openCartModal();
   };
 
+  // Custom arrow components with chevron icons
+  const NextArrow = ({ onClick }) => (
+    <button
+      onClick={onClick}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "absolute",
+        right: "10px",
+        top: "50%",
+        transform: "translateY(-50%)",
+        zIndex: 10,
+        background: "rgba(255, 255, 255, 0.9)",
+        border: "none",
+        borderRadius: "50%",
+        width: "40px",
+        height: "40px",
+        cursor: "pointer",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+        padding: "0",
+        lineHeight: "1",
+      }}
+    >
+      <i
+        className="fas fa-chevron-right"
+        style={{
+          color: "#333",
+          fontSize: "16px",
+          display: "flex",
+          marginLeft: 2,
+        }}
+      ></i>
+    </button>
+  );
+
+  const PrevArrow = ({ onClick }) => (
+    <button
+      onClick={onClick}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "absolute",
+        left: "10px",
+        top: "50%",
+        transform: "translateY(-50%)",
+        zIndex: 10,
+        background: "rgba(255, 255, 255, 0.9)",
+        border: "none",
+        borderRadius: "50%",
+        width: "40px",
+        height: "40px",
+        cursor: "pointer",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+        padding: "0",
+        lineHeight: "1",
+      }}
+    >
+      <i
+        className="fas fa-chevron-left"
+        style={{
+          color: "#333",
+          fontSize: "16px",
+          display: "flex",
+        }}
+      ></i>
+    </button>
+  );
+
   const sliderSettings = {
     dots: true,
     infinite: product?.imageUrls?.length > 1,
@@ -31,6 +101,8 @@ const ProductDetailsPage = ({ params }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
     autoplay: false,
     fade: false,
     adaptiveHeight: true,
