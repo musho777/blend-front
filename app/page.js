@@ -35,7 +35,7 @@ const page = () => {
       {/* HERO SECTION */}
       <section
         className="hero-area bgs-cover pt-180 rpt-150 pb-100 rel z-1"
-        style={{ backgroundImage: "url(assets/images/background/hero.jpg)" }}
+        style={{ backgroundImage: "url(/assets/images/background/hero.jpg)" }}
       >
         <div className="container">
           <div className="row align-items-center">
@@ -61,7 +61,7 @@ const page = () => {
               data-aos-offset={50}
             >
               <div className="hero-images rmt-60">
-                <img src="assets/images/hero/hero-right.webp" alt="Hero" />
+                <img src="/assets/images/hero/hero-right.webp" alt="Hero" />
               </div>
             </div>
           </div>
@@ -74,7 +74,7 @@ const page = () => {
       <section
         className="offer-area bgc-black pt-160 rpt-100 pb-150 rpb-120 rel z-1"
         style={{
-          backgroundImage: "url(assets/images/background/offer-dot-bg.png)",
+          backgroundImage: "url(/assets/images/background/offer-dot-bg.png)",
         }}
       >
         <span className="marquee-wrap style-two text-white">
@@ -134,7 +134,7 @@ const page = () => {
                         className="offer-badge"
                         style={{
                           backgroundImage:
-                            "url(assets/images/shapes/offer-circle-shape.png)",
+                            "url(/assets/images/shapes/offer-circle-shape.png)",
                         }}
                       >
                         <span>
@@ -209,14 +209,14 @@ const page = () => {
                   data-aos-offset={50}
                 >
                   <img
-                    src="assets/images/offer/offer-img.png"
+                    src="/assets/images/offer/offer-img.png"
                     alt="Offer Image"
                   />
                   <div
                     className="offer-badge"
                     style={{
                       backgroundImage:
-                        "url(assets/images/shapes/offer-circle-shape.png)",
+                        "url(/assets/images/shapes/offer-circle-shape.png)",
                     }}
                   >
                     <span>
