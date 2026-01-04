@@ -163,7 +163,7 @@ const CategoryPage = () => {
                     />
                   </form>
                 </div>
-                <div
+                {/* <div
                   className="widget widget-category"
                   data-aos="fade-up"
                   data-aos-delay={50}
@@ -199,7 +199,7 @@ const CategoryPage = () => {
                       </Link>
                     </li>
                   </ul>
-                </div>
+                </div> */}
                 <div
                   className="widget widget-filter"
                   data-aos="fade-up"

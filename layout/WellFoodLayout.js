@@ -8,6 +8,7 @@ import CartModal from "@/components/CartModal";
 
 const WellFoodLayout = ({ children, bgBlack, footer, headerBlack }) => {
   useEffect(() => {
+    document.querySelectorAll(".nice-select").forEach((el) => el.remove());
     niceSelect();
     wellfoodUtility.animation();
     if (bgBlack) {
