@@ -156,12 +156,12 @@ const DefaultFooter = () => {
                         States
                       </li>
                       <li>
-                        <a href="mailto:wellfood@gmail.com">
-                          <u>wellfood@gmail.com</u>
+                        <a href="mailto:blend@gmail.com">
+                          <u>blend@gmail.com</u>
                         </a>
                       </li>
                       <li>
-                        <a href="callto:+(1)0987654321">+(1) 098 765 4321</a>
+                        <a href="callto:+(1)0987654321">+(374) 93 613 007</a>
                       </li>
                     </ul>
                   </div>
@@ -334,12 +334,12 @@ const Footer2 = () => {
                         States
                       </li>
                       <li>
-                        <a href="mailto:wellfood@gmail.com">
-                          <u>wellfood@gmail.com</u>
+                        <a href="mailto:blend@gmail.com">
+                          <u>blend@gmail.com</u>
                         </a>
                       </li>
                       <li>
-                        <a href="callto:+(1)0987654321">+(1) 098 765 4321</a>
+                        <a href="callto:+(1)0987654321">+(374) 93 613 007</a>
                       </li>
                     </ul>
                   </div>
@@ -444,12 +444,12 @@ const Footer3 = () => {
                 </div>
                 <ul>
                   <li>
-                    <a href="mailto:wellfood@gmail.com">
-                      <u>wellfood@gmail.com</u>
+                    <a href="mailto:blend@gmail.com">
+                      <u>blend@gmail.com</u>
                     </a>
                   </li>
                   <li>
-                    <a href="callto:+(1)0987654321">+(1) 098 765 4321</a>
+                    <a href="callto:+(1)0987654321">+(374) 93 613 007</a>
                   </li>
                 </ul>
               </div>
@@ -530,7 +530,6 @@ const Footer3 = () => {
               <a href="#">Saladr</a>
             </li>
           </ul>
-          {/* Scroll Top Button */}
           <button className="scroll-top scroll-to-target" data-target="html">
             <i className="fas fa-arrow-alt-up" />
           </button>
@@ -597,12 +596,12 @@ const Footer5 = () => {
                 </div>
                 <ul>
                   <li>
-                    <a href="mailto:wellfood@gmail.com">
-                      <u>wellfood@gmail.com</u>
+                    <a href="mailto:blend@gmail.com">
+                      <u>blend@gmail.com</u>
                     </a>
                   </li>
                   <li>
-                    <a href="callto:+(1)0987654321">+(1) 098 765 4321</a>
+                    <a href="callto:+(1)0987654321">+(374) 93 613 007</a>
                   </li>
                 </ul>
               </div>
@@ -683,7 +682,6 @@ const Footer5 = () => {
               <a href="#">Saladr</a>
             </li>
           </ul>
-          {/* Scroll Top Button */}
           <button className="scroll-top scroll-to-target" data-target="html">
             <i className="fas fa-arrow-alt-up" />
           </button>
@@ -742,12 +740,12 @@ const Footer6 = () => {
                 </div>
                 <ul>
                   <li>
-                    <a href="mailto:wellfood@gmail.com">
-                      <u>wellfood@gmail.com</u>
+                    <a href="mailto:blend@gmail.com">
+                      <u>blend@gmail.com</u>
                     </a>
                   </li>
                   <li>
-                    <a href="callto:+(1)0987654321">+(1) 098 765 4321</a>
+                    <a href="callto:+(1)0987654321">+(374) 93 613 007</a>
                   </li>
                 </ul>
               </div>
@@ -792,7 +790,7 @@ const Footer6 = () => {
         </div>
       </div>
       <div className="footer-bottom pt-30 pb-15">
-        <div className="container rel text-center">
+        {/* <div className="container rel text-center">
           <ul className="footer-bottom-nav">
             <li>
               <Link href="product-details">Hamburger</Link>
@@ -816,18 +814,16 @@ const Footer6 = () => {
               <a href="#">Saladr</a>
             </li>
           </ul>
-          {/* Scroll Top Button */}
           <button className="scroll-top scroll-to-target" data-target="html">
             <i className="fas fa-arrow-alt-up" />
           </button>
-        </div>
-        <hr className="mt-25 mb-30" />
+        </div> */}
         <div className="container">
           <div className="row">
             <div className="col-lg-5">
               <div className="copyright-text text-center text-lg-start">
                 <p>
-                  Copyright 2024 <Link href="/">Wellfood</Link>. All Rights
+                  Copyright 2026 <Link href="/">Blend</Link>. All Rights
                   Reserved{" "}
                 </p>
               </div>
