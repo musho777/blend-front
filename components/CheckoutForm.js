@@ -96,6 +96,40 @@ const CheckoutForm = () => {
           </div>
         </div>
 
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group">
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                className="form-control"
+                placeholder="Phone Number *"
+                value={formData.phone}
+                onChange={handleChange}
+                pattern="[0-9+\s\-()]+"
+                style={{ border: "1px solid #ddd" }}
+                required
+              />
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="form-group">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className="form-control"
+                placeholder="Email Address *"
+                value={formData.email}
+                onChange={handleChange}
+                style={{ border: "1px solid #ddd" }}
+                required
+              />
+            </div>
+          </div>
+        </div>
+
         <div className="form-group">
           <input
             type="text"
@@ -110,38 +144,9 @@ const CheckoutForm = () => {
           />
         </div>
 
-        <div className="form-group">
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            className="form-control"
-            placeholder="Phone Number *"
-            value={formData.phone}
-            onChange={handleChange}
-            pattern="[0-9+\s\-()]+"
-            style={{ border: "1px solid #ddd" }}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <input
-            type="email"
-            id="email"
-            name="email"
-            className="form-control"
-            placeholder="Email Address *"
-            value={formData.email}
-            onChange={handleChange}
-            style={{ border: "1px solid #ddd" }}
-            required
-          />
-        </div>
-
         <div className="payment-method mb-30">
           <h6 className="mb-15">Select Payment Method</h6>
-          <Accordion defaultActiveKey="cash_on_delivery">
+          <div style={{ display: "flex", gap: 30 }}>
             <div
               className="custom-control custom-radio mb-10"
               style={{ gap: "10px" }}
@@ -207,7 +212,7 @@ const CheckoutForm = () => {
                 Bank Transfer
               </Accordion.Toggle>
             </div>
-          </Accordion>
+          </div>
         </div>
 
         <button
