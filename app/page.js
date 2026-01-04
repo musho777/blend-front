@@ -46,11 +46,11 @@ const page = () => {
                 data-aos-duration={1500}
                 data-aos-offset={50}
               >
-                <h1>PREMIUM HOOKAH EXPERIENCE</h1>
+                <h1>PREMIUM HOOKAH</h1>
                 <p>
-                  Discover premium hookahs, rich tobacco flavors, and smooth
-                  clouds. Everything you need for the perfect hookah session —
-                  quality, style, and authentic taste in one place.
+                  Welcome to your local hookah destination, where rich flavors,
+                  smooth clouds, and a relaxing atmosphere come together for the
+                  perfect smoke experience.
                 </p>
               </div>
             </div>
