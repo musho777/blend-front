@@ -1,5 +1,4 @@
 "use client";
-import PageBanner from "@/components/PageBanner";
 import WellFoodLayout from "@/layout/WellFoodLayout";
 import Link from "next/link";
 import { Nav, Tab } from "react-bootstrap";
@@ -16,7 +15,6 @@ const ProductDetailsPage = ({ params }) => {
   const [quantity, setQuantity] = useState(1);
   const { addToCart, openCartModal } = useCart();
 
-  // Extract product and suggestions from API response
   const product = data?.product || data;
   const suggestions = data?.suggestions || [];
 
