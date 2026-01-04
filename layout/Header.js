@@ -139,7 +139,10 @@ const MobileMenu = ({ black }) => {
     <Fragment>
       <header className="main-header white-menu menu-absolute d-block d-xl-none">
         {/*Header-Upper*/}
-        <div className="header-upper" style={black ? { backgroundColor: 'black' } : {}}>
+        <div
+          className="header-upper"
+          style={black ? { backgroundColor: "black" } : {}}
+        >
           <div className="container-fluid clearfix">
             <div className="header-inner rel d-flex align-items-center">
               <div className="logo-outer">
@@ -316,7 +319,7 @@ const MobileMenu = ({ black }) => {
               </div>
               <div className="header-number">
                 <i className="far fa-phone" />
-                Call : <a href="callto:+88012345688">+880 123 456 88</a>
+                Call : <a href="callto:+88012345688">+374 93 613 007</a>
               </div>
               {/* Nav Search */}
               <SearchBtn />
@@ -379,7 +382,10 @@ const Header = ({ black }) => {
     <Fragment>
       <header className="main-header white-menu menu-absolute d-none d-xl-block">
         {/*Header-Upper*/}
-        <div className="header-upper" style={black ? { backgroundColor: 'black' } : {}}>
+        <div
+          className="header-upper"
+          style={black ? { backgroundColor: "black" } : {}}
+        >
           <div className="container-fluid clearfix">
             <div className="header-inner rel d-flex align-items-center">
               <div className="logo-outer">
@@ -597,7 +603,7 @@ const Header = ({ black }) => {
               </div>
               <div className="header-number">
                 <i className="far fa-phone" />
-                Call : <a href="callto:+88012345688">+880 123 456 88</a>
+                Call : <a href="callto:+88012345688">+374 93 613 007</a>
               </div>
               <SearchBtn />
               <div style={{ marginLeft: "15px" }}>
