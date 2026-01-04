@@ -8,12 +8,17 @@ import Slider from "react-slick";
 import { useState } from "react";
 import { useCart } from "@/hooks/useCart";
 import QuantityControl from "@/components/QuantityControl";
+import { sliderProps } from "@/utility/sliderProps";
 
 const ProductDetailsPage = ({ params }) => {
   const { id } = params;
-  const { data: product, isLoading, error } = useProduct(id);
+  const { data, isLoading, error } = useProduct(id);
   const [quantity, setQuantity] = useState(1);
   const { addToCart, openCartModal } = useCart();
+
+  // Extract product and suggestions from API response
+  const product = data?.product || data;
+  const suggestions = data?.suggestions || [];
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -59,9 +64,9 @@ const ProductDetailsPage = ({ params }) => {
                 data-aos-duration={1500}
                 data-aos-offset={50}
               >
-                {product.imageUrls && product.imageUrls.length > 1 ? (
+                {product?.imageUrls && product?.imageUrls.length > 1 ? (
                   <Slider {...sliderSettings} className="product-image-slider">
-                    {product.imageUrls.map((imageUrl, index) => (
+                    {product?.imageUrls.map((imageUrl, index) => (
                       <div key={index} className="slider-item">
                         <img
                           src={`http://localhost:3000/${imageUrl}`}
@@ -181,6 +186,129 @@ const ProductDetailsPage = ({ params }) => {
               </Tab.Pane>
             </Tab.Content>
           </Tab.Container>
+
+          {/* Suggested Products Slider */}
+          {suggestions && suggestions.length > 0 && (
+            <div className="suggested-products-area pt-60 pb-60">
+              <div className="row justify-content-center">
+                <div className="col-lg-12">
+                  <div
+                    className="section-title text-center mb-50"
+                    data-aos="fade-up"
+                    data-aos-duration={1500}
+                    data-aos-offset={50}
+                  >
+                    <span className="sub-title mb-5">You May Also Like</span>
+                    <h2>Suggested Products</h2>
+                  </div>
+                </div>
+              </div>
+              <Slider
+                {...sliderProps.pizzaActive}
+                className="suggested-products-slider"
+              >
+                {suggestions.map((suggestedProduct, index) => (
+                  <div key={suggestedProduct.id || index} className="px-2">
+                    <div
+                      className="product-item-two"
+                      onClick={() => {
+                        window.location.href = `/product-details/${
+                          suggestedProduct.id || suggestedProduct.slug
+                        }`;
+                      }}
+                      style={{ cursor: "pointer" }}
+                      data-aos="fade-up"
+                      data-aos-delay={
+                        index % 4 === 0
+                          ? 0
+                          : index % 4 === 1
+                          ? 50
+                          : index % 4 === 2
+                          ? 100
+                          : 150
+                      }
+                      data-aos-duration={1500}
+                      data-aos-offset={50}
+                    >
+                      <div className="image">
+                        <img
+                          src={
+                            `http://localhost:3000/${suggestedProduct.imageUrls?.[0]}` ||
+                            "assets/images/dishes/dish1.png"
+                          }
+                          alt={suggestedProduct.name || suggestedProduct.title}
+                        />
+                        {(suggestedProduct.category?.name ||
+                          suggestedProduct.categoryName ||
+                          suggestedProduct.category?.title) && (
+                          <Link
+                            href={`/category/${
+                              suggestedProduct.category?.slug ||
+                              suggestedProduct.categorySlug ||
+                              suggestedProduct.category?.id ||
+                              suggestedProduct.categoryId
+                            }`}
+                            className="category-badge"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {suggestedProduct.category?.name ||
+                              suggestedProduct.categoryName ||
+                              suggestedProduct.category?.title}
+                          </Link>
+                        )}
+                      </div>
+                      <div className="content">
+                        {suggestedProduct.rating && (
+                          <div className="ratting">
+                            {[...Array(5)].map((_, i) => (
+                              <i
+                                key={i}
+                                className={`fas fa-star${
+                                  i < Math.floor(suggestedProduct.rating)
+                                    ? ""
+                                    : "-o"
+                                }`}
+                              />
+                            ))}
+                            {suggestedProduct.reviewCount && (
+                              <span>({suggestedProduct.reviewCount})</span>
+                            )}
+                          </div>
+                        )}
+                        <h5>
+                          <Link
+                            href={`/product-details/${
+                              suggestedProduct.id || suggestedProduct.slug
+                            }`}
+                          >
+                            {suggestedProduct.name || suggestedProduct.title}
+                          </Link>
+                        </h5>
+                        <span className="price">
+                          {suggestedProduct.originalPrice &&
+                            suggestedProduct.originalPrice >
+                              suggestedProduct.price && (
+                              <del>${suggestedProduct.originalPrice}</del>
+                            )}{" "}
+                          ${suggestedProduct.price}
+                        </span>
+                      </div>
+                      <button
+                        className="theme-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addToCart(suggestedProduct, 1);
+                          openCartModal();
+                        }}
+                      >
+                        add to cart <i className="far fa-arrow-alt-right" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </Slider>
+            </div>
+          )}
         </div>
       </section>
     </WellFoodLayout>
