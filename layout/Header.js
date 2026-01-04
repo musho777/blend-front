@@ -103,10 +103,10 @@ const SearchBtn = () => {
   });
   return (
     <div className="nav-search py-10" ref={domNode}>
-      <button
+      {/* <button
         className="far fa-search"
         onClick={() => setToggleSearch(!toggleSearch)}
-      />
+      /> */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -120,7 +120,7 @@ const SearchBtn = () => {
           className="searchbox"
           required=""
         />
-        <button type="submit" className="searchbutton far fa-search" />
+        {/* <button type="submit" className="searchbutton far fa-search" /> */}
       </form>
     </div>
   );
@@ -239,7 +239,9 @@ const MobileMenu = ({ black }) => {
                                 </ul>
                                 <div
                                   className="dropdown-btn"
-                                  onClick={() => activeMenuSet(`category-${elm?.id}`)}
+                                  onClick={() =>
+                                    activeMenuSet(`category-${elm?.id}`)
+                                  }
                                 >
                                   <span className="far fa-angle-down" />
                                 </div>
