@@ -130,6 +130,22 @@ const MobileMenu = ({ black }) => {
   const [toggle, setToggle] = useState(false);
   const [activeMenu, setActiveMenu] = useState("");
   const { data: categories, isLoading, isError } = useCategories();
+  const { data: subcategories } = useSubcategories();
+
+  // Group subcategories by categoryId for efficient lookup
+  const subcategoriesByCategory = useMemo(() => {
+    if (!subcategories) return {};
+
+    return subcategories.reduce((acc, subcategoryId) => {
+      const categoryId = subcategoryId.categoryId;
+      if (!acc[categoryId]) {
+        acc[categoryId] = [];
+      }
+      acc[categoryId].push(subcategoryId);
+      return acc;
+    }, {});
+  }, [subcategories]);
+
   console.log(categories);
   const activeMenuSet = (value) =>
       setActiveMenu(activeMenu === value ? "" : value),
@@ -186,133 +202,52 @@ const MobileMenu = ({ black }) => {
                     }`}
                   >
                     <ul className="navigation clearfix">
-                      <li className="dropdown" style={activeLi("home")}>
-                        <a href="#">Home</a>
-                        <ul>
-                          <li>
-                            <Link href="/">Home Restauran</Link>
-                          </li>
-                          <li>
-                            <Link href="index2">Home Pizza</Link>
-                          </li>
-                          <li>
-                            <Link href="index3">Home Burger</Link>
-                          </li>
-                          <li>
-                            <Link href="index4">Home Chiken</Link>
-                          </li>
-                          <li>
-                            <Link href="index5">Juice &amp; Drinks</Link>
-                          </li>
-                          <li>
-                            <Link href="index6">Home Grill</Link>
-                          </li>
-                        </ul>
-                        <div
-                          className="dropdown-btn"
-                          onClick={() => activeMenuSet("home")}
-                        >
-                          <span className="far fa-angle-down" />
-                        </div>
-                      </li>
-                      <li className="dropdown">
-                        <a href="#">Menu</a>
-                        {/* <ul style={activeLi("Menu")}>
-                          {categories?.length > 0 &&
-                            categories.map((category) => (
-                              <li key={category.id}>
-                                <Link
-                                  href={`/category/${
-                                    category.slug || category.id
-                                  }`}
+                      {categories?.map((elm, i) => {
+                        const categorySubcategories =
+                          subcategoriesByCategory[elm?.id] || [];
+                        const hasSubcategories =
+                          categorySubcategories.length > 0;
+
+                        return (
+                          <li
+                            key={i}
+                            className={hasSubcategories ? "dropdown" : ""}
+                          >
+                            <Link href={`/category/${elm?.slug}`}>
+                              {elm.title}
+                            </Link>
+                            {hasSubcategories && (
+                              <>
+                                <ul style={activeLi(`category-${elm?.id}`)}>
+                                  {categorySubcategories.map(
+                                    (subcategoryId) => (
+                                      <li key={subcategoryId.id}>
+                                        <Link
+                                          href={`/category/${
+                                            elm?.slug
+                                          }?subcategoryId=${
+                                            subcategoryId.slug ||
+                                            subcategoryId.id
+                                          }`}
+                                        >
+                                          {subcategoryId.title ||
+                                            subcategoryId.name}
+                                        </Link>
+                                      </li>
+                                    )
+                                  )}
+                                </ul>
+                                <div
+                                  className="dropdown-btn"
+                                  onClick={() => activeMenuSet(`category-${elm?.id}`)}
                                 >
-                                  {category.title}
-                                </Link>
-                              </li>
-                            ))}
-                        </ul> */}
-                        <div
-                          className="dropdown-btn"
-                          onClick={() => activeMenuSet("Menu")}
-                        >
-                          <span className="far fa-angle-down" />
-                        </div>
-                      </li>
-                      <li className="dropdown">
-                        <a href="#">pages</a>
-                        <ul style={activeLi("pages")}>
-                          <li>
-                            <Link href="about">About Us</Link>
+                                  <span className="far fa-angle-down" />
+                                </div>
+                              </>
+                            )}
                           </li>
-                          <li>
-                            <Link href="history">Our History</Link>
-                          </li>
-                          <li>
-                            <Link href="faq">faqs</Link>
-                          </li>
-                          <li>
-                            <Link href="chefs">Our chefs</Link>
-                          </li>
-                          <li>
-                            <Link href="chef-details">chef Details</Link>
-                          </li>
-                          <li>
-                            <Link href="gallery">Gallery</Link>
-                          </li>
-                        </ul>
-                        <div
-                          className="dropdown-btn"
-                          onClick={() => activeMenuSet("pages")}
-                        >
-                          <span className="far fa-angle-down" />
-                        </div>
-                      </li>
-                      <li className="dropdown">
-                        <a href="#">blog</a>
-                        <ul style={activeLi("blog")}>
-                          <li>
-                            <Link href="blog">blog standard</Link>
-                          </li>
-                          <li>
-                            <Link href="blog-details">blog details</Link>
-                          </li>
-                        </ul>
-                        <div
-                          className="dropdown-btn"
-                          onClick={() => activeMenuSet("blog")}
-                        >
-                          <span className="far fa-angle-down" />
-                        </div>
-                      </li>
-                      <li className="dropdown">
-                        <a href="#">shop</a>
-                        <ul style={activeLi("shop")}>
-                          <li>
-                            <Link href="shop">Products</Link>
-                          </li>
-                          <li>
-                            <Link href="product-details">Product Details</Link>
-                          </li>
-                          <li>
-                            <Link href="product-details">Product Details</Link>
-                          </li>
-                          <li>
-                            <Link href="cart">Shopping Cart</Link>
-                          </li>
-                          <li>
-                            <Link href="checkout">Checkout Page</Link>
-                          </li>
-                        </ul>
-                        <div
-                          className="dropdown-btn"
-                          onClick={() => activeMenuSet("shop")}
-                        >
-                          <span className="far fa-angle-down" />
-                        </div>
-                      </li>
-                      <li>
-                        <Link href="contact">Contact</Link>
-                      </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 </nav>
@@ -321,25 +256,9 @@ const MobileMenu = ({ black }) => {
                 <i className="far fa-phone" />
                 Call : <a href="callto:+88012345688">+374 93 613 007</a>
               </div>
-              {/* Nav Search */}
               <SearchBtn />
-              {/* Menu Button */}
-              <div className="menu-btns">
+              <div style={{ marginLeft: "15px" }}>
                 <CartIcon />
-                <Link href="contact" className="theme-btn">
-                  Book now <i className="far fa-arrow-alt-right" />
-                </Link>
-                {/* menu sidbar */}
-                <div className="menu-sidebar">
-                  <button
-                    className="bg-transparent"
-                    onClick={() =>
-                      document
-                        .querySelector("body")
-                        .classList.add("side-content-visible")
-                    }
-                  />
-                </div>
               </div>
             </div>
           </div>
