@@ -12,7 +12,7 @@ const OfferCard = () => {
             <span className="title">‎ </span>
 
             <div className="image">
-              <img src="assets/images/offer/tobacco.png" alt="tobacco" />
+              <img src="assets/images/offer/offer-card1.png" alt="tobacco" />
             </div>
             <span className="title">‎ </span>
 
@@ -71,7 +71,7 @@ const OfferCard = () => {
             <span className="title">‎ </span>
 
             <div className="image">
-              <img src="assets/images/offer/offer-card4.png" alt="Food" />
+              <img src="assets/images/offer/offer-card4.webp" alt="Food" />
             </div>
             <span className="title">‎ </span>
 
@@ -91,7 +91,7 @@ const OfferCard = () => {
             <span className="title">‎ </span>
 
             <div className="image">
-              <img src="assets/images/offer/offer-card5.png" alt="Food" />
+              <img src="assets/images/offer/offer-card5.webp" alt="Food" />
             </div>
             <span className="title">‎ </span>
 
