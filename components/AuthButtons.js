@@ -34,8 +34,13 @@ const AuthButtons = () => {
           onClick={() => setShowUserMenu(!showUserMenu)}
           style={{ textDecoration: "none" }}
         >
-          <i className="far fa-user" style={{ fontSize: "20px", marginRight: "8px" }} />
-          <span className="d-none d-lg-inline">{user.firstName || user.name}</span>
+          <i
+            className="far fa-user"
+            style={{ fontSize: "20px", marginRight: "8px" }}
+          />
+          <span className="d-none d-lg-inline">
+            {user.firstName || user.name}
+          </span>
         </button>
 
         {showUserMenu && (
@@ -51,7 +56,9 @@ const AuthButtons = () => {
             }}
           >
             <div className="p-3 border-bottom">
-              <div className="fw-bold text-dark">{user.firstName || user.name} {user.lastName || user.surname}</div>
+              <div className="fw-bold text-dark">
+                {user.firstName || user.name} {user.lastName || user.surname}
+              </div>
               <small className="text-muted">{user.email}</small>
             </div>
             <div className="p-2">
@@ -78,8 +85,10 @@ const AuthButtons = () => {
           onClick={() => setShowLogin(true)}
           style={{ textDecoration: "none" }}
         >
-          <i className="far fa-user" style={{ fontSize: "20px", marginRight: "5px" }} />
-          <span className="d-none d-lg-inline">Login</span>
+          <i
+            className="far fa-user"
+            style={{ fontSize: "20px", marginRight: "5px" }}
+          />
         </button>
       </div>
 
