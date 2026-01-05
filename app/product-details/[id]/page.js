@@ -133,6 +133,7 @@ const ProductDetailsPage = ({ params }) => {
                 data-aos="fade-left"
                 data-aos-duration={1500}
                 data-aos-offset={50}
+                style={{ position: 'relative' }}
               >
                 {product?.imageUrls && product?.imageUrls.length > 1 ? (
                   <Slider {...sliderSettings} className="product-image-slider">
@@ -147,6 +148,7 @@ const ProductDetailsPage = ({ params }) => {
                             width: "100%",
                             height: "auto",
                             display: "block",
+                            opacity: product.stock === 0 ? 0.6 : 1
                           }}
                         />
                       </div>
@@ -156,13 +158,35 @@ const ProductDetailsPage = ({ params }) => {
                   <img
                     src={`http://localhost:3000/${product.imageUrls[0]}`}
                     alt={product.name || product.title}
-                    style={{ width: "100%", height: "auto" }}
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      opacity: product.stock === 0 ? 0.6 : 1
+                    }}
                   />
                 ) : (
                   <img
                     src="assets/images/products/product-details.jpg"
                     alt={product.name || product.title}
+                    style={{ opacity: product.stock === 0 ? 0.6 : 1 }}
                   />
+                )}
+                {product.stock === 0 && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '40%',
+                    zIndex: 10,
+                    pointerEvents: 'none'
+                  }}>
+                    <img
+                      src="/assets/images/sold-out-grunge-rubber-stamp-free-png.webp"
+                      alt="Sold Out"
+                      style={{ width: '100%', height: 'auto' }}
+                    />
+                  </div>
                 )}
               </div>
             </div>
@@ -209,9 +233,22 @@ const ProductDetailsPage = ({ params }) => {
                 />
                 <form onSubmit={handleAddToCart} className="add-to-cart py-25">
                   <h5>Quantity</h5>
-                  <QuantityControl value={quantity} onChange={setQuantity} />
-                  <button type="submit" className="theme-btn">
-                    Add to Cart <i className="far fa-arrow-alt-right" />
+                  <QuantityControl
+                    value={quantity}
+                    onChange={setQuantity}
+                    disabled={product.stock === 0}
+                  />
+                  <button
+                    type="submit"
+                    className="theme-btn"
+                    disabled={product.stock === 0}
+                    style={product.stock === 0 ? {
+                      opacity: 0.5,
+                      cursor: 'not-allowed',
+                      backgroundColor: '#999'
+                    } : {}}
+                  >
+                    {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'} <i className="far fa-arrow-alt-right" />
                   </button>
                 </form>
                 <ul className="category-tags pt-20 pb-30">
@@ -300,14 +337,32 @@ const ProductDetailsPage = ({ params }) => {
                       data-aos-duration={1500}
                       data-aos-offset={50}
                     >
-                      <div className="image">
+                      <div className="image" style={{ position: 'relative' }}>
                         <img
                           src={
                             `http://localhost:3000/${suggestedProduct.imageUrls?.[0]}` ||
                             "assets/images/dishes/dish1.png"
                           }
                           alt={suggestedProduct.name || suggestedProduct.title}
+                          style={suggestedProduct.stock === 0 ? { opacity: 0.6 } : {}}
                         />
+                        {suggestedProduct.stock === 0 && (
+                          <div style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: '60%',
+                            zIndex: 10,
+                            pointerEvents: 'none'
+                          }}>
+                            <img
+                              src="/assets/images/sold-out-grunge-rubber-stamp-free-png.webp"
+                              alt="Sold Out"
+                              style={{ width: '100%', height: 'auto' }}
+                            />
+                          </div>
+                        )}
                         {(suggestedProduct.category?.name ||
                           suggestedProduct.categoryName ||
                           suggestedProduct.category?.title) && (
@@ -367,11 +422,19 @@ const ProductDetailsPage = ({ params }) => {
                         className="theme-btn"
                         onClick={(e) => {
                           e.stopPropagation();
-                          addToCart(suggestedProduct, 1);
-                          openCartModal();
+                          if (suggestedProduct.stock !== 0) {
+                            addToCart(suggestedProduct, 1);
+                            openCartModal();
+                          }
                         }}
+                        disabled={suggestedProduct.stock === 0}
+                        style={suggestedProduct.stock === 0 ? {
+                          opacity: 0.5,
+                          cursor: 'not-allowed',
+                          backgroundColor: '#999'
+                        } : {}}
                       >
-                        add to cart <i className="far fa-arrow-alt-right" />
+                        {suggestedProduct.stock === 0 ? 'Out of Stock' : 'add to cart'} <i className="far fa-arrow-alt-right" />
                       </button>
                     </div>
                   </div>

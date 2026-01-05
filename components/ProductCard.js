@@ -13,19 +13,45 @@ const ProductCard = ({ product, index }) => {
       key={product.id || index}
       className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3"
       data-aos="fade-up"
-      data-aos-delay={index % 4 === 0 ? 0 : index % 4 === 1 ? 50 : index % 4 === 2 ? 100 : 150}
+      data-aos-delay={
+        index % 4 === 0 ? 0 : index % 4 === 1 ? 50 : index % 4 === 2 ? 100 : 150
+      }
       data-aos-duration={1500}
       data-aos-offset={50}
     >
-      <div className="product-item-two" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
-        <div className="image">
+      <div
+        className="product-item-two"
+        onClick={handleCardClick}
+        style={{ cursor: "pointer" }}
+      >
+        <div className="image" style={{ position: "relative" }}>
           <img
             src={
               `http://localhost:3000/${product.imageUrls[0]}` ||
               "assets/images/dishes/dish1.png"
             }
             alt={product.name || product.title}
+            style={product.stock === 0 ? { opacity: 0.6 } : {}}
           />
+          {product.stock === 0 && (
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "60%",
+                zIndex: 10,
+                pointerEvents: "none",
+              }}
+            >
+              <img
+                src="/assets/images/sold-out-grunge-rubber-stamp-free-png.webp"
+                alt="Sold Out"
+                style={{ width: "100%", height: "auto" }}
+              />
+            </div>
+          )}
           {(product.category?.name ||
             product.categoryName ||
             product.category?.title) && (
@@ -71,15 +97,30 @@ const ProductCard = ({ product, index }) => {
             {product.price} AMD
           </span>
         </div>
-        <button
-          className="theme-btn"
-          onClick={(e) => {
-            e.stopPropagation();
-            addToCart(product, 1);
-          }}
-        >
-          add to cart <i className="far fa-arrow-alt-right" />
-        </button>
+        {product.stock !== 0 && (
+          <button
+            className="theme-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (product.stock !== 0) {
+                addToCart(product, 1);
+              }
+            }}
+            disabled={product.stock === 0}
+            style={
+              product.stock === 0
+                ? {
+                    opacity: 0.5,
+                    cursor: "not-allowed",
+                    backgroundColor: "#999",
+                  }
+                : {}
+            }
+          >
+            {product.stock === 0 ? "Out of Stock" : "add to cart"}{" "}
+            <i className="far fa-arrow-alt-right" />
+          </button>
+        )}
       </div>
     </div>
   );
