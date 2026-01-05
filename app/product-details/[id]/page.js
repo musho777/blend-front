@@ -179,9 +179,9 @@ const ProductDetailsPage = ({ params }) => {
                 <span className="price mb-15">
                   {product.originalPrice &&
                     product.originalPrice > product.price && (
-                      <del>${product.originalPrice}</del>
+                      <del>{product.originalPrice} AMD</del>
                     )}{" "}
-                  ${product.price}
+                  {product.price} AMD
                 </span>
                 {product.rating && (
                   <div className="ratting mb-40">
@@ -358,9 +358,9 @@ const ProductDetailsPage = ({ params }) => {
                           {suggestedProduct.originalPrice &&
                             suggestedProduct.originalPrice >
                               suggestedProduct.price && (
-                              <del>${suggestedProduct.originalPrice}</del>
+                              <del>{suggestedProduct.originalPrice} AMD</del>
                             )}{" "}
-                          ${suggestedProduct.price}
+                          {suggestedProduct.price} AMD
                         </span>
                       </div>
                       <button
