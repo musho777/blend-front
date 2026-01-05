@@ -2,8 +2,8 @@ import { apiClient } from "../api/client";
 import { ENDPOINTS } from "../api/endpoints";
 
 export const productsService = {
-  getProductsByCategory: async (categoryId, page = 1, limit = 10, subcategoryId = null, search = null, sortBy = null) => {
-    return apiClient(ENDPOINTS.PRODUCTS.BY_CATEGORY(categoryId, page, limit, subcategoryId, search, sortBy));
+  getProductsByCategory: async (categoryId, page = 1, limit = 10, subcategoryId = null, search = null, sortBy = null, minPrice = null, maxPrice = null) => {
+    return apiClient(ENDPOINTS.PRODUCTS.BY_CATEGORY(categoryId, page, limit, subcategoryId, search, sortBy, minPrice, maxPrice));
   },
 
   getProducts: async () => {

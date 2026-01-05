@@ -10,7 +10,14 @@ import {
 } from "@/hooks/queries/useCategoriesQuery";
 import { useProductsByCategory } from "@/hooks/queries/useProductsByCategoryQuery";
 import ProductCard from "@/components/ProductCard";
-import { Select, MenuItem, FormControl } from "@mui/material";
+import {
+  Select,
+  MenuItem,
+  FormControl,
+  Slider,
+  Typography,
+  Box,
+} from "@mui/material";
 
 const CategoryPage = () => {
   const params = useParams();
@@ -22,12 +29,26 @@ const CategoryPage = () => {
   const limitFromUrl = parseInt(searchParams.get("limit")) || 12;
   const searchFromUrl = searchParams.get("search") || "";
   const sortByFromUrl = searchParams.get("sortBy") || "default";
+  const minPriceFromUrl = searchParams.get("minPrice")
+    ? parseInt(searchParams.get("minPrice"))
+    : null;
+  const maxPriceFromUrl = searchParams.get("maxPrice")
+    ? parseInt(searchParams.get("maxPrice"))
+    : null;
 
   const [currentPage, setCurrentPage] = useState(pageFromUrl);
   const [limit] = useState(limitFromUrl);
   const [searchInput, setSearchInput] = useState(searchFromUrl);
   const [debouncedSearch, setDebouncedSearch] = useState(searchFromUrl);
   const [sortBy, setSortBy] = useState(sortByFromUrl);
+  const [priceRange, setPriceRange] = useState([
+    minPriceFromUrl || 0,
+    maxPriceFromUrl || 1000000,
+  ]);
+  const [debouncedPriceRange, setDebouncedPriceRange] = useState([
+    minPriceFromUrl || 0,
+    maxPriceFromUrl || 1000000,
+  ]);
 
   const decodedSlug = decodeURIComponent(categorySlug);
   const { data: categories, isLoading: categoriesLoading } = useCategories();
@@ -55,7 +76,9 @@ const CategoryPage = () => {
     limit,
     subcategoryId,
     debouncedSearch,
-    sortBy
+    sortBy,
+    debouncedPriceRange[0] > 0 ? debouncedPriceRange[0] : null,
+    debouncedPriceRange[1] < 1000000 ? debouncedPriceRange[1] : null
   );
 
   const isLoading = categoriesLoading || categoryLoading || productsLoading;
@@ -79,6 +102,15 @@ const CategoryPage = () => {
     return () => clearTimeout(timer);
   }, [searchInput]);
 
+  // Debounce price range (500ms delay)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedPriceRange(priceRange);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [priceRange]);
+
   // Update URL query parameters
   const updateURL = useCallback(() => {
     const params = new URLSearchParams();
@@ -101,13 +133,29 @@ const CategoryPage = () => {
       params.set("sortBy", sortBy);
     }
 
+    if (debouncedPriceRange[0] > 0) {
+      params.set("minPrice", debouncedPriceRange[0].toString());
+    }
+
+    if (debouncedPriceRange[1] < 1000000) {
+      params.set("maxPrice", debouncedPriceRange[1].toString());
+    }
+
     const queryString = params.toString();
     const newURL = queryString
       ? `${window.location.pathname}?${queryString}`
       : window.location.pathname;
 
     router.push(newURL, { scroll: false });
-  }, [currentPage, limit, debouncedSearch, subcategoryId, sortBy, router]);
+  }, [
+    currentPage,
+    limit,
+    debouncedSearch,
+    subcategoryId,
+    sortBy,
+    debouncedPriceRange,
+    router,
+  ]);
 
   // Update URL when search, page, or filters change
   useEffect(() => {
@@ -120,6 +168,16 @@ const CategoryPage = () => {
       setCurrentPage(1);
     }
   }, [debouncedSearch, searchFromUrl]);
+
+  // Reset to page 1 when price range changes
+  useEffect(() => {
+    if (
+      debouncedPriceRange[0] !== (minPriceFromUrl || 0) ||
+      debouncedPriceRange[1] !== (maxPriceFromUrl || 1000000)
+    ) {
+      setCurrentPage(1);
+    }
+  }, [debouncedPriceRange, minPriceFromUrl, maxPriceFromUrl]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -135,6 +193,10 @@ const CategoryPage = () => {
     console.log("Sort changed to:", value);
     setSortBy(value);
     setCurrentPage(1);
+  };
+
+  const handlePriceRangeChange = (event, newValue) => {
+    setPriceRange(newValue);
   };
 
   return (
@@ -223,13 +285,47 @@ const CategoryPage = () => {
                   data-aos-offset={50}
                 >
                   <h4 className="widget-title">Pricing</h4>
-                  <div className="price-filter-wrap">
-                    <div className="price-slider-range" />
-                    <div className="price">
-                      <span>Price </span>
-                      <input type="text" id="price" readOnly="" />
-                    </div>
-                  </div>
+                  <Box sx={{ px: 2, py: 3 }}>
+                    <Slider
+                      value={priceRange}
+                      onChange={handlePriceRangeChange}
+                      valueLabelDisplay="auto"
+                      min={0}
+                      max={1000000}
+                      step={10}
+                      sx={{
+                        color: "#c9a164",
+                        "& .MuiSlider-thumb": {
+                          width: 16,
+                          height: 16,
+                          backgroundColor: "#c9a164",
+                          "&:hover, &.Mui-focusVisible": {
+                            boxShadow: "0 0 0 8px rgba(201, 161, 100, 0.16)",
+                          },
+                        },
+                        "& .MuiSlider-track": {
+                          backgroundColor: "#c9a164",
+                        },
+                        "& .MuiSlider-rail": {
+                          backgroundColor: "#e8e8e8",
+                        },
+                      }}
+                    />
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        mt: 2,
+                      }}
+                    >
+                      <Typography variant="body2" sx={{ color: "#666" }}>
+                        ${priceRange[0]}
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: "#666" }}>
+                        ${priceRange[1]}
+                      </Typography>
+                    </Box>
+                  </Box>
                 </div>
                 <div
                   className="widget widget-products"
@@ -291,8 +387,12 @@ const CategoryPage = () => {
                         <MenuItem value="default">Default Sorting</MenuItem>
                         <MenuItem value="newest">Newness Sorting</MenuItem>
                         <MenuItem value="oldest">Oldest Sorting</MenuItem>
-                        <MenuItem value="price_high_to_low">High To Low</MenuItem>
-                        <MenuItem value="price_low_to_high">Low To High</MenuItem>
+                        <MenuItem value="price_high_to_low">
+                          High To Low
+                        </MenuItem>
+                        <MenuItem value="price_low_to_high">
+                          Low To High
+                        </MenuItem>
                       </Select>
                     </FormControl>
                   </div>

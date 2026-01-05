@@ -30,7 +30,7 @@ export const ENDPOINTS = {
     LIST: "/products",
     ITEM: (id) => `/products/${id}`,
     SEARCH: "/products/search",
-    BY_CATEGORY: (categoryId, page = 1, limit = 10, subcategoryId = null, search = null, sortBy = null) => {
+    BY_CATEGORY: (categoryId, page = 1, limit = 10, subcategoryId = null, search = null, sortBy = null, minPrice = null, maxPrice = null) => {
       let url = `/categories/${categoryId}/products?page=${page}&limit=${limit}`;
       if (subcategoryId) {
         url += `&subcategoryId=${subcategoryId}`;
@@ -40,6 +40,12 @@ export const ENDPOINTS = {
       }
       if (sortBy && sortBy !== "default") {
         url += `&sortBy=${sortBy}`;
+      }
+      if (minPrice !== null && minPrice !== undefined) {
+        url += `&minPrice=${minPrice}`;
+      }
+      if (maxPrice !== null && maxPrice !== undefined) {
+        url += `&maxPrice=${maxPrice}`;
       }
       return url;
     },
