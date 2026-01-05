@@ -66,9 +66,9 @@ const ProductCard = ({ product, index }) => {
           </h5>
           <span className="price">
             {product.originalPrice && product.originalPrice > product.price && (
-              <del>${product.originalPrice}</del>
+              <del>{product.originalPrice} AMD</del>
             )}{" "}
-            ${product.price}
+            {product.price} AMD
           </span>
         </div>
         <button

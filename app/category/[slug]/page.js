@@ -319,10 +319,10 @@ const CategoryPage = () => {
                       }}
                     >
                       <Typography variant="body2" sx={{ color: "#666" }}>
-                        ${priceRange[0]}
+                        {priceRange[0]} AMD
                       </Typography>
                       <Typography variant="body2" sx={{ color: "#666" }}>
-                        ${priceRange[1]}
+                        {priceRange[1]} AMD
                       </Typography>
                     </Box>
                   </Box>
