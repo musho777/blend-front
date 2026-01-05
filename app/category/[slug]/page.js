@@ -10,6 +10,7 @@ import {
 } from "@/hooks/queries/useCategoriesQuery";
 import { useProductsByCategory } from "@/hooks/queries/useProductsByCategoryQuery";
 import ProductCard from "@/components/ProductCard";
+import { Select, MenuItem, FormControl } from "@mui/material";
 
 const CategoryPage = () => {
   const params = useParams();
@@ -20,11 +21,13 @@ const CategoryPage = () => {
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
   const limitFromUrl = parseInt(searchParams.get("limit")) || 12;
   const searchFromUrl = searchParams.get("search") || "";
+  const sortByFromUrl = searchParams.get("sortBy") || "default";
 
   const [currentPage, setCurrentPage] = useState(pageFromUrl);
   const [limit] = useState(limitFromUrl);
   const [searchInput, setSearchInput] = useState(searchFromUrl);
   const [debouncedSearch, setDebouncedSearch] = useState(searchFromUrl);
+  const [sortBy, setSortBy] = useState(sortByFromUrl);
 
   const decodedSlug = decodeURIComponent(categorySlug);
   const { data: categories, isLoading: categoriesLoading } = useCategories();
@@ -51,7 +54,8 @@ const CategoryPage = () => {
     currentPage,
     limit,
     subcategoryId,
-    debouncedSearch
+    debouncedSearch,
+    sortBy
   );
 
   const isLoading = categoriesLoading || categoryLoading || productsLoading;
@@ -93,13 +97,17 @@ const CategoryPage = () => {
       params.set("subcategoryId", subcategoryId);
     }
 
+    if (sortBy && sortBy !== "default") {
+      params.set("sortBy", sortBy);
+    }
+
     const queryString = params.toString();
     const newURL = queryString
       ? `${window.location.pathname}?${queryString}`
       : window.location.pathname;
 
     router.push(newURL, { scroll: false });
-  }, [currentPage, limit, debouncedSearch, subcategoryId, router]);
+  }, [currentPage, limit, debouncedSearch, subcategoryId, sortBy, router]);
 
   // Update URL when search, page, or filters change
   useEffect(() => {
@@ -111,7 +119,7 @@ const CategoryPage = () => {
     if (debouncedSearch !== searchFromUrl) {
       setCurrentPage(1);
     }
-  }, [debouncedSearch]);
+  }, [debouncedSearch, searchFromUrl]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -120,6 +128,13 @@ const CategoryPage = () => {
 
   const handleSearchChange = (e) => {
     setSearchInput(e.target.value);
+  };
+
+  const handleSortChange = (event) => {
+    const value = event.target.value;
+    console.log("Sort changed to:", value);
+    setSortBy(value);
+    setCurrentPage(1);
   };
 
   return (
@@ -254,15 +269,32 @@ const CategoryPage = () => {
                     data-aos-duration={1500}
                     data-aos-offset={50}
                   >
-                    <select>
-                      <option value="default" selected="">
-                        Default Sorting
-                      </option>
-                      <option value="new">Newness Sorting</option>
-                      <option value="old">Oldest Sorting</option>
-                      <option value="hight-to-low">High To Low</option>
-                      <option value="low-to-high">Low To High</option>
-                    </select>
+                    <FormControl fullWidth>
+                      <Select
+                        value={sortBy}
+                        onChange={handleSortChange}
+                        displayEmpty
+                        sx={{
+                          height: "42px",
+                          backgroundColor: "#fff",
+                          "& .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "#e8e8e8",
+                          },
+                          "&:hover .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "#dbdbdb",
+                          },
+                          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "#999",
+                          },
+                        }}
+                      >
+                        <MenuItem value="default">Default Sorting</MenuItem>
+                        <MenuItem value="newest">Newness Sorting</MenuItem>
+                        <MenuItem value="oldest">Oldest Sorting</MenuItem>
+                        <MenuItem value="price_high_to_low">High To Low</MenuItem>
+                        <MenuItem value="price_low_to_high">Low To High</MenuItem>
+                      </Select>
+                    </FormControl>
                   </div>
                 </div>
                 <div className="row">

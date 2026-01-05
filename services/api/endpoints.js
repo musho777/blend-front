@@ -30,13 +30,16 @@ export const ENDPOINTS = {
     LIST: "/products",
     ITEM: (id) => `/products/${id}`,
     SEARCH: "/products/search",
-    BY_CATEGORY: (categoryId, page = 1, limit = 10, subcategoryId = null, search = null) => {
+    BY_CATEGORY: (categoryId, page = 1, limit = 10, subcategoryId = null, search = null, sortBy = null) => {
       let url = `/categories/${categoryId}/products?page=${page}&limit=${limit}`;
       if (subcategoryId) {
         url += `&subcategoryId=${subcategoryId}`;
       }
       if (search) {
         url += `&search=${encodeURIComponent(search)}`;
+      }
+      if (sortBy && sortBy !== "default") {
+        url += `&sortBy=${sortBy}`;
       }
       return url;
     },
