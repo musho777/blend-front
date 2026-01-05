@@ -133,7 +133,7 @@ const ProductDetailsPage = ({ params }) => {
                 data-aos="fade-left"
                 data-aos-duration={1500}
                 data-aos-offset={50}
-                style={{ position: 'relative' }}
+                style={{ position: "relative" }}
               >
                 {product?.imageUrls && product?.imageUrls.length > 1 ? (
                   <Slider {...sliderSettings} className="product-image-slider">
@@ -148,7 +148,7 @@ const ProductDetailsPage = ({ params }) => {
                             width: "100%",
                             height: "auto",
                             display: "block",
-                            opacity: product.stock === 0 ? 0.6 : 1
+                            opacity: product.stock === 0 ? 0.6 : 1,
                           }}
                         />
                       </div>
@@ -161,7 +161,7 @@ const ProductDetailsPage = ({ params }) => {
                     style={{
                       width: "100%",
                       height: "auto",
-                      opacity: product.stock === 0 ? 0.6 : 1
+                      opacity: product.stock === 0 ? 0.6 : 1,
                     }}
                   />
                 ) : (
@@ -172,19 +172,21 @@ const ProductDetailsPage = ({ params }) => {
                   />
                 )}
                 {product.stock === 0 && (
-                  <div style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '40%',
-                    zIndex: 10,
-                    pointerEvents: 'none'
-                  }}>
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: "40%",
+                      zIndex: 10,
+                      pointerEvents: "none",
+                    }}
+                  >
                     <img
                       src="/assets/images/sold-out-grunge-rubber-stamp-free-png.webp"
                       alt="Sold Out"
-                      style={{ width: '100%', height: 'auto' }}
+                      style={{ width: "100%", height: "auto" }}
                     />
                   </div>
                 )}
@@ -242,13 +244,18 @@ const ProductDetailsPage = ({ params }) => {
                     type="submit"
                     className="theme-btn"
                     disabled={product.stock === 0}
-                    style={product.stock === 0 ? {
-                      opacity: 0.5,
-                      cursor: 'not-allowed',
-                      backgroundColor: '#999'
-                    } : {}}
+                    style={
+                      product.stock === 0
+                        ? {
+                            opacity: 0.5,
+                            cursor: "not-allowed",
+                            backgroundColor: "#999",
+                          }
+                        : {}
+                    }
                   >
-                    {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'} <i className="far fa-arrow-alt-right" />
+                    {product.stock === 0 ? "Out of Stock" : "Add to Cart"}{" "}
+                    <i className="far fa-arrow-alt-right" />
                   </button>
                 </form>
                 <ul className="category-tags pt-20 pb-30">
@@ -337,29 +344,33 @@ const ProductDetailsPage = ({ params }) => {
                       data-aos-duration={1500}
                       data-aos-offset={50}
                     >
-                      <div className="image" style={{ position: 'relative' }}>
+                      <div className="image" style={{ position: "relative" }}>
                         <img
                           src={
                             `http://localhost:3000/${suggestedProduct.imageUrls?.[0]}` ||
                             "assets/images/dishes/dish1.png"
                           }
                           alt={suggestedProduct.name || suggestedProduct.title}
-                          style={suggestedProduct.stock === 0 ? { opacity: 0.6 } : {}}
+                          style={
+                            suggestedProduct.stock === 0 ? { opacity: 0.6 } : {}
+                          }
                         />
                         {suggestedProduct.stock === 0 && (
-                          <div style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            width: '60%',
-                            zIndex: 10,
-                            pointerEvents: 'none'
-                          }}>
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: "50%",
+                              left: "50%",
+                              transform: "translate(-50%, -50%)",
+                              width: "60%",
+                              zIndex: 10,
+                              pointerEvents: "none",
+                            }}
+                          >
                             <img
                               src="/assets/images/sold-out-grunge-rubber-stamp-free-png.webp"
                               alt="Sold Out"
-                              style={{ width: '100%', height: 'auto' }}
+                              style={{ width: "100%", height: "auto" }}
                             />
                           </div>
                         )}
@@ -418,24 +429,33 @@ const ProductDetailsPage = ({ params }) => {
                           {suggestedProduct.price} AMD
                         </span>
                       </div>
-                      <button
-                        className="theme-btn"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (suggestedProduct.stock !== 0) {
-                            addToCart(suggestedProduct, 1);
-                            openCartModal();
+                      {suggestedProduct.stock !== 0 && (
+                        <button
+                          className="theme-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (suggestedProduct.stock !== 0) {
+                              addToCart(suggestedProduct, 1);
+                              openCartModal();
+                            }
+                          }}
+                          disabled={suggestedProduct.stock === 0}
+                          style={
+                            suggestedProduct.stock === 0
+                              ? {
+                                  opacity: 0.5,
+                                  cursor: "not-allowed",
+                                  backgroundColor: "#999",
+                                }
+                              : {}
                           }
-                        }}
-                        disabled={suggestedProduct.stock === 0}
-                        style={suggestedProduct.stock === 0 ? {
-                          opacity: 0.5,
-                          cursor: 'not-allowed',
-                          backgroundColor: '#999'
-                        } : {}}
-                      >
-                        {suggestedProduct.stock === 0 ? 'Out of Stock' : 'add to cart'} <i className="far fa-arrow-alt-right" />
-                      </button>
+                        >
+                          {suggestedProduct.stock === 0
+                            ? "Out of Stock"
+                            : "add to cart"}{" "}
+                          <i className="far fa-arrow-alt-right" />
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
