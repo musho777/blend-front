@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useCart } from "@/hooks/useCart";
+import Tooltip from "@mui/material/Tooltip";
 
 const ProductCard = ({ product, index }) => {
   const { addToCart } = useCart();
@@ -85,11 +86,20 @@ const ProductCard = ({ product, index }) => {
               {product.reviewCount && <span>({product.reviewCount})</span>}
             </div>
           )}
-          <h5>
-            <Link href={`/product-details/${product.id || product.slug}`}>
-              {product.name || product.title}
-            </Link>
-          </h5>
+          <Tooltip title={product.name || product.title} arrow placement="top">
+            <h5
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                maxWidth: "100%",
+              }}
+            >
+              <Link href={`/product-details/${product.id || product.slug}`}>
+                {product.name || product.title}
+              </Link>
+            </h5>
+          </Tooltip>
           <span className="price">
             {product.originalPrice && product.originalPrice > product.price && (
               <del>{product.originalPrice} AMD</del>

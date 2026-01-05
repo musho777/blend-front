@@ -164,12 +164,8 @@ const MobileMenu = ({ black }) => {
             <div className="header-inner rel d-flex align-items-center">
               <div className="logo-outer">
                 <div className="logo">
-                  <Link href="/">
-                    <img
-                      src="/assets/images/logos/logo.png"
-                      alt="Logo"
-                      title="Logo"
-                    />
+                  <Link href="/" style={{ fontSize: '28px', fontWeight: 'bold', color: '#ffb936', textDecoration: 'none' }}>
+                    Blend
                   </Link>
                 </div>
               </div>
@@ -177,12 +173,8 @@ const MobileMenu = ({ black }) => {
                 <nav className="main-menu navbar-expand-lg">
                   <div className="navbar-header py-10">
                     <div className="mobile-logo">
-                      <Link href="/">
-                        <img
-                          src="/assets/images/logos/logo.png"
-                          alt="Logo"
-                          title="Logo"
-                        />
+                      <Link href="/" style={{ fontSize: '28px', fontWeight: 'bold', color: '#ffb936', textDecoration: 'none' }}>
+                        Blend
                       </Link>
                     </div>
                     <button
@@ -313,12 +305,8 @@ const Header = ({ black }) => {
             <div className="header-inner rel d-flex align-items-center">
               <div className="logo-outer">
                 <div className="logo">
-                  <Link href="/">
-                    <img
-                      src="/assets/images/logos/logo.png"
-                      alt="Logo"
-                      title="Logo"
-                    />
+                  <Link href="/" style={{ fontSize: '28px', fontWeight: 'bold', color: '#ffb936', textDecoration: 'none' }}>
+                    Blend
                   </Link>
                 </div>
               </div>
@@ -326,12 +314,8 @@ const Header = ({ black }) => {
                 <nav className="main-menu navbar-expand-lg">
                   <div className="navbar-header py-10">
                     <div className="mobile-logo">
-                      <Link href="/">
-                        <img
-                          src="/assets/images/logos/logo.png"
-                          alt="Logo"
-                          title="Logo"
-                        />
+                      <Link href="/" style={{ fontSize: '28px', fontWeight: 'bold', color: '#ffb936', textDecoration: 'none' }}>
+                        Blend
                       </Link>
                     </div>
                     {/* Toggle Button */}
