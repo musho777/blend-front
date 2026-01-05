@@ -7,12 +7,12 @@ import { useRegister } from "@/hooks/mutations/useAuthMutations";
 import { useState } from "react";
 
 const registerSchema = yup.object().shape({
-  name: yup
+  firstName: yup
     .string()
     .required("First name is required")
     .min(2, "First name must be at least 2 characters")
     .max(50, "First name must not exceed 50 characters"),
-  surname: yup
+  lastName: yup
     .string()
     .required("Last name is required")
     .min(2, "Last name must be at least 2 characters")
@@ -21,7 +21,7 @@ const registerSchema = yup.object().shape({
     .string()
     .email("Please enter a valid email address")
     .required("Email is required"),
-  phoneNumber: yup
+  phone: yup
     .string()
     .required("Phone number is required")
     .matches(
@@ -32,7 +32,7 @@ const registerSchema = yup.object().shape({
   password: yup
     .string()
     .required("Password is required")
-    .min(8, "Password must be at least 8 characters")
+    .min(6, "Password must be at least 6 characters")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
       "Password must contain at least one uppercase letter, one lowercase letter, and one number"
@@ -40,6 +40,7 @@ const registerSchema = yup.object().shape({
   confirmPassword: yup
     .string()
     .required("Please confirm your password")
+    .min(6, "Confirm password must be at least 6 characters")
     .oneOf([yup.ref("password")], "Passwords must match"),
 });
 
@@ -57,9 +58,8 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
 
   const onSubmit = async (data) => {
     try {
-      // Remove confirmPassword before sending to API
-      const { confirmPassword, ...userData } = data;
-      const response = await registerMutation.mutateAsync(userData);
+      // Backend expects confirmPassword, so send all fields
+      const response = await registerMutation.mutateAsync(data);
       reset();
       onHide();
       // Call onSuccess callback to show OTP modal
@@ -92,10 +92,12 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
                   className="form-control"
                   placeholder="First Name *"
                   style={{ border: "1px solid #ddd" }}
-                  {...register("name")}
+                  {...register("firstName")}
                 />
-                {errors.name && (
-                  <small className="text-danger d-block mt-1">{errors.name.message}</small>
+                {errors.firstName && (
+                  <small className="text-danger d-block mt-1">
+                    {errors.firstName.message}
+                  </small>
                 )}
               </div>
             </div>
@@ -107,10 +109,12 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
                   className="form-control"
                   placeholder="Last Name *"
                   style={{ border: "1px solid #ddd" }}
-                  {...register("surname")}
+                  {...register("lastName")}
                 />
-                {errors.surname && (
-                  <small className="text-danger d-block mt-1">{errors.surname.message}</small>
+                {errors.lastName && (
+                  <small className="text-danger d-block mt-1">
+                    {errors.lastName.message}
+                  </small>
                 )}
               </div>
             </div>
@@ -125,7 +129,9 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
               {...register("email")}
             />
             {errors.email && (
-              <small className="text-danger d-block mt-1">{errors.email.message}</small>
+              <small className="text-danger d-block mt-1">
+                {errors.email.message}
+              </small>
             )}
           </div>
 
@@ -135,14 +141,16 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
               className="form-control"
               placeholder="Phone Number *"
               style={{ border: "1px solid #ddd" }}
-              {...register("phoneNumber")}
+              {...register("phone")}
             />
-            {errors.phoneNumber && (
-              <small className="text-danger d-block mt-1">{errors.phoneNumber.message}</small>
+            {errors.phone && (
+              <small className="text-danger d-block mt-1">
+                {errors.phone.message}
+              </small>
             )}
           </div>
 
-          <div className="form-group">
+          {/* <div className="form-group">
             <textarea
               className="form-control"
               rows="2"
@@ -153,7 +161,7 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
             {errors.address && (
               <small className="text-danger d-block mt-1">{errors.address.message}</small>
             )}
-          </div>
+          </div> */}
 
           <div className="row">
             <div className="col-md-6">
@@ -166,7 +174,9 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
                   {...register("password")}
                 />
                 {errors.password && (
-                  <small className="text-danger d-block mt-1">{errors.password.message}</small>
+                  <small className="text-danger d-block mt-1">
+                    {errors.password.message}
+                  </small>
                 )}
               </div>
             </div>
@@ -181,7 +191,9 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
                   {...register("confirmPassword")}
                 />
                 {errors.confirmPassword && (
-                  <small className="text-danger d-block mt-1">{errors.confirmPassword.message}</small>
+                  <small className="text-danger d-block mt-1">
+                    {errors.confirmPassword.message}
+                  </small>
                 )}
               </div>
             </div>
@@ -189,7 +201,8 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
 
           {registerMutation.isError && (
             <div className="alert alert-danger" role="alert">
-              {registerMutation.error?.message || "Registration failed. Please try again."}
+              {registerMutation.error?.message ||
+                "Registration failed. Please try again."}
             </div>
           )}
 
@@ -199,7 +212,10 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
               className="theme-btn w-100"
               disabled={registerMutation.isPending}
             >
-              {registerMutation.isPending ? "Creating Account..." : "Create Account"} <i className="far fa-arrow-alt-right" />
+              {registerMutation.isPending
+                ? "Creating Account..."
+                : "Create Account"}{" "}
+              <i className="far fa-arrow-alt-right" />
             </button>
           </div>
 

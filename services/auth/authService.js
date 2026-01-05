@@ -17,13 +17,14 @@ export const authService = {
   /**
    * Register new user
    * @param {Object} userData - User registration data
-   * @param {string} userData.name - User first name
-   * @param {string} userData.surname - User last name
+   * @param {string} userData.firstName - User first name
+   * @param {string} userData.lastName - User last name
    * @param {string} userData.email - User email
-   * @param {string} userData.phoneNumber - User phone number
+   * @param {string} userData.phone - User phone number
    * @param {string} userData.password - User password
+   * @param {string} userData.confirmPassword - Confirm password
    * @param {string} [userData.address] - User address (optional)
-   * @returns {Promise<Object>} Registration response
+   * @returns {Promise<Object>} Registration response (triggers OTP email)
    */
   register: async (userData) => {
     const response = await apiClient.post(ENDPOINTS.AUTH.REGISTER, userData);
@@ -31,14 +32,14 @@ export const authService = {
   },
 
   /**
-   * Verify OTP code
-   * @param {Object} data - OTP verification data
+   * Verify email with OTP code
+   * @param {Object} data - Email verification data
    * @param {string} data.email - User email
-   * @param {string} data.otp - OTP code
-   * @returns {Promise<Object>} User data and token
+   * @param {string} data.otp - 6-digit OTP code
+   * @returns {Promise<Object>} User data and JWT token
    */
-  verifyOTP: async (data) => {
-    const response = await apiClient.post(ENDPOINTS.AUTH.VERIFY_OTP, data);
+  verifyEmail: async (data) => {
+    const response = await apiClient.post(ENDPOINTS.AUTH.VERIFY_EMAIL, data);
     return response;
   },
 

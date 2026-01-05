@@ -35,7 +35,7 @@ const AuthButtons = () => {
           style={{ textDecoration: "none" }}
         >
           <i className="far fa-user" style={{ fontSize: "20px", marginRight: "8px" }} />
-          <span className="d-none d-lg-inline">{user.name}</span>
+          <span className="d-none d-lg-inline">{user.firstName || user.name}</span>
         </button>
 
         {showUserMenu && (
@@ -51,7 +51,7 @@ const AuthButtons = () => {
             }}
           >
             <div className="p-3 border-bottom">
-              <div className="fw-bold text-dark">{user.name} {user.surname}</div>
+              <div className="fw-bold text-dark">{user.firstName || user.name} {user.lastName || user.surname}</div>
               <small className="text-muted">{user.email}</small>
             </div>
             <div className="p-2">

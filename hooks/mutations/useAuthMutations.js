@@ -35,21 +35,21 @@ export function useRegister() {
 }
 
 /**
- * Hook for OTP verification
+ * Hook for email verification with OTP
  */
-export function useVerifyOTP() {
+export function useVerifyEmail() {
   const { login } = useAuth();
 
   return useMutation({
-    mutationFn: authService.verifyOTP,
+    mutationFn: authService.verifyEmail,
     onSuccess: (data) => {
-      // Store user data and token in context after successful verification
+      // Store user data and JWT token in context after successful verification
       if (data.token && data.user) {
         login(data.user, data.token);
       }
     },
     onError: (error) => {
-      console.error("OTP verification failed:", error);
+      console.error("Email verification failed:", error);
     },
   });
 }

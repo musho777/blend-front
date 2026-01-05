@@ -2,7 +2,7 @@
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
 import { MuiOtpInput } from "mui-one-time-password-input";
-import { useVerifyOTP, useResendOTP } from "@/hooks/mutations/useAuthMutations";
+import { useVerifyEmail, useResendOTP } from "@/hooks/mutations/useAuthMutations";
 import SuccessModal from "./SuccessModal";
 
 const OTPVerificationModal = ({ show, onHide, email }) => {
@@ -10,7 +10,7 @@ const OTPVerificationModal = ({ show, onHide, email }) => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [resendTimer, setResendTimer] = useState(0);
 
-  const verifyOTPMutation = useVerifyOTP();
+  const verifyEmailMutation = useVerifyEmail();
   const resendOTPMutation = useResendOTP();
 
   const handleChange = (newValue) => {
@@ -20,7 +20,7 @@ const OTPVerificationModal = ({ show, onHide, email }) => {
   const handleComplete = async (value) => {
     if (value.length === 6) {
       try {
-        await verifyOTPMutation.mutateAsync({ email, otp: value });
+        await verifyEmailMutation.mutateAsync({ email, otp: value });
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
@@ -113,9 +113,9 @@ const OTPVerificationModal = ({ show, onHide, email }) => {
             />
           </div>
 
-          {verifyOTPMutation.isError && (
+          {verifyEmailMutation.isError && (
             <div className="alert alert-danger" role="alert">
-              {verifyOTPMutation.error?.message || "Invalid OTP. Please try again."}
+              {verifyEmailMutation.error?.message || "Invalid OTP. Please try again."}
             </div>
           )}
 
@@ -155,7 +155,7 @@ const OTPVerificationModal = ({ show, onHide, email }) => {
             </a>
           </div>
 
-          {verifyOTPMutation.isPending && (
+          {verifyEmailMutation.isPending && (
             <div className="mt-3">
               <div className="spinner-border" style={{ color: "#ff3d00" }} role="status">
                 <span className="visually-hidden">Verifying...</span>
