@@ -9,6 +9,7 @@ import "@css/style.css";
 import "./globals.css";
 import QueryProvider from "@/providers/QueryProvider";
 import { CartProvider } from "@/contexts/CartContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export const metadata = {
   title: "Blend",
@@ -20,7 +21,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <QueryProvider>
-          <CartProvider>{children}</CartProvider>
+          <AuthProvider>
+            <CartProvider>{children}</CartProvider>
+          </AuthProvider>
         </QueryProvider>
       </body>
     </html>

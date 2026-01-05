@@ -80,4 +80,14 @@ export const ENDPOINTS = {
     LIST: "/orders",
     ITEM: (id) => `/orders/${id}`,
   },
+
+  // Auth endpoints
+  AUTH: {
+    LOGIN: "/auth/login",
+    REGISTER: "/auth/register",
+    VERIFY_OTP: "/auth/verify-otp",
+    RESEND_OTP: "/auth/resend-otp",
+    LOGOUT: "/auth/logout",
+    ME: "/auth/me",
+  },
 };

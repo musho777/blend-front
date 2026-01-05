@@ -6,6 +6,7 @@ import { Fragment, useEffect, useState, useMemo } from "react";
 import { useCategories } from "@/hooks/queries/useCategoriesQuery";
 import { useSubcategories } from "@/hooks/queries/useSubcategoriesQuery";
 import CartIcon from "@/components/CartIcon";
+import AuthButtons from "@/components/AuthButtons";
 
 const Sidebar = () => {
   return (
@@ -262,6 +263,7 @@ const MobileMenu = ({ black }) => {
               <div style={{ marginLeft: "15px" }}>
                 <CartIcon />
               </div>
+              <AuthButtons />
             </div>
           </div>
           <div className="bg-lines">
@@ -530,6 +532,7 @@ const Header = ({ black }) => {
               <div style={{ marginLeft: "15px" }}>
                 <CartIcon />
               </div>
+              <AuthButtons />
             </div>
           </div>
           <div className="bg-lines">
