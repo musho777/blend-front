@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useCart } from "@/hooks/useCart";
 import QuantityControl from "@/components/QuantityControl";
 import { sliderProps } from "@/utility/sliderProps";
+import ProductCard from "@/components/ProductCard";
 
 const ProductDetailsPage = ({ params }) => {
   const { id } = params;
@@ -411,7 +412,14 @@ const ProductDetailsPage = ({ params }) => {
                             )}
                           </div>
                         )}
-                        <h5>
+                        <h5
+                          style={{
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            maxWidth: "100%",
+                          }}
+                        >
                           <Link
                             href={`/product-details/${
                               suggestedProduct.id || suggestedProduct.slug
