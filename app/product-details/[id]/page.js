@@ -141,7 +141,7 @@ const ProductDetailsPage = ({ params }) => {
                     {product?.imageUrls.map((imageUrl, index) => (
                       <div key={index} className="slider-item">
                         <img
-                          src={`http://localhost:3000/${imageUrl}`}
+                          src={`${process.env.NEXT_PUBLIC_BASE_URL}/${imageUrl}`}
                           alt={`${product.name || product.title} - Image ${
                             index + 1
                           }`}
@@ -157,7 +157,7 @@ const ProductDetailsPage = ({ params }) => {
                   </Slider>
                 ) : product.imageUrls && product.imageUrls.length === 1 ? (
                   <img
-                    src={`http://localhost:3000/${product.imageUrls[0]}`}
+                    src={`${process.env.NEXT_PUBLIC_BASE_URL}/${product.imageUrls[0]}`}
                     alt={product.name || product.title}
                     style={{
                       width: "100%",
@@ -348,7 +348,7 @@ const ProductDetailsPage = ({ params }) => {
                       <div className="image" style={{ position: "relative" }}>
                         <img
                           src={
-                            `http://localhost:3000/${suggestedProduct.imageUrls?.[0]}` ||
+                            `${process.env.NEXT_PUBLIC_BASE_URL}/${suggestedProduct.imageUrls?.[0]}` ||
                             "assets/images/dishes/dish1.png"
                           }
                           alt={suggestedProduct.name || suggestedProduct.title}

@@ -28,7 +28,7 @@ const ProductCard = ({ product, index }) => {
         <div className="image" style={{ position: "relative" }}>
           <img
             src={
-              `http://localhost:3000/${product.imageUrls[0]}` ||
+              `${process.env.NEXT_PUBLIC_BASE_URL}/${product.imageUrls[0]}` ||
               "assets/images/dishes/dish1.png"
             }
             alt={product.name || product.title}

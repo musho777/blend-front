@@ -124,7 +124,7 @@ const page = () => {
                   >
                     <img
                       src={
-                        `http://localhost:3000/${banners[activeBannerIndex].image}` ||
+                        `${process.env.NEXT_PUBLIC_BASE_URL}/${banners[activeBannerIndex].image}` ||
                         "assets/images/offer/offer-img.png"
                       }
                       alt={banners[activeBannerIndex].title || "Offer Image"}

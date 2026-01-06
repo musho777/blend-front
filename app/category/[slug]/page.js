@@ -205,9 +205,9 @@ const CategoryPage = () => {
         pageTitle={category?.name || category?.title || decodedSlug}
         backgroundImage={
           category?.image
-            ? `http://localhost:3000/${category.image}`
+            ? `${process.env.NEXT_PUBLIC_BASE_URL}/${category.image}`
             : category?.imageUrl
-            ? `http://localhost:3000/${category.imageUrl}`
+            ? `${process.env.NEXT_PUBLIC_BASE_URL}/${category.imageUrl}`
             : undefined
         }
       />

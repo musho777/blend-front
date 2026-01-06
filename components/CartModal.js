@@ -49,7 +49,7 @@ const CartModal = () => {
                     <img
                       src={
                         item.imageUrl
-                          ? `http://localhost:3000/${item.imageUrl}`
+                          ? `${process.env.NEXT_PUBLIC_BASE_URL}/${item.imageUrl}`
                           : "/assets/images/products/product-details.jpg"
                       }
                       alt={item.name}
