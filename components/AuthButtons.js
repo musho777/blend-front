@@ -36,7 +36,7 @@ const AuthButtons = () => {
         >
           <i
             className="far fa-user"
-            style={{ fontSize: "20px", marginRight: "8px" }}
+            style={{ fontSize: "20px", marginRight: "9px" }}
           />
           <span className="d-none d-lg-inline">
             {user.firstName || user.name}
