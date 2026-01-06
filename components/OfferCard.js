@@ -12,7 +12,7 @@ const OfferCard = () => {
             <span className="title">‎ </span>
 
             <div className="image">
-              <img src="/assets/images/hero/hero-right.webp" alt="tobacco" />
+              <img src="assets/images/offer/offer-card1.png" alt="tobacco" />
             </div>
             <span className="title">‎ </span>
 
