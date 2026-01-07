@@ -4162,6 +4162,7 @@ h6,
   animation: sticky 1s;
   -webkit-box-shadow: 0px 0px 30px 0px rgba(87, 95, 245, 0.1);
   box-shadow: 0px 0px 30px 0px rgba(87, 95, 245, 0.1);
+  padding: 0;
 }
 @media only screen and (min-width: 992px) {
   .main-header.fixed-header .main-menu .navbar-collapse > ul > li {
@@ -4176,8 +4177,8 @@ h6,
   }
 }
 
-.container-fluid {
-  padding: 35px 20px;
+.header-number {
+  padding: 20px 20px;
 }
 
 /** Header Main Menu **/

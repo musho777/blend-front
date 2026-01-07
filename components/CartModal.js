@@ -17,7 +17,7 @@ const CartModal = () => {
 
   return (
     <Modal show={isModalOpen} onHide={closeCartModal} size="lg" centered>
-      <Modal.Header>
+      <Modal.Header closeButton>
         <Modal.Title>Shopping Cart</Modal.Title>
       </Modal.Header>
 

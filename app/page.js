@@ -14,7 +14,7 @@ const page = () => {
   const { data: banners, isLoading: isBannersLoading } = useBanners();
   const [activeBannerIndex, setActiveBannerIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
-
+  console.log(banners, "banners[activeBannerIndex]");
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -116,14 +116,15 @@ const page = () => {
                           {banners[activeBannerIndex].title ||
                             "Exclusive hookah deal of the week"}
                         </h2>
-                        {console.log(banners)}
                         <p>
                           {banners[activeBannerIndex].text ||
                             "Upgrade your smoking experience with high-quality hookahs, premium accessories, and carefully selected flavors — available for a limited time."}
                         </p>
-                        <Link href="shop" className="theme-btn">
-                          shop now <i className="far fa-arrow-alt-right" />
-                        </Link>
+                        {banners[activeBannerIndex].url && (
+                          <Link href="shop" className="theme-btn">
+                            More info <i className="far fa-arrow-alt-right" />
+                          </Link>
+                        )}
                       </div>
                     </div>
 
