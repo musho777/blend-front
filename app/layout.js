@@ -10,6 +10,7 @@ import "./globals.css";
 import QueryProvider from "@/providers/QueryProvider";
 import { CartProvider } from "@/contexts/CartContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import AgeVerificationModal from "@/components/AgeVerificationModal";
 
 export const metadata = {
   title: "Blend",
@@ -22,7 +23,10 @@ export default function RootLayout({ children }) {
       <body>
         <QueryProvider>
           <AuthProvider>
-            <CartProvider>{children}</CartProvider>
+            <CartProvider>
+              <AgeVerificationModal />
+              {children}
+            </CartProvider>
           </AuthProvider>
         </QueryProvider>
       </body>
