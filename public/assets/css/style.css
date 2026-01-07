@@ -4176,6 +4176,10 @@ h6,
   }
 }
 
+.container-fluid {
+  padding: 35px 20px;
+}
+
 /** Header Main Menu **/
 @media only screen and (max-width: 991px) {
   .main-menu {
@@ -4227,7 +4231,7 @@ h6,
   }
 }
 .main-menu .navbar-collapse li {
-  padding: 35px 20px;
+  /* padding: 35px 20px; */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
