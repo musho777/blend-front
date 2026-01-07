@@ -191,4 +191,15 @@ export const sliderProps = {
     autoplay: false,
     autoplaySpeed: 5000,
   },
+  offerCardSlider: {
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    infinite: true,
+    speed: 400,
+    arrows: false,
+    dots: false,
+    focusOnSelect: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  },
 };
