@@ -22,7 +22,7 @@ const LoadingScreen = ({ isLoading }) => {
             animationData={animationData}
             loop={true}
             autoplay={true}
-            style={{ width: "400px", height: "400px" }}
+            style={{ width: "240px", height: "240px" }}
           />
         )}
       </div>
