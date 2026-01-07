@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Counter from "@/components/Counter";
 import OfferCard from "@/components/OfferCard";
 import ProductCard from "@/components/ProductCard";
+import LoadingScreen from "@/components/LoadingScreen";
 import WellFoodLayout from "@/layout/WellFoodLayout";
 import Link from "next/link";
 import { useBestSellers } from "@/hooks/queries/useBestSellersQuery";
@@ -31,7 +32,9 @@ const page = () => {
   };
 
   return (
-    <WellFoodLayout>
+    <>
+      <LoadingScreen isLoading={isLoading || isBannersLoading} />
+      <WellFoodLayout>
       {/* HERO SECTION */}
       <section
         className="hero-area bgs-cover pt-180 rpt-150 pb-100 rel z-1"
@@ -350,6 +353,7 @@ const page = () => {
         </div>
       </section>
     </WellFoodLayout>
+    </>
   );
 };
 
