@@ -164,6 +164,7 @@ const OrderHistoryPage = () => {
                   </div>
                 </div>
               </div>
+              <div style={{ height: 80 }}></div>
             </section>
 
             {/* Order Details Modal */}
