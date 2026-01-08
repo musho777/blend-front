@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useLogout } from "@/hooks/mutations/useAuthMutations";
+import Link from "next/link";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
 import OTPVerificationModal from "./OTPVerificationModal";
@@ -9,12 +10,34 @@ import OTPVerificationModal from "./OTPVerificationModal";
 const AuthButtons = () => {
   const { isAuthenticated, user } = useAuth();
   const logoutMutation = useLogout();
+  const menuRef = useRef(null);
 
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
   const [otpEmail, setOtpEmail] = useState("");
   const [showUserMenu, setShowUserMenu] = useState(false);
+
+  // Debug: Log auth state
+  useEffect(() => {
+    console.log("AuthButtons - Auth State:", { isAuthenticated, user });
+  }, [isAuthenticated, user]);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowUserMenu(false);
+      }
+    };
+
+    if (showUserMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [showUserMenu]);
 
   const handleRegisterSuccess = (email) => {
     setOtpEmail(email);
@@ -28,7 +51,7 @@ const AuthButtons = () => {
 
   if (isAuthenticated && user) {
     return (
-      <div className="position-relative" style={{ marginLeft: "15px" }}>
+      <div className="position-relative" style={{ marginLeft: "15px" }} ref={menuRef}>
         <button
           className="btn btn-link text-white p-0 d-flex align-items-center"
           onClick={() => setShowUserMenu(!showUserMenu)}
@@ -62,6 +85,15 @@ const AuthButtons = () => {
               <small className="text-muted">{user.email}</small>
             </div>
             <div className="p-2">
+              <Link
+                href="/order-history"
+                className="btn btn-link text-dark w-100 text-start p-2"
+                style={{ textDecoration: "none" }}
+                onClick={() => setShowUserMenu(false)}
+              >
+                <i className="far fa-receipt me-2" />
+                Order History
+              </Link>
               <button
                 className="btn btn-link text-dark w-100 text-start p-2"
                 onClick={handleLogout}

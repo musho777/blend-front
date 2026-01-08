@@ -147,7 +147,6 @@ const MobileMenu = ({ black }) => {
     }, {});
   }, [subcategories]);
 
-  console.log(categories);
   const activeMenuSet = (value) =>
       setActiveMenu(activeMenu === value ? "" : value),
     activeLi = (value) =>
@@ -164,7 +163,15 @@ const MobileMenu = ({ black }) => {
             <div className="header-inner rel d-flex align-items-center">
               <div className="logo-outer">
                 <div className="logo">
-                  <Link href="/" style={{ fontSize: '28px', fontWeight: 'bold', color: '#ffb936', textDecoration: 'none' }}>
+                  <Link
+                    href="/"
+                    style={{
+                      fontSize: "28px",
+                      fontWeight: "bold",
+                      color: "#ffb936",
+                      textDecoration: "none",
+                    }}
+                  >
                     Blend
                   </Link>
                 </div>
@@ -173,7 +180,15 @@ const MobileMenu = ({ black }) => {
                 <nav className="main-menu navbar-expand-lg">
                   <div className="navbar-header py-10">
                     <div className="mobile-logo">
-                      <Link href="/" style={{ fontSize: '28px', fontWeight: 'bold', color: '#ffb936', textDecoration: 'none' }}>
+                      <Link
+                        href="/"
+                        style={{
+                          fontSize: "28px",
+                          fontWeight: "bold",
+                          color: "#ffb936",
+                          textDecoration: "none",
+                        }}
+                      >
                         Blend
                       </Link>
                     </div>
@@ -305,7 +320,15 @@ const Header = ({ black }) => {
             <div className="header-inner rel d-flex align-items-center">
               <div className="logo-outer">
                 <div className="logo">
-                  <Link href="/" style={{ fontSize: '28px', fontWeight: 'bold', color: '#ffb936', textDecoration: 'none' }}>
+                  <Link
+                    href="/"
+                    style={{
+                      fontSize: "28px",
+                      fontWeight: "bold",
+                      color: "#ffb936",
+                      textDecoration: "none",
+                    }}
+                  >
                     Blend
                   </Link>
                 </div>
@@ -314,7 +337,15 @@ const Header = ({ black }) => {
                 <nav className="main-menu navbar-expand-lg">
                   <div className="navbar-header py-10">
                     <div className="mobile-logo">
-                      <Link href="/" style={{ fontSize: '28px', fontWeight: 'bold', color: '#ffb936', textDecoration: 'none' }}>
+                      <Link
+                        href="/"
+                        style={{
+                          fontSize: "28px",
+                          fontWeight: "bold",
+                          color: "#ffb936",
+                          textDecoration: "none",
+                        }}
+                      >
                         Blend
                       </Link>
                     </div>
@@ -335,7 +366,6 @@ const Header = ({ black }) => {
                       {categories?.map((elm, i) => {
                         const categorySubcategories =
                           subcategoriesByCategory[elm?.id] || [];
-                        console.log(elm, "elm", categorySubcategories);
                         const hasSubcategories =
                           categorySubcategories.length > 0;
 

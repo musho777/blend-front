@@ -78,6 +78,7 @@ export const ENDPOINTS = {
   ORDERS: {
     CREATE: "/public/orders",
     LIST: "/orders",
+    MY_ORDERS: "/public/orders/my-orders",
     ITEM: (id) => `/orders/${id}`,
   },
 

@@ -10,9 +10,14 @@ export const orderService = {
     });
   },
 
-  // Fetch all orders
+  // Fetch all orders (admin)
   getOrders: async () => {
     return apiClient(ENDPOINTS.ORDERS.LIST);
+  },
+
+  // Fetch user's own orders
+  getMyOrders: async () => {
+    return apiClient(ENDPOINTS.ORDERS.MY_ORDERS);
   },
 
   // Fetch single order
