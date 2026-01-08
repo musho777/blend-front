@@ -95,16 +95,17 @@ const OrderHistoryPage = () => {
                                         #{order.id}
                                       </h5>
                                     </div>
+                                    {console.log(order.status)}
                                     <span
                                       className={`badge ms-2 ms-md-0 ${
                                         order.status === "completed" ||
-                                        order.status === "delivered"
+                                        order.status === "success"
                                           ? "bg-success"
                                           : order.status === "pending"
                                           ? "bg-warning text-dark"
                                           : order.status === "processing"
                                           ? "bg-info"
-                                          : order.status === "cancelled"
+                                          : order.status === "rejected"
                                           ? "bg-danger"
                                           : "bg-secondary"
                                       }`}
