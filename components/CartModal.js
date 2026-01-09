@@ -44,7 +44,6 @@ const CartModal = () => {
                   className="cart-item d-flex align-items-center mb-3 pb-3"
                   style={{ borderBottom: "1px solid #eee" }}
                 >
-                  {console.log(item)}
                   <div className="cart-item-image me-3">
                     <img
                       src={
@@ -72,7 +71,13 @@ const CartModal = () => {
                       onChange={(newQuantity) =>
                         updateQuantity(item.productId, newQuantity)
                       }
+                      max={item.stock || 99}
                     />
+                    {item.stock && item.stock <= 10 && (
+                      <p className="mb-0 mt-1" style={{ color: "#ff6b6b", fontSize: "12px" }}>
+                        Only {item.stock} left in stock
+                      </p>
+                    )}
                   </div>
 
                   <div className="cart-item-total text-end">

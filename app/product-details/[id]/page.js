@@ -242,8 +242,14 @@ const ProductDetailsPage = ({ params }) => {
                       <QuantityControl
                         value={quantity}
                         onChange={setQuantity}
+                        max={product?.stock || 99}
                         disabled={product?.stock === 0}
                       />
+                      {product?.stock > 0 && product?.stock <= 10 && (
+                        <p style={{ color: "#ff6b6b", fontSize: "14px", marginTop: "8px" }}>
+                          Only {product.stock} left in stock!
+                        </p>
+                      )}
                       <button
                         type="submit"
                         className="theme-btn"

@@ -1,12 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Accordion, Modal } from "react-bootstrap";
 import { useCart } from "@/hooks/useCart";
 import { useCreateOrder } from "@/hooks/mutations/useOrderMutation";
+import { useAuth } from "@/hooks/useAuth";
 
 const CheckoutForm = () => {
   const { cart, subtotal, grandTotal, clearCart, closeCartModal } = useCart();
   const createOrder = useCreateOrder();
+  const { user, isAuthenticated } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -19,6 +21,19 @@ const CheckoutForm = () => {
   const [paymentMethod, setPaymentMethod] = useState("cash_on_delivery");
   const [error, setError] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  // Auto-fill form fields when user is authenticated
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      setFormData({
+        name: user.firstName || "",
+        surname: user.lastName || "",
+        email: user.email || "",
+        phone: user.phone || "",
+        address: user.address || "",
+      });
+    }
+  }, [isAuthenticated, user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
