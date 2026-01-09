@@ -32,7 +32,14 @@ const ProductCard = ({ product, index }) => {
               "assets/images/dishes/dish1.png"
             }
             alt={product.name || product.title}
-            style={product.stock === 0 ? { opacity: 0.6 } : {}}
+            width={400}
+            height={400}
+            loading="lazy"
+            style={
+              product.stock === 0
+                ? { opacity: 0.6, aspectRatio: '1/1', objectFit: 'cover' }
+                : { aspectRatio: '1/1', objectFit: 'cover' }
+            }
           />
           {product.stock === 0 && (
             <div
@@ -49,6 +56,9 @@ const ProductCard = ({ product, index }) => {
               <img
                 src="/assets/images/sold-out-grunge-rubber-stamp-free-png.webp"
                 alt="Sold Out"
+                width={200}
+                height={100}
+                loading="lazy"
                 style={{ width: "100%", height: "auto" }}
               />
             </div>

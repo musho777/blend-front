@@ -166,3 +166,44 @@
     overflow: hidden;
   }
 }
+
+/* Prevent Cumulative Layout Shift (CLS) */
+.offer-card-area {
+  min-height: 350px;
+}
+
+.offer-card-item .image {
+  position: relative;
+  /* overflow: hidden; */
+}
+
+.offer-card-item .image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Prevent layout shifts on image load */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Reserve space for hero images */
+.hero-images img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent navbar toggle shift */
+.navbar-toggle {
+  min-width: 40px;
+  min-height: 40px;
+}
+
+/* AOS animations - prevent layout shift */
+[data-aos] {
+  pointer-events: auto;
+}

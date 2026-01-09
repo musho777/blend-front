@@ -73,7 +73,14 @@ const page = () => {
                   data-aos-offset={50}
                 >
                   <div className="hero-images rmt-60">
-                    <img src="/assets/images/hero/hero-right.webp" alt="Hero" />
+                    <img
+                      src="/assets/images/hero/hero-right.webp"
+                      alt="Hero"
+                      width={600}
+                      height={600}
+                      loading="eager"
+                      style={{ maxWidth: '100%', height: 'auto' }}
+                    />
                   </div>
                 </div>
               </div>
@@ -144,6 +151,10 @@ const page = () => {
                           alt={
                             banners[activeBannerIndex].title || "Offer Image"
                           }
+                          width={500}
+                          height={500}
+                          loading="eager"
+                          style={{ maxWidth: '100%', height: 'auto' }}
                         />
                         {banners[activeBannerIndex].price && (
                           <div
@@ -229,6 +240,10 @@ const page = () => {
                       <img
                         src="/assets/images/offer/offer-img.png"
                         alt="Offer Image"
+                        width={500}
+                        height={500}
+                        loading="eager"
+                        style={{ maxWidth: '100%', height: 'auto' }}
                       />
                       <div
                         className="offer-badge"

@@ -46,34 +46,44 @@ const OfferCard = () => {
       {/* Desktop Grid View - Hidden on mobile */}
       <div className="offer-card-area d-none d-sm-block">
         <div className="row no-gap row-cols-xxl-5 row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 justify-content-center">
-        {offerCards.map((card, index) => (
-          <div
-            key={index}
-            className="col"
-            data-aos="fade-up"
-            data-aos-delay={card.delay}
-            data-aos-duration={1500}
-            data-aos-offset={50}
-          >
-            <div className={`offer-card-item ${card.style}`}>
-              <span className="title">‎ </span>
-              <div className="image">
-                <img src={card.image} alt={card.alt} />
-              </div>
-              <span className="title">‎ </span>
-              <div className="bg-text">
-                <span>{card.title}</span> <span>{card.title}</span>{" "}
-                <span>{card.title}</span>
+          {offerCards.map((card, index) => (
+            <div
+              key={index}
+              className="col"
+              data-aos="fade-up"
+              data-aos-delay={card.delay}
+              data-aos-duration={1500}
+              data-aos-offset={50}
+            >
+              <div className={`offer-card-item ${card.style}`}>
+                <span className="title">‎ </span>
+                <div className="image">
+                  <img
+                    src={card.image}
+                    alt={card.alt}
+                    width={300}
+                    height={300}
+                    loading="eager"
+                    style={{ width: "100%", height: "auto" }}
+                  />
+                </div>
+                <span className="title">‎ </span>
+                <div className="bg-text">
+                  <span>{card.title}</span> <span>{card.title}</span>{" "}
+                  <span>{card.title}</span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
         </div>
       </div>
 
       {/* Mobile Slider View - Visible only on mobile - Full Width */}
       <div className="d-block d-sm-none offer-card-mobile-slider">
-        <Slider {...sliderProps.offerCardSlider} className="offer-card-slider-mobile">
+        <Slider
+          {...sliderProps.offerCardSlider}
+          className="offer-card-slider-mobile"
+        >
           {offerCards.map((card, index) => (
             <div key={index}>
               <div
@@ -85,7 +95,14 @@ const OfferCard = () => {
               >
                 <span className="title">‎ </span>
                 <div className="image">
-                  <img src={card.image} alt={card.alt} />
+                  <img
+                    src={card.image}
+                    alt={card.alt}
+                    width={300}
+                    height={300}
+                    loading="eager"
+                    style={{ width: "100%", height: "auto" }}
+                  />
                 </div>
                 <span className="title">‎ </span>
                 <div className="bg-text">
