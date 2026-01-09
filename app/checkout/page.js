@@ -452,28 +452,28 @@ const page = () => {
                                 <td>
                                   Chicken Soup <strong>× 1</strong>
                                 </td>
-                                <td>$70.00</td>
+                                <td>70.00 AMD</td>
                               </tr>
                               <tr>
                                 <td>
                                   Alaskan Crab <strong>× 2</strong>
                                 </td>
-                                <td>$130.00</td>
+                                <td>130.00 AMD</td>
                               </tr>
                               <tr>
                                 <td>Shipping Fee</td>
-                                <td>$10.00</td>
+                                <td>10.00 AMD</td>
                               </tr>
                               <tr>
                                 <td>Vat</td>
-                                <td>$5.00</td>
+                                <td>5.00 AMD</td>
                               </tr>
                               <tr>
                                 <td>
                                   <strong>Order Total</strong>
                                 </td>
                                 <td>
-                                  <strong>$225.00</strong>
+                                  <strong>225.00 AMD</strong>
                                 </td>
                               </tr>
                             </tbody>

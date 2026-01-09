@@ -136,7 +136,7 @@ const page = () => {
                     </tr>
                     <tr>
                       <td>Vat</td>
-                      <td>$0.00</td>
+                      <td>0.00 AMD</td>
                     </tr>
                     <tr>
                       <td>

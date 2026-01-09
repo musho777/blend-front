@@ -12,7 +12,7 @@ const Item = ({ item }) => {
       <div className="content">
         <h5>
           <span className="title">{item.title}</span> <span className="dots" />{" "}
-          <span className="price">${item.price}</span>
+          <span className="price">{item.price} AMD</span>
         </h5>
         <p>{item.decs}</p>
       </div>

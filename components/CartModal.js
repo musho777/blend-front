@@ -64,7 +64,7 @@ const CartModal = () => {
                   <div className="cart-item-details flex-grow-1">
                     <h6 className="mb-1">{item.name}</h6>
                     <p className="mb-2" style={{ color: "#666" }}>
-                      ${item.price.toFixed(2)}
+                      {item.price.toFixed(2)} AMD
                     </p>
                     <QuantityControl
                       value={item.quantity}
@@ -83,7 +83,7 @@ const CartModal = () => {
                   <div className="cart-item-total text-end">
                     <div className="item-total mb-2">
                       <strong>
-                        ${(item.price * item.quantity).toFixed(2)}
+                        {(item.price * item.quantity).toFixed(2)} AMD
                       </strong>
                     </div>
                     <button
@@ -104,7 +104,7 @@ const CartModal = () => {
             >
               <div className="d-flex justify-content-between mb-2">
                 <span>Subtotal:</span>
-                <strong>${subtotal.toFixed(2)}</strong>
+                <strong>{subtotal.toFixed(2)} AMD</strong>
               </div>
               <div
                 className="d-flex justify-content-between pt-2"
@@ -114,7 +114,7 @@ const CartModal = () => {
                   <strong>Grand Total:</strong>
                 </span>
                 <strong style={{ color: "#ff6b6b" }}>
-                  ${grandTotal.toFixed(2)}
+                  {grandTotal.toFixed(2)} AMD
                 </strong>
               </div>
             </div>
