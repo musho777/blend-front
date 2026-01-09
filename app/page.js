@@ -104,7 +104,7 @@ const page = () => {
               ) : banners && banners.length > 0 ? (
                 <>
                   <div className="row align-items-center">
-                    <div className="col-lg-6">
+                    <div className="col-lg-6" key={`content-${activeBannerIndex}`}>
                       <div
                         className="offer-content text-white rmb-55"
                         data-aos="fade-left"
@@ -128,7 +128,7 @@ const page = () => {
                       </div>
                     </div>
 
-                    <div className="col-lg-6 ">
+                    <div className="col-lg-6 " key={`image-${activeBannerIndex}`}>
                       <div
                         style={{ display: "flex", justifyContent: "flex-end" }}
                         data-aos="fade-right"
