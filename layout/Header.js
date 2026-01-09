@@ -209,7 +209,7 @@ const MobileMenu = ({ black }) => {
                       toggle ? "show" : ""
                     }`}
                   >
-                    <ul className="navigation clearfix">
+                    <ul className="navigation clearfix" style={{ gap: "20px", display: "flex" }}>
                       {categories?.map((elm, i) => {
                         const categorySubcategories =
                           subcategoriesByCategory[elm?.id] || [];
@@ -362,7 +362,7 @@ const Header = ({ black }) => {
                     </button>
                   </div>
                   <div className="navbar-collapse collapse clearfix">
-                    <ul className="navigation clearfix">
+                    <ul className="navigation clearfix" style={{ gap: "20px", display: "flex" }}>
                       {categories?.map((elm, i) => {
                         const categorySubcategories =
                           subcategoriesByCategory[elm?.id] || [];
