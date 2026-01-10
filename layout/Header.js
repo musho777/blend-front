@@ -202,7 +202,7 @@ const MobileMenu = ({ black }) => {
                   <Link
                     href="/"
                     style={{
-                      fontSize: "28px",
+                      fontSize: "36px",
                       fontWeight: "bold",
                       color: "#ffb936",
                       textDecoration: "none",
@@ -247,7 +247,7 @@ const MobileMenu = ({ black }) => {
                   >
                     <ul
                       className="navigation clearfix"
-                      style={{ gap: "20px", display: "flex" }}
+                      style={{ gap: "20px", display: "flex", fontSize: "18px" }}
                     >
                       {visibleCategories?.map((elm, i) => {
                         const categorySubcategories =
@@ -307,7 +307,7 @@ const MobileMenu = ({ black }) => {
                             }}
                           >
                             More{" "}
-                            <span style={{ fontSize: "0.9em" }}>
+                            <span style={{ fontSize: "0.85em" }}>
                               ({hiddenCategories.length})
                             </span>
                           </a>
@@ -332,7 +332,7 @@ const MobileMenu = ({ black }) => {
                   </div>
                 </nav>
               </div>
-              <div className="header-number">
+              <div className="header-number" style={{ fontSize: "18px" }}>
                 <i className="far fa-phone" />
                 Call : <a href="callto:+88012345688">+374 93 613 007</a>
               </div>
@@ -405,7 +405,7 @@ const Header = ({ black }) => {
                   <Link
                     href="/"
                     style={{
-                      fontSize: "28px",
+                      fontSize: "36px",
                       fontWeight: "bold",
                       color: "#ffb936",
                       textDecoration: "none",
@@ -446,7 +446,7 @@ const Header = ({ black }) => {
                   <div className="navbar-collapse collapse clearfix">
                     <ul
                       className="navigation clearfix"
-                      style={{ gap: "20px", display: "flex" }}
+                      style={{ gap: "20px", display: "flex", fontSize: "18px" }}
                     >
                       {visibleCategories?.map((elm, i) => {
                         const categorySubcategories =
@@ -500,7 +500,7 @@ const Header = ({ black }) => {
                             }}
                           >
                             More{" "}
-                            <span style={{ fontSize: "0.9em" }}>
+                            <span style={{ fontSize: "0.85em" }}>
                               ({hiddenCategories.length})
                             </span>
                           </a>
@@ -650,7 +650,7 @@ const Header = ({ black }) => {
                   </div>
                 </nav>
               </div>
-              <div className="header-number">
+              <div className="header-number" style={{ fontSize: "18px" }}>
                 <i className="far fa-phone" />
                 Call : <a href="callto:+88012345688">+374 93 613 007</a>
               </div>
