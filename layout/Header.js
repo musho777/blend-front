@@ -8,6 +8,30 @@ import { useSubcategories } from "@/hooks/queries/useSubcategoriesQuery";
 import CartIcon from "@/components/CartIcon";
 import AuthButtons from "@/components/AuthButtons";
 
+// Custom hook for responsive category limit
+const useCategoryLimit = () => {
+  const [categoryLimit, setCategoryLimit] = useState(4);
+
+  useEffect(() => {
+    const updateLimit = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setCategoryLimit(4); // Mobile
+      } else if (width < 1440) {
+        setCategoryLimit(6); // Tablet
+      } else {
+        setCategoryLimit(8); // Desktop - max 8
+      }
+    };
+
+    updateLimit();
+    window.addEventListener("resize", updateLimit);
+    return () => window.removeEventListener("resize", updateLimit);
+  }, []);
+
+  return categoryLimit;
+};
+
 const Sidebar = () => {
   return (
     <Fragment>
@@ -132,7 +156,7 @@ const MobileMenu = ({ black }) => {
   const [activeMenu, setActiveMenu] = useState("");
   const { data: categories, isLoading, isError } = useCategories();
   const { data: subcategories } = useSubcategories();
-  const CATEGORY_LIMIT = 4; // Number of categories to show before "More"
+  const CATEGORY_LIMIT = useCategoryLimit(); // Responsive category limit
 
   // Group subcategories by categoryId for efficient lookup
   const subcategoriesByCategory = useMemo(() => {
@@ -335,7 +359,7 @@ const MobileMenu = ({ black }) => {
 const Header = ({ black }) => {
   const { data: categories, isLoading, isError } = useCategories();
   const { data: subcategories } = useSubcategories();
-  const CATEGORY_LIMIT = 5; // Number of categories to show before "More"
+  const CATEGORY_LIMIT = useCategoryLimit(); // Responsive category limit
 
   // Group subcategories by categoryId for efficient lookup
   const subcategoriesByCategory = useMemo(() => {
