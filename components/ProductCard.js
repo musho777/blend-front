@@ -27,18 +27,15 @@ const ProductCard = ({ product, index }) => {
       >
         <div className="image" style={{ position: "relative" }}>
           <img
-            src={
-              `${process.env.NEXT_PUBLIC_BASE_URL}/${product.imageUrls[0]}` ||
-              "assets/images/dishes/dish1.png"
-            }
+            src={`${product.imageUrls[0]}` || "assets/images/dishes/dish1.png"}
             alt={product.name || product.title}
             width={400}
             height={400}
             loading="lazy"
             style={
               product.stock === 0
-                ? { opacity: 0.6, aspectRatio: '1/1', objectFit: 'cover' }
-                : { aspectRatio: '1/1', objectFit: 'cover' }
+                ? { opacity: 0.6, aspectRatio: "1/1", objectFit: "cover" }
+                : { aspectRatio: "1/1", objectFit: "cover" }
             }
           />
           {product.stock === 0 && (

@@ -82,46 +82,48 @@ const OfferCard = () => {
         <div className="row no-gap row-cols-xxl-5 row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 justify-content-center">
           {offersData?.slice(0, 5)?.map((card, index) => {
             const truncatedTitle = card.title?.slice(0, 5) || "";
-            const cardStyle = card.style || (index % 2 === 0 ? "" : "style-two");
+            const cardStyle =
+              card.style || (index % 2 === 0 ? "" : "style-two");
 
             return (
-            <div
-              key={index}
-              className="col"
-              data-aos="fade-up"
-              data-aos-delay={card.delay || index * 50}
-              data-aos-duration={1500}
-              data-aos-offset={50}
-            >
               <div
-                className={`offer-card-item ${cardStyle}`}
-                onClick={() => handleCardClick(card)}
-                style={{
-                  cursor: card.id || card.slug ? "pointer" : "default",
-                }}
+                key={index}
+                className="col"
+                data-aos="fade-up"
+                data-aos-delay={card.delay || index * 50}
+                data-aos-duration={1500}
+                data-aos-offset={50}
               >
-                <span className="title">‎ </span>
-                <div className="image">
-                  <img
-                    src={
-                      `${process.env.NEXT_PUBLIC_BASE_URL}/${card.imageUrls[0]}` ||
-                      "assets/images/dishes/dish1.png"
-                    }
-                    alt={card.alt}
-                    width={300}
-                    height={300}
-                    loading="eager"
-                    style={{ width: "100%", height: "auto" }}
-                  />
-                </div>
-                <span className="title">‎ </span>
-                <div className="bg-text">
-                  <span>{truncatedTitle}</span> <span>{truncatedTitle}</span>{" "}
-                  <span>{truncatedTitle}</span>
+                <div
+                  className={`offer-card-item ${cardStyle}`}
+                  onClick={() => handleCardClick(card)}
+                  style={{
+                    cursor: card.id || card.slug ? "pointer" : "default",
+                  }}
+                >
+                  <span className="title">‎ </span>
+                  <div className="image">
+                    <img
+                      src={
+                        `${card.imageUrls[0]}` ||
+                        "assets/images/dishes/dish1.png"
+                      }
+                      alt={card.alt}
+                      width={300}
+                      height={300}
+                      loading="eager"
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                  </div>
+                  <span className="title">‎ </span>
+                  <div className="bg-text">
+                    <span>{truncatedTitle}</span> <span>{truncatedTitle}</span>{" "}
+                    <span>{truncatedTitle}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          )})}
+            );
+          })}
         </div>
       </div>
 
@@ -133,41 +135,42 @@ const OfferCard = () => {
         >
           {offersData?.slice(0, 5)?.map((card, index) => {
             const truncatedTitle = card.title?.slice(0, 5) || "";
-            const cardStyle = card.style || (index % 2 === 0 ? "" : "style-two");
+            const cardStyle =
+              card.style || (index % 2 === 0 ? "" : "style-two");
 
             return (
-            <div key={index}>
-              <div
-                className={`offer-card-item ${cardStyle}`}
-                data-aos="fade-up"
-                data-aos-delay={card.delay || index * 50}
-                data-aos-duration={1500}
-                data-aos-offset={50}
-                onClick={() => handleCardClick(card)}
-                style={{
-                  cursor: card.id || card.slug ? "pointer" : "default",
-                }}
-              >
-                <span className="title">‎ </span>
-                <div className="image">
-                  <img
-                    src={card.image}
-                    alt={card.alt}
-                    width={300}
-                    height={300}
-                    loading="eager"
-                    style={{ width: "100%", height: "auto" }}
-                  />
-                </div>
-                <span className="title">‎ </span>
-                <div className="bg-text">
-                  <span>{truncatedTitle}</span> <span>{truncatedTitle}</span>{" "}
-                  <span>{truncatedTitle}</span>
+              <div key={index}>
+                <div
+                  className={`offer-card-item ${cardStyle}`}
+                  data-aos="fade-up"
+                  data-aos-delay={card.delay || index * 50}
+                  data-aos-duration={1500}
+                  data-aos-offset={50}
+                  onClick={() => handleCardClick(card)}
+                  style={{
+                    cursor: card.id || card.slug ? "pointer" : "default",
+                  }}
+                >
+                  <span className="title">‎ </span>
+                  <div className="image">
+                    <img
+                      src={card.image}
+                      alt={card.alt}
+                      width={300}
+                      height={300}
+                      loading="eager"
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                  </div>
+                  <span className="title">‎ </span>
+                  <div className="bg-text">
+                    <span>{truncatedTitle}</span> <span>{truncatedTitle}</span>{" "}
+                    <span>{truncatedTitle}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          )})}
-
+            );
+          })}
         </Slider>
       </div>
     </>
