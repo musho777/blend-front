@@ -275,7 +275,13 @@ const MobileMenu = ({ black }) => {
                       })}
                       {hiddenCategories.length > 0 && (
                         <li className="dropdown">
-                          <a href="#">
+                          <a
+                            href="#"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              activeMenuSet("more-categories");
+                            }}
+                          >
                             More{" "}
                             <span style={{ fontSize: "0.9em" }}>
                               ({hiddenCategories.length})
@@ -463,7 +469,12 @@ const Header = ({ black }) => {
                       })}
                       {hiddenCategories.length > 0 && (
                         <li className="dropdown">
-                          <a href="#">
+                          <a
+                            href="#"
+                            onClick={(e) => {
+                              e.preventDefault();
+                            }}
+                          >
                             More{" "}
                             <span style={{ fontSize: "0.9em" }}>
                               ({hiddenCategories.length})
