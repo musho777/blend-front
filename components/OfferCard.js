@@ -80,17 +80,21 @@ const OfferCard = () => {
       {/* Desktop Grid View - Hidden on mobile */}
       <div className="offer-card-area d-none d-sm-block">
         <div className="row no-gap row-cols-xxl-5 row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 justify-content-center">
-          {offersData?.slice(0, 5)?.map((card, index) => (
+          {offersData?.slice(0, 5)?.map((card, index) => {
+            const truncatedTitle = card.title?.slice(0, 5) || "";
+            const cardStyle = card.style || (index % 2 === 0 ? "" : "style-two");
+
+            return (
             <div
               key={index}
               className="col"
               data-aos="fade-up"
-              data-aos-delay={card.delay}
+              data-aos-delay={card.delay || index * 50}
               data-aos-duration={1500}
               data-aos-offset={50}
             >
               <div
-                className={`offer-card-item ${card.style}`}
+                className={`offer-card-item ${cardStyle}`}
                 onClick={() => handleCardClick(card)}
                 style={{
                   cursor: card.id || card.slug ? "pointer" : "default",
@@ -112,12 +116,12 @@ const OfferCard = () => {
                 </div>
                 <span className="title">‎ </span>
                 <div className="bg-text">
-                  <span>{card.title}</span> <span>{card.title}</span>{" "}
-                  <span>{card.title}</span>
+                  <span>{truncatedTitle}</span> <span>{truncatedTitle}</span>{" "}
+                  <span>{truncatedTitle}</span>
                 </div>
               </div>
             </div>
-          ))}
+          )})}
         </div>
       </div>
 
@@ -127,12 +131,16 @@ const OfferCard = () => {
           {...sliderProps.offerCardSlider}
           className="offer-card-slider-mobile"
         >
-          {offersData?.slice(0, 5)?.map((card, index) => (
+          {offersData?.slice(0, 5)?.map((card, index) => {
+            const truncatedTitle = card.title?.slice(0, 5) || "";
+            const cardStyle = card.style || (index % 2 === 0 ? "" : "style-two");
+
+            return (
             <div key={index}>
               <div
-                className={`offer-card-item ${card.style}`}
+                className={`offer-card-item ${cardStyle}`}
                 data-aos="fade-up"
-                data-aos-delay={card.delay}
+                data-aos-delay={card.delay || index * 50}
                 data-aos-duration={1500}
                 data-aos-offset={50}
                 onClick={() => handleCardClick(card)}
@@ -153,12 +161,13 @@ const OfferCard = () => {
                 </div>
                 <span className="title">‎ </span>
                 <div className="bg-text">
-                  <span>{card.title}</span> <span>{card.title}</span>{" "}
-                  <span>{card.title}</span>
+                  <span>{truncatedTitle}</span> <span>{truncatedTitle}</span>{" "}
+                  <span>{truncatedTitle}</span>
                 </div>
               </div>
             </div>
-          ))}
+          )})}
+
         </Slider>
       </div>
     </>
