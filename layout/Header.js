@@ -10,7 +10,17 @@ import AuthButtons from "@/components/AuthButtons";
 
 // Custom hook for responsive category limit
 const useCategoryLimit = () => {
-  const [categoryLimit, setCategoryLimit] = useState(4);
+  const [categoryLimit, setCategoryLimit] = useState(() => {
+    if (typeof window === 'undefined') return 8; // Server-side default
+    const width = window.innerWidth;
+    if (width < 768) {
+      return 4; // Mobile
+    } else if (width < 1440) {
+      return 6; // Tablet
+    } else {
+      return 8; // Desktop - max 8
+    }
+  });
 
   useEffect(() => {
     const updateLimit = () => {
@@ -181,7 +191,7 @@ const MobileMenu = ({ black }) => {
       visibleCategories: categories.slice(0, CATEGORY_LIMIT),
       hiddenCategories: categories.slice(CATEGORY_LIMIT),
     };
-  }, [categories]);
+  }, [categories, CATEGORY_LIMIT]);
 
   const activeMenuSet = (value) =>
       setActiveMenu(activeMenu === value ? "" : value),
@@ -384,7 +394,7 @@ const Header = ({ black }) => {
       visibleCategories: categories.slice(0, CATEGORY_LIMIT),
       hiddenCategories: categories.slice(CATEGORY_LIMIT),
     };
-  }, [categories]);
+  }, [categories, CATEGORY_LIMIT]);
 
   useEffect(() => {
     wellfoodUtility.fixedHeader();
