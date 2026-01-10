@@ -30,7 +30,16 @@ export const ENDPOINTS = {
     LIST: "/products",
     ITEM: (id) => `/products/${id}`,
     SEARCH: "/products/search",
-    BY_CATEGORY: (categoryId, page = 1, limit = 10, subcategoryId = null, search = null, sortBy = null, minPrice = null, maxPrice = null) => {
+    BY_CATEGORY: (
+      categoryId,
+      page = 1,
+      limit = 10,
+      subcategoryId = null,
+      search = null,
+      sortBy = null,
+      minPrice = null,
+      maxPrice = null
+    ) => {
       let url = `/categories/${categoryId}/products?page=${page}&limit=${limit}`;
       if (subcategoryId) {
         url += `&subcategoryId=${subcategoryId}`;
@@ -90,5 +99,10 @@ export const ENDPOINTS = {
     RESEND_OTP: "/auth/resend-otp",
     LOGOUT: "/auth/logout",
     ME: "/auth/me",
+  },
+
+  // Offer endpoints
+  OFFERS: {
+    LIST: "/home/best-select",
   },
 };

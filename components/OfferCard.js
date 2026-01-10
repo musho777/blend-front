@@ -1,9 +1,13 @@
 "use client";
+import { useMemo } from "react";
 import Slider from "react-slick";
 import { sliderProps } from "@/utility/sliderProps";
+import { useOffers } from "@/hooks/queries/useOffersQuery";
 
 const OfferCard = () => {
-  const offerCards = [
+  const { data: offersData, isLoading, isError } = useOffers();
+
+  const defaultOfferCards = [
     {
       image: "/assets/images/offer/offer-card1.png",
       alt: "tobacco",
@@ -41,12 +45,42 @@ const OfferCard = () => {
     },
   ];
 
+  // const offerCards = useMemo(() => {
+  //   if (offersData && offersData.data && Array.isArray(offersData.data)) {
+  //     return offersData.data.slice(0, 5).map((offer, index) => ({
+  //       id: offer.id || offer._id,
+  //       slug: offer.slug,
+  //       image:
+  //         offer.image ||
+  //         offer.imageUrl ||
+  //         `/assets/images/offer/offer-card${index + 1}.png`,
+  //       alt: offer.alt || offer.name || offer.title || "offer",
+  //       title: offer.title || offer.name || "Offer",
+  //       style: index % 2 === 0 ? "" : "style-two",
+  //       delay: index * 50,
+  //     }));
+  //   }
+  //   return defaultOfferCards;
+  // }, [offersData]);
+
+  // const handleCardClick = (card) => {
+  //   if (card.id || card.slug) {
+  //     window.location.href = `/category/${card.slug || card.id}`;
+  //   }
+  // };
+  const handleCardClick = (card) => {
+    if (card.id || card.slug) {
+      window.location.href = `/product-details/${card.id || card.slug}`;
+    }
+  };
+
+  if (offersData?.length === 0) return null;
   return (
     <>
       {/* Desktop Grid View - Hidden on mobile */}
       <div className="offer-card-area d-none d-sm-block">
         <div className="row no-gap row-cols-xxl-5 row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 justify-content-center">
-          {offerCards.map((card, index) => (
+          {offersData?.slice(0, 5)?.map((card, index) => (
             <div
               key={index}
               className="col"
@@ -55,11 +89,20 @@ const OfferCard = () => {
               data-aos-duration={1500}
               data-aos-offset={50}
             >
-              <div className={`offer-card-item ${card.style}`}>
+              <div
+                className={`offer-card-item ${card.style}`}
+                onClick={() => handleCardClick(card)}
+                style={{
+                  cursor: card.id || card.slug ? "pointer" : "default",
+                }}
+              >
                 <span className="title">‎ </span>
                 <div className="image">
                   <img
-                    src={card.image}
+                    src={
+                      `${process.env.NEXT_PUBLIC_BASE_URL}/${card.imageUrls[0]}` ||
+                      "assets/images/dishes/dish1.png"
+                    }
                     alt={card.alt}
                     width={300}
                     height={300}
@@ -84,7 +127,7 @@ const OfferCard = () => {
           {...sliderProps.offerCardSlider}
           className="offer-card-slider-mobile"
         >
-          {offerCards.map((card, index) => (
+          {offersData?.slice(0, 5)?.map((card, index) => (
             <div key={index}>
               <div
                 className={`offer-card-item ${card.style}`}
@@ -92,6 +135,10 @@ const OfferCard = () => {
                 data-aos-delay={card.delay}
                 data-aos-duration={1500}
                 data-aos-offset={50}
+                onClick={() => handleCardClick(card)}
+                style={{
+                  cursor: card.id || card.slug ? "pointer" : "default",
+                }}
               >
                 <span className="title">‎ </span>
                 <div className="image">
