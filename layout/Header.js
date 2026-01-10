@@ -132,6 +132,7 @@ const MobileMenu = ({ black }) => {
   const [activeMenu, setActiveMenu] = useState("");
   const { data: categories, isLoading, isError } = useCategories();
   const { data: subcategories } = useSubcategories();
+  const CATEGORY_LIMIT = 4; // Number of categories to show before "More"
 
   // Group subcategories by categoryId for efficient lookup
   const subcategoriesByCategory = useMemo(() => {
@@ -146,6 +147,17 @@ const MobileMenu = ({ black }) => {
       return acc;
     }, {});
   }, [subcategories]);
+
+  // Split categories into visible and hidden
+  const { visibleCategories, hiddenCategories } = useMemo(() => {
+    if (!categories || categories.length <= CATEGORY_LIMIT) {
+      return { visibleCategories: categories || [], hiddenCategories: [] };
+    }
+    return {
+      visibleCategories: categories.slice(0, CATEGORY_LIMIT),
+      hiddenCategories: categories.slice(CATEGORY_LIMIT),
+    };
+  }, [categories]);
 
   const activeMenuSet = (value) =>
       setActiveMenu(activeMenu === value ? "" : value),
@@ -209,8 +221,11 @@ const MobileMenu = ({ black }) => {
                       toggle ? "show" : ""
                     }`}
                   >
-                    <ul className="navigation clearfix" style={{ gap: "20px", display: "flex" }}>
-                      {categories?.map((elm, i) => {
+                    <ul
+                      className="navigation clearfix"
+                      style={{ gap: "20px", display: "flex" }}
+                    >
+                      {visibleCategories?.map((elm, i) => {
                         const categorySubcategories =
                           subcategoriesByCategory[elm?.id] || [];
                         const hasSubcategories =
@@ -258,6 +273,31 @@ const MobileMenu = ({ black }) => {
                           </li>
                         );
                       })}
+                      {hiddenCategories.length > 0 && (
+                        <li className="dropdown">
+                          <a href="#">
+                            More{" "}
+                            <span style={{ fontSize: "0.9em" }}>
+                              ({hiddenCategories.length})
+                            </span>
+                          </a>
+                          <ul style={activeLi("more-categories")}>
+                            {hiddenCategories.map((elm, i) => (
+                              <li key={`more-${i}`}>
+                                <Link href={`/category/${elm?.slug}`}>
+                                  {elm.title}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                          <div
+                            className="dropdown-btn"
+                            onClick={() => activeMenuSet("more-categories")}
+                          >
+                            <span className="far fa-angle-down" />
+                          </div>
+                        </li>
+                      )}
                     </ul>
                   </div>
                 </nav>
@@ -289,6 +329,7 @@ const MobileMenu = ({ black }) => {
 const Header = ({ black }) => {
   const { data: categories, isLoading, isError } = useCategories();
   const { data: subcategories } = useSubcategories();
+  const CATEGORY_LIMIT = 5; // Number of categories to show before "More"
 
   // Group subcategories by categoryId for efficient lookup
   const subcategoriesByCategory = useMemo(() => {
@@ -303,6 +344,17 @@ const Header = ({ black }) => {
       return acc;
     }, {});
   }, [subcategories]);
+
+  // Split categories into visible and hidden
+  const { visibleCategories, hiddenCategories } = useMemo(() => {
+    if (!categories || categories.length <= CATEGORY_LIMIT) {
+      return { visibleCategories: categories || [], hiddenCategories: [] };
+    }
+    return {
+      visibleCategories: categories.slice(0, CATEGORY_LIMIT),
+      hiddenCategories: categories.slice(CATEGORY_LIMIT),
+    };
+  }, [categories]);
 
   useEffect(() => {
     wellfoodUtility.fixedHeader();
@@ -362,8 +414,11 @@ const Header = ({ black }) => {
                     </button>
                   </div>
                   <div className="navbar-collapse collapse clearfix">
-                    <ul className="navigation clearfix" style={{ gap: "20px", display: "flex" }}>
-                      {categories?.map((elm, i) => {
+                    <ul
+                      className="navigation clearfix"
+                      style={{ gap: "20px", display: "flex" }}
+                    >
+                      {visibleCategories?.map((elm, i) => {
                         const categorySubcategories =
                           subcategoriesByCategory[elm?.id] || [];
                         const hasSubcategories =
@@ -406,6 +461,28 @@ const Header = ({ black }) => {
                           </li>
                         );
                       })}
+                      {hiddenCategories.length > 0 && (
+                        <li className="dropdown">
+                          <a href="#">
+                            More{" "}
+                            <span style={{ fontSize: "0.9em" }}>
+                              ({hiddenCategories.length})
+                            </span>
+                          </a>
+                          <ul>
+                            {hiddenCategories.map((elm, i) => (
+                              <li key={`more-${i}`}>
+                                <Link href={`/category/${elm?.slug}`}>
+                                  {elm.title}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                          <div className="dropdown-btn">
+                            <span className="far fa-angle-down" />
+                          </div>
+                        </li>
+                      )}
                       {/* <li className="dropdown">
                         <a href="#">Home</a>
                         <ul>
