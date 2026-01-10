@@ -79,7 +79,7 @@ const page = () => {
                       width={600}
                       height={600}
                       loading="eager"
-                      style={{ maxWidth: '100%', height: 'auto' }}
+                      style={{ maxWidth: "100%", height: "auto" }}
                     />
                   </div>
                 </div>
@@ -111,7 +111,10 @@ const page = () => {
               ) : banners && banners.length > 0 ? (
                 <>
                   <div className="row align-items-center">
-                    <div className="col-lg-6" key={`content-${activeBannerIndex}`}>
+                    <div
+                      className="col-lg-6"
+                      key={`content-${activeBannerIndex}`}
+                    >
                       <div
                         className="offer-content text-white rmb-55"
                         data-aos="fade-left"
@@ -135,7 +138,10 @@ const page = () => {
                       </div>
                     </div>
 
-                    <div className="col-lg-6 " key={`image-${activeBannerIndex}`}>
+                    <div
+                      className="col-lg-6 "
+                      key={`image-${activeBannerIndex}`}
+                    >
                       <div
                         style={{ display: "flex", justifyContent: "flex-end" }}
                         data-aos="fade-right"
@@ -144,17 +150,14 @@ const page = () => {
                         data-aos-offset={50}
                       >
                         <img
-                          src={
-                            `${process.env.NEXT_PUBLIC_BASE_URL}/${banners[activeBannerIndex].image}` ||
-                            "assets/images/offer/offer-img.png"
-                          }
+                          src={banners[activeBannerIndex].image}
                           alt={
                             banners[activeBannerIndex].title || "Offer Image"
                           }
                           width={500}
                           height={500}
                           loading="eager"
-                          style={{ maxWidth: '100%', height: 'auto' }}
+                          style={{ maxWidth: "100%", height: "auto" }}
                         />
                         {banners[activeBannerIndex].price && (
                           <div
@@ -243,7 +246,7 @@ const page = () => {
                         width={500}
                         height={500}
                         loading="eager"
-                        style={{ maxWidth: '100%', height: 'auto' }}
+                        style={{ maxWidth: "100%", height: "auto" }}
                       />
                       <div
                         className="offer-badge"

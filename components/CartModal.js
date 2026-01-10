@@ -46,11 +46,7 @@ const CartModal = () => {
                 >
                   <div className="cart-item-image me-3">
                     <img
-                      src={
-                        item.imageUrl
-                          ? `${process.env.NEXT_PUBLIC_BASE_URL}/${item.imageUrl}`
-                          : "/assets/images/products/product-details.jpg"
-                      }
+                      src={item.imageUrl}
                       alt={item.name}
                       style={{
                         width: "80px",
@@ -74,7 +70,10 @@ const CartModal = () => {
                       max={item.stock || 99}
                     />
                     {item.stock && item.stock <= 10 && (
-                      <p className="mb-0 mt-1" style={{ color: "#ff6b6b", fontSize: "12px" }}>
+                      <p
+                        className="mb-0 mt-1"
+                        style={{ color: "green", fontSize: "12px" }}
+                      >
                         Only {item.stock} left in stock
                       </p>
                     )}

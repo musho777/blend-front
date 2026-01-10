@@ -140,7 +140,7 @@ const ProductDetailsPage = ({ params }) => {
                         {product?.imageUrls.map((imageUrl, index) => (
                           <div key={index} className="slider-item">
                             <img
-                              src={`${process.env.NEXT_PUBLIC_BASE_URL}/${imageUrl}`}
+                              src={imageUrl}
                               alt={`${product.name || product.title} - Image ${
                                 index + 1
                               }`}
@@ -157,7 +157,7 @@ const ProductDetailsPage = ({ params }) => {
                     ) : product?.imageUrls &&
                       product?.imageUrls.length === 1 ? (
                       <img
-                        src={`${process.env.NEXT_PUBLIC_BASE_URL}/${product.imageUrls[0]}`}
+                        src={product.imageUrls[0]}
                         alt={product?.name || product?.title}
                         style={{
                           width: "100%",
@@ -246,7 +246,13 @@ const ProductDetailsPage = ({ params }) => {
                         disabled={product?.stock === 0}
                       />
                       {product?.stock > 0 && product?.stock <= 10 && (
-                        <p style={{ color: "#ff6b6b", fontSize: "14px", marginTop: "8px" }}>
+                        <p
+                          style={{
+                            color: "#ff6b6b",
+                            fontSize: "14px",
+                            marginTop: "8px",
+                          }}
+                        >
                           Only {product.stock} left in stock!
                         </p>
                       )}
@@ -361,10 +367,7 @@ const ProductDetailsPage = ({ params }) => {
                             style={{ position: "relative" }}
                           >
                             <img
-                              src={
-                                `${process.env.NEXT_PUBLIC_BASE_URL}/${suggestedProduct.imageUrls?.[0]}` ||
-                                "assets/images/dishes/dish1.png"
-                              }
+                              src={suggestedProduct.imageUrls?.[0]}
                               alt={
                                 suggestedProduct.name || suggestedProduct.title
                               }
