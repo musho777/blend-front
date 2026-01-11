@@ -203,10 +203,10 @@ const DefaultFooter = () => {
             <div className="col-lg-7 text-center text-lg-end">
               <ul className="footer-bottom-nav">
                 <li>
-                  <a href="#">Privacy Policy</a>
+                  <Link href="/privacy-policy">Privacy Policy</Link>
                 </li>
                 <li>
-                  <a href="#">Terms &amp; Condition</a>
+                  <Link href="/terms-condition">Terms &amp; Condition</Link>
                 </li>
               </ul>
             </div>
@@ -246,12 +246,12 @@ const Footer2 = () => {
                   eveniet voluta repudiandae molestiae recusandae
                 </p>
                 <div className="social-style-one mt-15">
-                  <Link href="https://t.me/blend7_am">
-                    <i className="fab fa-telegram" />
-                  </Link>
-
                   <Link href="https://www.instagram.com/blend.arm?igsh=MWZ6ZjRmaW45cXpybw==">
                     <i className="fab fa-instagram" />
+                  </Link>
+
+                  <Link href="https://t.me/blend7_am">
+                    <i className="fab fa-telegram" />
                   </Link>
                 </div>
               </div>
@@ -373,10 +373,10 @@ const Footer2 = () => {
             <div className="col-lg-7 text-center text-lg-end">
               <ul className="footer-bottom-nav">
                 <li>
-                  <a href="#">Privacy Policy</a>
+                  <Link href="/privacy-policy">Privacy Policy</Link>
                 </li>
                 <li>
-                  <a href="#">Terms &amp; Condition</a>
+                  <Link href="/terms-condition">Terms &amp; Condition</Link>
                 </li>
               </ul>
             </div>
@@ -520,10 +520,10 @@ const Footer3 = () => {
             <div className="col-lg-7 text-center text-lg-end">
               <ul className="footer-bottom-nav">
                 <li>
-                  <a href="#">Privacy Policy</a>
+                  <Link href="/privacy-policy">Privacy Policy</Link>
                 </li>
                 <li>
-                  <a href="#">Terms &amp; Condition</a>
+                  <Link href="/terms-condition">Terms &amp; Condition</Link>
                 </li>
               </ul>
             </div>
@@ -607,7 +607,7 @@ const Footer5 = () => {
                 </div>
                 <div className="social-style-one mt-5">
                   <Link href="https://www.instagram.com/blend.arm?igsh=MWZ6ZjRmaW45cXpybw==">
-                    <i className="fab fa-facebook-f" />
+                    <i className="fab fa-instagram" />
                   </Link>
                   <Link href="https://t.me/blend7_am">
                     <i className="fab fa-telegram" />
@@ -661,10 +661,10 @@ const Footer5 = () => {
             <div className="col-lg-7 text-center text-lg-end">
               <ul className="footer-bottom-nav">
                 <li>
-                  <a href="#">Privacy Policy</a>
+                  <Link href="/privacy-policy">Privacy Policy</Link>
                 </li>
                 <li>
-                  <a href="#">Terms &amp; Condition</a>
+                  <Link href="/terms-condition">Terms &amp; Condition</Link>
                 </li>
               </ul>
             </div>
@@ -781,10 +781,10 @@ const Footer6 = () => {
             <div className="col-lg-7 text-center text-lg-end">
               <ul className="footer-bottom-nav">
                 <li>
-                  <a href="#">Privacy Policy</a>
+                  <Link href="/privacy-policy">Privacy Policy</Link>
                 </li>
                 <li>
-                  <a href="#">Terms &amp; Condition</a>
+                  <Link href="/terms-condition">Terms &amp; Condition</Link>
                 </li>
               </ul>
             </div>

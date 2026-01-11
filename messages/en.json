@@ -191,5 +191,43 @@
     "itemsPlural": "items",
     "total": "Total",
     "viewDetails": "View Details"
+  },
+  "privacyPolicy": {
+    "pageTitle": "Privacy Policy",
+    "lastUpdated": "Last Updated: January 11, 2026",
+    "introduction": "At Blend, we value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data.",
+    "section1Title": "Information We Collect",
+    "section1Content": "We collect information you provide directly to us, such as when you create an account, place an order, or contact us. This may include your name, email address, phone number, delivery address, and payment information.",
+    "section2Title": "How We Use Your Information",
+    "section2Content": "We use the information we collect to process your orders, communicate with you, improve our services, and provide you with a personalized experience. We may also use your information to send you promotional offers and updates about our products.",
+    "section3Title": "Information Sharing",
+    "section3Content": "We do not sell or rent your personal information to third parties. We may share your information with service providers who help us operate our business, such as payment processors and delivery services, but only to the extent necessary to provide our services.",
+    "section4Title": "Data Security",
+    "section4Content": "We implement appropriate security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.",
+    "section5Title": "Your Rights",
+    "section5Content": "You have the right to access, update, or delete your personal information. You can also opt-out of receiving promotional communications from us at any time.",
+    "section6Title": "Contact Us",
+    "section6Content": "If you have any questions about this Privacy Policy, please contact us at blend@gmail.com or call us at +(374) 93 613 007."
+  },
+  "termsCondition": {
+    "pageTitle": "Terms & Conditions",
+    "lastUpdated": "Last Updated: January 11, 2026",
+    "introduction": "Welcome to Blend. By accessing or using our services, you agree to be bound by these Terms and Conditions. Please read them carefully.",
+    "section1Title": "Use of Services",
+    "section1Content": "You agree to use our services only for lawful purposes and in accordance with these Terms. You must not use our services in any way that could damage, disable, or impair our website or interfere with other users' access.",
+    "section2Title": "Orders and Payments",
+    "section2Content": "When you place an order, you are offering to purchase products at the prices displayed. All orders are subject to acceptance and availability. Payment must be made in full at the time of order placement using our accepted payment methods.",
+    "section3Title": "Delivery",
+    "section3Content": "We strive to deliver your orders within the estimated delivery time. However, delivery times may vary due to circumstances beyond our control. We are not liable for any delays in delivery.",
+    "section4Title": "Returns and Refunds",
+    "section4Content": "Due to the nature of our products (hookah and related items), we cannot accept returns unless the product is defective or damaged. Please contact us within 24 hours of delivery if you have any issues with your order.",
+    "section5Title": "Intellectual Property",
+    "section5Content": "All content on our website, including text, images, logos, and designs, is the property of Blend and is protected by copyright and trademark laws. You may not use any content without our prior written permission.",
+    "section6Title": "Limitation of Liability",
+    "section6Content": "To the fullest extent permitted by law, Blend shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of our services.",
+    "section7Title": "Changes to Terms",
+    "section7Content": "We reserve the right to modify these Terms and Conditions at any time. Any changes will be effective immediately upon posting on our website. Your continued use of our services constitutes acceptance of the updated Terms.",
+    "section8Title": "Contact Us",
+    "section8Content": "If you have any questions about these Terms and Conditions, please contact us at blend@gmail.com or call us at +(374) 93 613 007."
   }
 }
