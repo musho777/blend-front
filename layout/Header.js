@@ -219,10 +219,6 @@ const SearchBtn = () => {
   });
   return (
     <div className="nav-search py-10" ref={domNode}>
-      {/* <button
-        className="far fa-search"
-        onClick={() => setToggleSearch(!toggleSearch)}
-      /> */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -236,133 +232,12 @@ const SearchBtn = () => {
           className="searchbox"
           required=""
         />
-        {/* <button type="submit" className="searchbutton far fa-search" /> */}
       </form>
     </div>
   );
 };
 
-// Tablet hamburger component usable by both MobileMenu and Header
-const TabletHamburger = ({
-  visibleCategories,
-  hiddenCategories,
-  subcategoriesByCategory,
-  locale,
-}) => {
-  const [open, setOpen] = useState(false);
-  let domNode = useClickOutside(() => setOpen(false));
-
-  return (
-    <div className="tablet-hamburger" ref={domNode}>
-      <button
-        aria-label="Open categories"
-        className="hamburger-toggle"
-        onClick={() => setOpen(!open)}
-        style={{
-          background: "transparent",
-          border: "none",
-          fontSize: "22px",
-          cursor: "pointer",
-          color: "inherit",
-        }}
-      >
-        <i className="fa fa-bars" />
-      </button>
-
-      {open && (
-        <div
-          className="tablet-hamburger-panel"
-          style={{
-            position: "fixed",
-            top: 0,
-            right: 0,
-            height: "100%",
-            width: "320px",
-            maxWidth: "80%",
-            background: "#fff",
-            boxShadow: "-4px 0 12px rgba(0,0,0,0.15)",
-            zIndex: 9999,
-            padding: "24px",
-            overflowY: "auto",
-          }}
-        >
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <h4 style={{ margin: 0 }}>Categories</h4>
-            <button
-              onClick={() => setOpen(false)}
-              style={{
-                background: "transparent",
-                border: "none",
-                fontSize: 20,
-              }}
-              aria-label="Close categories"
-            >
-              <i className="fa fa-times" />
-            </button>
-          </div>
-
-          <ul style={{ listStyle: "none", padding: 0, marginTop: 16 }}>
-            {visibleCategories?.map((c, idx) => {
-              const subs = subcategoriesByCategory[c?.id] || [];
-              return (
-                <li key={idx} style={{ marginBottom: 12 }}>
-                  <Link
-                    href={`/category/${c?.slug}`}
-                    onClick={() => setOpen(false)}
-                  >
-                    <div style={{ fontWeight: 600 }}>
-                      {getLocalizedTitle(c, locale)}
-                    </div>
-                  </Link>
-                  {subs.length > 0 && (
-                    <ul style={{ paddingLeft: 12, marginTop: 6 }}>
-                      {subs.map((s) => (
-                        <li key={s.id} style={{ marginBottom: 8 }}>
-                          <Link
-                            href={`/category/${c?.slug}?subcategoryId=${
-                              s.slug || s.id
-                            }`}
-                            onClick={() => setOpen(false)}
-                          >
-                            {getLocalizedTitle(s, locale)}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              );
-            })}
-
-            {hiddenCategories.length > 0 && (
-              <li style={{ marginTop: 8 }}>
-                <div style={{ fontWeight: 600 }}>
-                  More ({hiddenCategories.length})
-                </div>
-                <ul style={{ paddingLeft: 12, marginTop: 6 }}>
-                  {hiddenCategories.map((hc, i) => (
-                    <li key={`more-${i}`} style={{ marginBottom: 8 }}>
-                      <Link
-                        href={`/category/${hc?.slug}`}
-                        onClick={() => setOpen(false)}
-                      >
-                        {getLocalizedTitle(hc, locale)}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            )}
-          </ul>
-          {/* Language switcher for tablet/mobile menu drawer */}
-          <div style={{ marginTop: 18 }}>
-            <LanguageSwitcher />
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
+// NOTE: Tablet-specific hamburger removed — tablet will use the same hidden-bar drawer as mobile.
 const MobileMenu = ({ black }) => {
   const [toggle, setToggle] = useState(false);
   const [activeMenu, setActiveMenu] = useState("");
@@ -441,12 +316,25 @@ const MobileMenu = ({ black }) => {
               </div>
               <div className="nav-outer ms-lg-5 ps-xxl-4 clearfix">
                 {isTablet ? (
-                  <TabletHamburger
-                    visibleCategories={visibleCategories}
-                    hiddenCategories={hiddenCategories}
-                    subcategoriesByCategory={subcategoriesByCategory}
-                    locale={locale}
-                  />
+                  // On tablet, open the same hidden drawer used by mobile by toggling the body class.
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <button
+                      aria-label="Open drawer"
+                      className="hamburger-toggle"
+                      onClick={() =>
+                        document.body.classList.toggle("side-content-visible")
+                      }
+                      style={{
+                        background: "transparent",
+                        border: "none",
+                        fontSize: "22px",
+                        cursor: "pointer",
+                        color: "inherit",
+                      }}
+                    >
+                      <i className="fa fa-bars" />
+                    </button>
+                  </div>
                 ) : (
                   <nav className="main-menu navbar-expand-lg">
                     <div className="navbar-header py-10">
@@ -763,14 +651,26 @@ const Header = ({ black }) => {
                 </div>
               </div>
               <div className="nav-outer ms-lg-5 ps-xxl-4 clearfix">
-                {/* If tablet width, show hamburger icon that opens categories; otherwise show normal nav */}
+                {/* If tablet width, show a drawer-toggle that opens the same hidden-bar as mobile; otherwise show normal nav */}
                 {isTablet ? (
-                  <TabletHamburger
-                    visibleCategories={visibleCategories}
-                    hiddenCategories={hiddenCategories}
-                    subcategoriesByCategory={subcategoriesByCategory}
-                    locale={locale}
-                  />
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <button
+                      aria-label="Open categories"
+                      className="hamburger-toggle"
+                      onClick={() =>
+                        document.body.classList.toggle("side-content-visible")
+                      }
+                      style={{
+                        background: "transparent",
+                        border: "none",
+                        fontSize: "22px",
+                        cursor: "pointer",
+                        color: "inherit",
+                      }}
+                    >
+                      <i className="fa fa-bars" />
+                    </button>
+                  </div>
                 ) : (
                   <nav className="main-menu navbar-expand-lg">
                     <div className="navbar-header py-10">
