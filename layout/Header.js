@@ -258,7 +258,7 @@ const MobileMenu = ({ black }) => {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const isTablet = windowWidth >= 990 && windowWidth <= 1280;
+  const isTablet = windowWidth >= 990 && windowWidth <= 1200;
 
   // Group subcategories by categoryId for efficient lookup
   const subcategoriesByCategory = useMemo(() => {
@@ -317,24 +317,7 @@ const MobileMenu = ({ black }) => {
               <div className="nav-outer ms-lg-5 ps-xxl-4 clearfix">
                 {isTablet ? (
                   // On tablet, open the same hidden drawer used by mobile by toggling the body class.
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <button
-                      aria-label="Open drawer"
-                      className="hamburger-toggle"
-                      onClick={() =>
-                        document.body.classList.toggle("side-content-visible")
-                      }
-                      style={{
-                        background: "transparent",
-                        border: "none",
-                        fontSize: "22px",
-                        cursor: "pointer",
-                        color: "inherit",
-                      }}
-                    >
-                      <i className="fa fa-bars" />
-                    </button>
-                  </div>
+                  <div style={{ display: "flex", alignItems: "center" }}></div>
                 ) : (
                   <nav className="main-menu navbar-expand-lg">
                     <div className="navbar-header py-10">
@@ -619,7 +602,7 @@ const Header = ({ black }) => {
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
-  const isTablet = windowWidth >= 990 && windowWidth <= 1280;
+  const isTablet = windowWidth >= 990 && windowWidth <= 1200;
 
   useEffect(() => {
     wellfoodUtility.fixedHeader();
