@@ -1,5 +1,5 @@
 "use client";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 import PageBanner from "@/components/PageBanner";
 import WellFoodLayout from "@/layout/WellFoodLayout";
 import Link from "next/link";
@@ -10,6 +10,8 @@ import {
   useCategoryById,
 } from "@/hooks/queries/useCategoriesQuery";
 import { useProductsByCategory } from "@/hooks/queries/useProductsByCategoryQuery";
+import { useLocale } from "@/contexts/LocaleContext";
+import { getLocalizedTitle } from "@/utils/localization";
 import ProductCard from "@/components/ProductCard";
 import {
   Select,
@@ -21,7 +23,8 @@ import {
 } from "@mui/material";
 
 const CategoryPage = () => {
-  const t = useTranslations('category');
+  const t = useTranslations("category");
+  const { locale } = useLocale();
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -85,6 +88,9 @@ const CategoryPage = () => {
 
   const isLoading = categoriesLoading || categoryLoading || productsLoading;
   const category = categoryData || currentCategory;
+  const localizedCategoryTitle = category
+    ? getLocalizedTitle(category, locale)
+    : decodedSlug;
   const products = productsData?.data || [];
   const meta = productsData?.meta || {
     page: 1,
@@ -204,7 +210,7 @@ const CategoryPage = () => {
   return (
     <WellFoodLayout>
       <PageBanner
-        pageTitle={category?.name || category?.title || decodedSlug}
+        pageTitle={localizedCategoryTitle}
         backgroundImage={
           category?.image
             ? `${category.image}`
@@ -224,7 +230,7 @@ const CategoryPage = () => {
                   data-aos-duration={1500}
                   data-aos-offset={50}
                 >
-                  <h4 className="widget-title">{t('search')}</h4>
+                  <h4 className="widget-title">{t("search")}</h4>
                   <form
                     action="#"
                     className="default-search-form"
@@ -232,7 +238,7 @@ const CategoryPage = () => {
                   >
                     <input
                       type="text"
-                      placeholder={t('searchPlaceholder')}
+                      placeholder={t("searchPlaceholder")}
                       value={searchInput}
                       onChange={handleSearchChange}
                     />
@@ -286,7 +292,7 @@ const CategoryPage = () => {
                   data-aos-duration={1500}
                   data-aos-offset={50}
                 >
-                  <h4 className="widget-title">{t('pricing')}</h4>
+                  <h4 className="widget-title">{t("pricing")}</h4>
                   <Box sx={{ px: 2, py: 3 }}>
                     <Slider
                       value={priceRange}
@@ -353,13 +359,14 @@ const CategoryPage = () => {
                     data-aos-offset={50}
                   >
                     {isLoading
-                      ? t('loadingProducts')
-                      : `${t('showing')} ${(meta.page - 1) * meta.limit + 1}–${Math.min(
-                          meta.page * meta.limit,
-                          meta.total
-                        )} ${t('of')} ${meta.total} ${t('results')} ${
-                          category?.name || category?.title || decodedSlug
-                        }`}
+                      ? t("loadingProducts")
+                      : `${t("showing")} ${
+                          (meta.page - 1) * meta.limit + 1
+                        }–${Math.min(meta.page * meta.limit, meta.total)} ${t(
+                          "of"
+                        )} ${meta.total} ${t(
+                          "results"
+                        )} ${localizedCategoryTitle}`}
                   </div>
                   <div
                     className="products-dropdown mb-15"
@@ -386,14 +393,16 @@ const CategoryPage = () => {
                           },
                         }}
                       >
-                        <MenuItem value="default">{t('defaultSorting')}</MenuItem>
-                        <MenuItem value="newest">{t('newestSorting')}</MenuItem>
-                        <MenuItem value="oldest">{t('oldestSorting')}</MenuItem>
+                        <MenuItem value="default">
+                          {t("defaultSorting")}
+                        </MenuItem>
+                        <MenuItem value="newest">{t("newestSorting")}</MenuItem>
+                        <MenuItem value="oldest">{t("oldestSorting")}</MenuItem>
                         <MenuItem value="price_high_to_low">
-                          {t('highToLow')}
+                          {t("highToLow")}
                         </MenuItem>
                         <MenuItem value="price_low_to_high">
-                          {t('lowToHigh')}
+                          {t("lowToHigh")}
                         </MenuItem>
                       </Select>
                     </FormControl>

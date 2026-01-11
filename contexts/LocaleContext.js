@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useState, useEffect, useCallback } from 'react';
+import { createContext, useState, useEffect, useCallback, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 
 const LOCALE_STORAGE_KEY = 'wellfood_locale';
@@ -13,6 +13,15 @@ export const LocaleContext = createContext({
   locales: SUPPORTED_LOCALES,
   isInitialized: false,
 });
+
+// Custom hook to use the LocaleContext
+export function useLocale() {
+  const context = useContext(LocaleContext);
+  if (!context) {
+    throw new Error('useLocale must be used within a LocaleProvider');
+  }
+  return context;
+}
 
 export function LocaleProvider({ children }) {
   const router = useRouter();

@@ -1,10 +1,15 @@
 "use client";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 import WellFoodLayout from "@/layout/WellFoodLayout";
 import LoadingScreen from "@/components/LoadingScreen";
 import Link from "next/link";
 import { Nav, Tab } from "react-bootstrap";
 import { useProduct } from "@/hooks/queries/useProductQuery";
+import { useLocale } from "@/contexts/LocaleContext";
+import {
+  getLocalizedTitle,
+  getLocalizedDescription,
+} from "@/utils/localization";
 import Slider from "react-slick";
 import { useState, useEffect } from "react";
 import { useCart } from "@/hooks/useCart";
@@ -12,7 +17,8 @@ import QuantityControl from "@/components/QuantityControl";
 import { sliderProps } from "@/utility/sliderProps";
 
 const ProductDetailsPage = ({ params }) => {
-  const t = useTranslations('product');
+  const t = useTranslations("product");
+  const { locale } = useLocale();
   const { id } = params;
   const { data, isLoading, error } = useProduct(id);
   const [quantity, setQuantity] = useState(1);
@@ -21,6 +27,16 @@ const ProductDetailsPage = ({ params }) => {
 
   const product = data?.product || data;
   const suggestions = data?.suggestions || [];
+
+  const localizedProductTitle = product
+    ? getLocalizedTitle(product, locale)
+    : "";
+  const localizedProductDescription = product
+    ? getLocalizedDescription(product, locale)
+    : "";
+  const localizedCategoryName = product?.category
+    ? getLocalizedTitle(product.category, locale)
+    : product?.categoryName || "";
 
   // Set mounted state
   useEffect(() => {
@@ -143,7 +159,7 @@ const ProductDetailsPage = ({ params }) => {
                           <div key={index} className="slider-item">
                             <img
                               src={imageUrl}
-                              alt={`${product.name || product.title} - Image ${
+                              alt={`${localizedProductTitle} - Image ${
                                 index + 1
                               }`}
                               style={{
@@ -160,7 +176,7 @@ const ProductDetailsPage = ({ params }) => {
                       product?.imageUrls.length === 1 ? (
                       <img
                         src={product.imageUrls[0]}
-                        alt={product?.name || product?.title}
+                        alt={localizedProductTitle}
                         style={{
                           width: "100%",
                           height: "auto",
@@ -170,7 +186,7 @@ const ProductDetailsPage = ({ params }) => {
                     ) : (
                       <img
                         src="assets/images/products/product-details.jpg"
-                        alt={product?.name || product?.title}
+                        alt={localizedProductTitle}
                         style={{ opacity: product?.stock === 0 ? 0.6 : 1 }}
                       />
                     )}
@@ -203,7 +219,7 @@ const ProductDetailsPage = ({ params }) => {
                     data-aos-offset={50}
                   >
                     <div className="section-title">
-                      <h2>{product?.name || product?.title}</h2>
+                      <h2>{localizedProductTitle}</h2>
                     </div>
                     <span className="price mb-15">
                       {product?.originalPrice &&
@@ -232,7 +248,7 @@ const ProductDetailsPage = ({ params }) => {
                     <div
                       dangerouslySetInnerHTML={{
                         __html:
-                          product?.description ||
+                          localizedProductDescription ||
                           "<p>Delicious and freshly prepared. Perfect for any occasion.</p>",
                       }}
                     />
@@ -240,7 +256,7 @@ const ProductDetailsPage = ({ params }) => {
                       onSubmit={handleAddToCart}
                       className="add-to-cart py-25"
                     >
-                      <h5>{t('quantity')}</h5>
+                      <h5>{t("quantity")}</h5>
                       <QuantityControl
                         value={quantity}
                         onChange={setQuantity}
@@ -255,7 +271,7 @@ const ProductDetailsPage = ({ params }) => {
                             marginTop: "8px",
                           }}
                         >
-                          {t('onlyLeftInStock', { count: product.stock })}
+                          {t("onlyLeftInStock", { count: product.stock })}
                         </p>
                       )}
                       <button
@@ -272,16 +288,16 @@ const ProductDetailsPage = ({ params }) => {
                             : {}
                         }
                       >
-                        {product?.stock === 0 ? t('outOfStock') : t('addToCart')}{" "}
+                        {product?.stock === 0
+                          ? t("outOfStock")
+                          : t("addToCart")}{" "}
                         <i className="far fa-arrow-alt-right" />
                       </button>
                     </form>
                     <ul className="category-tags pt-20 pb-30">
-                      {(product?.category?.name ||
-                        product?.categoryName ||
-                        product?.category?.title) && (
+                      {localizedCategoryName && (
                         <li>
-                          <h6>{t('categories')}</h6> :
+                          <h6>{t("categories")}</h6> :
                           <Link
                             href={`/category/${
                               product?.category?.slug ||
@@ -290,9 +306,7 @@ const ProductDetailsPage = ({ params }) => {
                               product?.categoryId
                             }`}
                           >
-                            {product?.category?.name ||
-                              product?.categoryName ||
-                              product?.category?.title}
+                            {localizedCategoryName}
                           </Link>
                         </li>
                       )}
@@ -311,7 +325,7 @@ const ProductDetailsPage = ({ params }) => {
                   <Tab.Pane className="tab-pane fade" eventKey="details">
                     {product?.ingredients && (
                       <div className="mt-20">
-                        <h6>{t('ingredients')}</h6>
+                        <h6>{t("ingredients")}</h6>
                         <p>{product.ingredients}</p>
                       </div>
                     )}
@@ -331,9 +345,9 @@ const ProductDetailsPage = ({ params }) => {
                         data-aos-offset={50}
                       >
                         <span className="sub-title mb-5">
-                          {t('youMayAlsoLike')}
+                          {t("youMayAlsoLike")}
                         </span>
-                        <h2>{t('suggestedProducts')}</h2>
+                        <h2>{t("suggestedProducts")}</h2>
                       </div>
                     </div>
                   </div>
@@ -341,158 +355,166 @@ const ProductDetailsPage = ({ params }) => {
                     {...sliderProps.pizzaActive}
                     className="suggested-products-slider"
                   >
-                    {suggestions.map((suggestedProduct, index) => (
-                      <div key={suggestedProduct.id || index} className="px-2">
+                    {suggestions.map((suggestedProduct, index) => {
+                      const suggestedTitle = getLocalizedTitle(
+                        suggestedProduct,
+                        locale
+                      );
+                      const suggestedCategoryName = suggestedProduct.category
+                        ? getLocalizedTitle(suggestedProduct.category, locale)
+                        : suggestedProduct.categoryName || "";
+
+                      return (
                         <div
-                          className="product-item-two"
-                          onClick={() => {
-                            window.location.href = `/product-details/${
-                              suggestedProduct.id || suggestedProduct.slug
-                            }`;
-                          }}
-                          style={{ cursor: "pointer" }}
-                          data-aos="fade-up"
-                          data-aos-delay={
-                            index % 4 === 0
-                              ? 0
-                              : index % 4 === 1
-                              ? 50
-                              : index % 4 === 2
-                              ? 100
-                              : 150
-                          }
-                          data-aos-duration={1500}
-                          data-aos-offset={50}
+                          key={suggestedProduct.id || index}
+                          className="px-2"
                         >
                           <div
-                            className="image"
-                            style={{ position: "relative" }}
+                            className="product-item-two"
+                            onClick={() => {
+                              window.location.href = `/product-details/${
+                                suggestedProduct.id || suggestedProduct.slug
+                              }`;
+                            }}
+                            style={{ cursor: "pointer" }}
+                            data-aos="fade-up"
+                            data-aos-delay={
+                              index % 4 === 0
+                                ? 0
+                                : index % 4 === 1
+                                ? 50
+                                : index % 4 === 2
+                                ? 100
+                                : 150
+                            }
+                            data-aos-duration={1500}
+                            data-aos-offset={50}
                           >
-                            <img
-                              src={suggestedProduct.imageUrls?.[0]}
-                              alt={
-                                suggestedProduct.name || suggestedProduct.title
-                              }
-                              style={
-                                suggestedProduct.stock === 0
-                                  ? { opacity: 0.6 }
-                                  : {}
-                              }
-                            />
-                            {suggestedProduct.stock === 0 && (
-                              <div
+                            <div
+                              className="image"
+                              style={{ position: "relative" }}
+                            >
+                              <img
+                                src={suggestedProduct.imageUrls?.[0]}
+                                alt={suggestedTitle}
+                                style={
+                                  suggestedProduct.stock === 0
+                                    ? { opacity: 0.6 }
+                                    : {}
+                                }
+                              />
+                              {suggestedProduct.stock === 0 && (
+                                <div
+                                  style={{
+                                    position: "absolute",
+                                    top: "50%",
+                                    left: "50%",
+                                    transform: "translate(-50%, -50%)",
+                                    width: "60%",
+                                    zIndex: 10,
+                                    pointerEvents: "none",
+                                  }}
+                                >
+                                  <img
+                                    src="/assets/images/sold-out-grunge-rubber-stamp-free-png.webp"
+                                    alt="Sold Out"
+                                    style={{ width: "100%", height: "auto" }}
+                                  />
+                                </div>
+                              )}
+                              {suggestedCategoryName && (
+                                <Link
+                                  href={`/category/${
+                                    suggestedProduct.category?.slug ||
+                                    suggestedProduct.categorySlug ||
+                                    suggestedProduct.category?.id ||
+                                    suggestedProduct.categoryId
+                                  }`}
+                                  className="category-badge"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  {suggestedCategoryName}
+                                </Link>
+                              )}
+                            </div>
+                            <div className="content">
+                              {suggestedProduct.rating && (
+                                <div className="ratting">
+                                  {[...Array(5)].map((_, i) => (
+                                    <i
+                                      key={i}
+                                      className={`fas fa-star${
+                                        i < Math.floor(suggestedProduct.rating)
+                                          ? ""
+                                          : "-o"
+                                      }`}
+                                    />
+                                  ))}
+                                  {suggestedProduct.reviewCount && (
+                                    <span>
+                                      ({suggestedProduct.reviewCount})
+                                    </span>
+                                  )}
+                                </div>
+                              )}
+                              <h5
                                 style={{
-                                  position: "absolute",
-                                  top: "50%",
-                                  left: "50%",
-                                  transform: "translate(-50%, -50%)",
-                                  width: "60%",
-                                  zIndex: 10,
-                                  pointerEvents: "none",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                  maxWidth: "100%",
                                 }}
                               >
-                                <img
-                                  src="/assets/images/sold-out-grunge-rubber-stamp-free-png.webp"
-                                  alt="Sold Out"
-                                  style={{ width: "100%", height: "auto" }}
-                                />
-                              </div>
-                            )}
-                            {(suggestedProduct.category?.name ||
-                              suggestedProduct.categoryName ||
-                              suggestedProduct.category?.title) && (
-                              <Link
-                                href={`/category/${
-                                  suggestedProduct.category?.slug ||
-                                  suggestedProduct.categorySlug ||
-                                  suggestedProduct.category?.id ||
-                                  suggestedProduct.categoryId
-                                }`}
-                                className="category-badge"
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                {suggestedProduct.category?.name ||
-                                  suggestedProduct.categoryName ||
-                                  suggestedProduct.category?.title}
-                              </Link>
-                            )}
-                          </div>
-                          <div className="content">
-                            {suggestedProduct.rating && (
-                              <div className="ratting">
-                                {[...Array(5)].map((_, i) => (
-                                  <i
-                                    key={i}
-                                    className={`fas fa-star${
-                                      i < Math.floor(suggestedProduct.rating)
-                                        ? ""
-                                        : "-o"
-                                    }`}
-                                  />
-                                ))}
-                                {suggestedProduct.reviewCount && (
-                                  <span>({suggestedProduct.reviewCount})</span>
-                                )}
-                              </div>
-                            )}
-                            <h5
-                              style={{
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap",
-                                maxWidth: "100%",
-                              }}
-                            >
-                              <Link
-                                href={`/product-details/${
-                                  suggestedProduct.id || suggestedProduct.slug
-                                }`}
-                              >
-                                {suggestedProduct.name ||
-                                  suggestedProduct.title}
-                              </Link>
-                            </h5>
-                            <span className="price">
-                              {suggestedProduct.originalPrice &&
-                                suggestedProduct.originalPrice >
-                                  suggestedProduct.price && (
-                                  <del>
-                                    {suggestedProduct.originalPrice} AMD
-                                  </del>
-                                )}{" "}
-                              {suggestedProduct.price} AMD
-                            </span>
-                          </div>
-                          {suggestedProduct.stock !== 0 && (
-                            <button
-                              className="theme-btn"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                if (suggestedProduct.stock !== 0) {
-                                  addToCart(suggestedProduct, 1);
-                                  openCartModal();
+                                <Link
+                                  href={`/product-details/${
+                                    suggestedProduct.id || suggestedProduct.slug
+                                  }`}
+                                >
+                                  {suggestedTitle}
+                                </Link>
+                              </h5>
+                              <span className="price">
+                                {suggestedProduct.originalPrice &&
+                                  suggestedProduct.originalPrice >
+                                    suggestedProduct.price && (
+                                    <del>
+                                      {suggestedProduct.originalPrice} AMD
+                                    </del>
+                                  )}{" "}
+                                {suggestedProduct.price} AMD
+                              </span>
+                            </div>
+                            {suggestedProduct.stock !== 0 && (
+                              <button
+                                className="theme-btn"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if (suggestedProduct.stock !== 0) {
+                                    addToCart(suggestedProduct, 1);
+                                    openCartModal();
+                                  }
+                                }}
+                                disabled={suggestedProduct.stock === 0}
+                                style={
+                                  suggestedProduct.stock === 0
+                                    ? {
+                                        opacity: 0.5,
+                                        cursor: "not-allowed",
+                                        backgroundColor: "#999",
+                                      }
+                                    : {}
                                 }
-                              }}
-                              disabled={suggestedProduct.stock === 0}
-                              style={
-                                suggestedProduct.stock === 0
-                                  ? {
-                                      opacity: 0.5,
-                                      cursor: "not-allowed",
-                                      backgroundColor: "#999",
-                                    }
-                                  : {}
-                              }
-                            >
-                              {suggestedProduct.stock === 0
-                                ? t('outOfStock')
-                                : t('addToCart')}{" "}
-                              <i className="far fa-arrow-alt-right" />
-                            </button>
-                          )}
+                              >
+                                {suggestedProduct.stock === 0
+                                  ? t("outOfStock")
+                                  : t("addToCart")}{" "}
+                                <i className="far fa-arrow-alt-right" />
+                              </button>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </Slider>
                 </div>
               )}

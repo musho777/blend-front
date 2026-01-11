@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 import Counter from "@/components/Counter";
 import OfferCard from "@/components/OfferCard";
 import ProductCard from "@/components/ProductCard";
@@ -9,9 +9,12 @@ import WellFoodLayout from "@/layout/WellFoodLayout";
 import Link from "next/link";
 import { useBestSellers } from "@/hooks/queries/useBestSellersQuery";
 import { useBanners } from "@/hooks/queries/useBannersQuery";
+import { useLocale } from "@/contexts/LocaleContext";
+import { getLocalizedTitle, getLocalizedField } from "@/utils/localization";
 
 const page = () => {
   const t = useTranslations();
+  const { locale } = useLocale();
   const { data: bestSellers, isLoading, error } = useBestSellers();
   const { data: banners, isLoading: isBannersLoading } = useBanners();
   const [activeBannerIndex, setActiveBannerIndex] = useState(0);
@@ -60,8 +63,8 @@ const page = () => {
                     data-aos-duration={1500}
                     data-aos-offset={50}
                   >
-                    <h1>{t('homepage.hero.title')}</h1>
-                    <p>{t('homepage.hero.description')}</p>
+                    <h1>{t("homepage.hero.title")}</h1>
+                    <p>{t("homepage.hero.description")}</p>
                   </div>
                 </div>
                 <div
@@ -96,15 +99,21 @@ const page = () => {
             }}
           >
             <span className="marquee-wrap style-two text-white">
-              <span className="marquee-inner left">{t('homepage.marquee.specialDeal')}</span>
-              <span className="marquee-inner left">{t('homepage.marquee.specialDeal')}</span>
-              <span className="marquee-inner left">{t('homepage.marquee.specialDeal')}</span>
+              <span className="marquee-inner left">
+                {t("homepage.marquee.specialDeal")}
+              </span>
+              <span className="marquee-inner left">
+                {t("homepage.marquee.specialDeal")}
+              </span>
+              <span className="marquee-inner left">
+                {t("homepage.marquee.specialDeal")}
+              </span>
             </span>
 
             <div className="container">
               {isBannersLoading ? (
                 <div className="text-white text-center py-5">
-                  <p>{t('homepage.specialOffer.loadingOffers')}</p>
+                  <p>{t("homepage.specialOffer.loadingOffers")}</p>
                 </div>
               ) : banners && banners.length > 0 ? (
                 <>
@@ -121,16 +130,22 @@ const page = () => {
                         data-aos-offset={50}
                       >
                         <h2>
-                          {banners[activeBannerIndex].title ||
-                            t('homepage.specialOffer.title')}
+                          {getLocalizedTitle(
+                            banners[activeBannerIndex],
+                            locale
+                          ) || t("homepage.specialOffer.title")}
                         </h2>
                         <p>
-                          {banners[activeBannerIndex].text ||
-                            t('homepage.specialOffer.description')}
+                          {getLocalizedField(
+                            banners[activeBannerIndex],
+                            "text",
+                            locale
+                          ) || t("homepage.specialOffer.description")}
                         </p>
                         {banners[activeBannerIndex].url && (
                           <Link href="shop" className="theme-btn">
-                            {t('homepage.specialOffer.moreInfo')} <i className="far fa-arrow-alt-right" />
+                            {t("homepage.specialOffer.moreInfo")}{" "}
+                            <i className="far fa-arrow-alt-right" />
                           </Link>
                         )}
                       </div>
@@ -150,7 +165,10 @@ const page = () => {
                         <img
                           src={banners[activeBannerIndex].image}
                           alt={
-                            banners[activeBannerIndex].title || "Offer Image"
+                            getLocalizedTitle(
+                              banners[activeBannerIndex],
+                              locale
+                            ) || "Offer Image"
                           }
                           width={500}
                           height={500}
@@ -166,7 +184,7 @@ const page = () => {
                             }}
                           >
                             <span>
-                              {t('common.only')} <br />
+                              {t("common.only")} <br />
                               <span className="price">
                                 ${banners[activeBannerIndex].price}
                               </span>
@@ -218,10 +236,11 @@ const page = () => {
                       data-aos-duration={1500}
                       data-aos-offset={50}
                     >
-                      <h2>{t('homepage.specialOffer.title')}</h2>
-                      <p>{t('homepage.specialOffer.description')}</p>
+                      <h2>{t("homepage.specialOffer.title")}</h2>
+                      <p>{t("homepage.specialOffer.description")}</p>
                       <Link href="shop" className="theme-btn">
-                        {t('homepage.specialOffer.shopNow')} <i className="far fa-arrow-alt-right" />
+                        {t("homepage.specialOffer.shopNow")}{" "}
+                        <i className="far fa-arrow-alt-right" />
                       </Link>
                     </div>
                   </div>
@@ -250,7 +269,7 @@ const page = () => {
                         }}
                       >
                         <span>
-                          {t('common.only')} <br />
+                          {t("common.only")} <br />
                           <span className="price">$59</span>
                         </span>
                       </div>
@@ -264,9 +283,15 @@ const page = () => {
           {/* WHY CHOOSE US */}
           <section className="why-choose-area bgc-lighter pt-240 rpt-150 pb-100 rpb-70 rel z-1">
             <span className="marquee-wrap style-two">
-              <span className="marquee-inner left">{t('homepage.whyChooseUs.marquee')}</span>
-              <span className="marquee-inner left">{t('homepage.whyChooseUs.marquee')}</span>
-              <span className="marquee-inner left">{t('homepage.whyChooseUs.marquee')}</span>
+              <span className="marquee-inner left">
+                {t("homepage.whyChooseUs.marquee")}
+              </span>
+              <span className="marquee-inner left">
+                {t("homepage.whyChooseUs.marquee")}
+              </span>
+              <span className="marquee-inner left">
+                {t("homepage.whyChooseUs.marquee")}
+              </span>
             </span>
 
             <div className="container">
@@ -279,11 +304,13 @@ const page = () => {
                     data-aos-offset={50}
                   >
                     <div className="section-title mb-25">
-                      <span className="sub-title mb-5">{t('homepage.whyChooseUs.subtitle')}</span>
-                      <h2>{t('homepage.whyChooseUs.title')}</h2>
+                      <span className="sub-title mb-5">
+                        {t("homepage.whyChooseUs.subtitle")}
+                      </span>
+                      <h2>{t("homepage.whyChooseUs.title")}</h2>
                     </div>
 
-                    <p>{t('homepage.whyChooseUs.description')}</p>
+                    <p>{t("homepage.whyChooseUs.description")}</p>
 
                     <div className="row">
                       <div className="col-sm-4 col-6">
@@ -291,7 +318,9 @@ const page = () => {
                           <span className="count-text k-plus">
                             <Counter end={34} />
                           </span>
-                          <span className="counter-title">{t('homepage.whyChooseUs.premiumFlavors')}</span>
+                          <span className="counter-title">
+                            {t("homepage.whyChooseUs.premiumFlavors")}
+                          </span>
                         </div>
                       </div>
 
@@ -301,7 +330,7 @@ const page = () => {
                             <Counter end={356} />
                           </span>
                           <span className="counter-title">
-                            {t('homepage.whyChooseUs.satisfiedCustomers')}
+                            {t("homepage.whyChooseUs.satisfiedCustomers")}
                           </span>
                         </div>
                       </div>
@@ -312,7 +341,7 @@ const page = () => {
                             <Counter end={853} />
                           </span>
                           <span className="counter-title">
-                            {t('homepage.whyChooseUs.hookahAccessories')}
+                            {t("homepage.whyChooseUs.hookahAccessories")}
                           </span>
                         </div>
                       </div>
@@ -327,15 +356,21 @@ const page = () => {
           <div className="headline-area bgc-black pt-120 rpt-90 rel z-2">
             <span className="marquee-wrap white-text">
               <span className="marquee-inner left">
-                <span className="marquee-item">{t('homepage.marqueeItems.hookah')}</span>
+                <span className="marquee-item">
+                  {t("homepage.marqueeItems.hookah")}
+                </span>
                 <span className="marquee-item">
                   <i className="flaticon-star" />
                 </span>
-                <span className="marquee-item">{t('homepage.marqueeItems.premiumSmoke')}</span>
+                <span className="marquee-item">
+                  {t("homepage.marqueeItems.premiumSmoke")}
+                </span>
                 <span className="marquee-item">
                   <i className="flaticon-star" />
                 </span>
-                <span className="marquee-item">{t('homepage.marqueeItems.clouds')}</span>
+                <span className="marquee-item">
+                  {t("homepage.marqueeItems.clouds")}
+                </span>
                 <span className="marquee-item">
                   <i className="flaticon-star" />
                 </span>
@@ -349,8 +384,10 @@ const page = () => {
               <div className="row justify-content-center">
                 <div className="col-xl-7 col-lg-8">
                   <div className="section-title text-white text-center mb-50">
-                    <span className="sub-title mb-5">{t('homepage.bestSellers.subtitle')}</span>
-                    <h2>{t('homepage.bestSellers.title')}</h2>
+                    <span className="sub-title mb-5">
+                      {t("homepage.bestSellers.subtitle")}
+                    </span>
+                    <h2>{t("homepage.bestSellers.title")}</h2>
                   </div>
                 </div>
               </div>
@@ -358,7 +395,7 @@ const page = () => {
               <div className="row">
                 {isLoading && (
                   <div className="text-white text-center py-5">
-                    <p>{t('homepage.bestSellers.loading')}</p>
+                    <p>{t("homepage.bestSellers.loading")}</p>
                   </div>
                 )}
 
@@ -373,7 +410,7 @@ const page = () => {
                   : !isLoading &&
                     !error && (
                       <div className="text-white text-center py-5">
-                        <p>{t('homepage.bestSellers.noProducts')}</p>
+                        <p>{t("homepage.bestSellers.noProducts")}</p>
                       </div>
                     )}
               </div>

@@ -1,12 +1,21 @@
 "use client";
 import Link from "next/link";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 import { useCart } from "@/hooks/useCart";
+import { useLocale } from "@/contexts/LocaleContext";
+import { getLocalizedTitle } from "@/utils/localization";
 import Tooltip from "@mui/material/Tooltip";
 
 const ProductCard = ({ product, index }) => {
   const t = useTranslations();
   const { addToCart } = useCart();
+  const { locale } = useLocale();
+
+  const localizedTitle = getLocalizedTitle(product, locale);
+  const localizedCategoryName = product.category
+    ? getLocalizedTitle(product.category, locale)
+    : product.categoryName || "";
+
   const handleCardClick = () => {
     window.location.href = `/product-details/${product.id || product.slug}`;
   };
@@ -30,7 +39,7 @@ const ProductCard = ({ product, index }) => {
         <div className="image" style={{ position: "relative" }}>
           <img
             src={`${product.imageUrls[0]}` || "assets/images/dishes/dish1.png"}
-            alt={product.name || product.title}
+            alt={localizedTitle}
             width={400}
             height={400}
             loading="lazy"
@@ -62,9 +71,7 @@ const ProductCard = ({ product, index }) => {
               />
             </div>
           )}
-          {(product.category?.name ||
-            product.categoryName ||
-            product.category?.title) && (
+          {localizedCategoryName && (
             <Link
               href={`/category/${
                 product.category?.slug ||
@@ -75,9 +82,7 @@ const ProductCard = ({ product, index }) => {
               className="category-badge"
               onClick={(e) => e.stopPropagation()}
             >
-              {product.category?.name ||
-                product.categoryName ||
-                product.category?.title}
+              {localizedCategoryName}
             </Link>
           )}
         </div>
@@ -95,7 +100,7 @@ const ProductCard = ({ product, index }) => {
               {product.reviewCount && <span>({product.reviewCount})</span>}
             </div>
           )}
-          <Tooltip title={product.name || product.title} arrow placement="top">
+          <Tooltip title={localizedTitle} arrow placement="top">
             <h5
               style={{
                 overflow: "hidden",
@@ -105,7 +110,7 @@ const ProductCard = ({ product, index }) => {
               }}
             >
               <Link href={`/product-details/${product.id || product.slug}`}>
-                {product.name || product.title}
+                {localizedTitle}
               </Link>
             </h5>
           </Tooltip>
@@ -136,7 +141,9 @@ const ProductCard = ({ product, index }) => {
                 : {}
             }
           >
-            {product.stock === 0 ? t('common.outOfStock') : t('common.addToCart')}{" "}
+            {product.stock === 0
+              ? t("common.outOfStock")
+              : t("common.addToCart")}{" "}
             <i className="far fa-arrow-alt-right" />
           </button>
         )}

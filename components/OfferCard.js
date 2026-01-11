@@ -3,9 +3,12 @@ import { useMemo } from "react";
 import Slider from "react-slick";
 import { sliderProps } from "@/utility/sliderProps";
 import { useOffers } from "@/hooks/queries/useOffersQuery";
+import { useLocale } from "@/contexts/LocaleContext";
+import { getLocalizedTitle } from "@/utils/localization";
 
 const OfferCard = () => {
   const { data: offersData, isLoading, isError } = useOffers();
+  const { locale } = useLocale();
 
   const defaultOfferCards = [
     {
@@ -81,7 +84,8 @@ const OfferCard = () => {
       <div className="offer-card-area d-none d-sm-block">
         <div className="row no-gap row-cols-xxl-5 row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 justify-content-center">
           {offersData?.slice(0, 5)?.map((card, index) => {
-            const truncatedTitle = card.title?.slice(0, 5) || "";
+            const localizedTitle = getLocalizedTitle(card, locale);
+            const truncatedTitle = localizedTitle?.slice(0, 5) || "";
             const cardStyle =
               card.style || (index % 2 === 0 ? "" : "style-two");
 
@@ -134,7 +138,8 @@ const OfferCard = () => {
           className="offer-card-slider-mobile"
         >
           {offersData?.slice(0, 5)?.map((card, index) => {
-            const truncatedTitle = card.title?.slice(0, 5) || "";
+            const localizedTitle = getLocalizedTitle(card, locale);
+            const truncatedTitle = localizedTitle?.slice(0, 5) || "";
             const cardStyle =
               card.style || (index % 2 === 0 ? "" : "style-two");
 

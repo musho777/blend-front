@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Fragment, useEffect, useState, useMemo } from "react";
 import { useCategories } from "@/hooks/queries/useCategoriesQuery";
 import { useSubcategories } from "@/hooks/queries/useSubcategoriesQuery";
+import { useLocale } from "@/contexts/LocaleContext";
+import { getLocalizedTitle } from "@/utils/localization";
 import CartIcon from "@/components/CartIcon";
 import AuthButtons from "@/components/AuthButtons";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -12,7 +14,7 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 // Custom hook for responsive category limit
 const useCategoryLimit = () => {
   const [categoryLimit, setCategoryLimit] = useState(() => {
-    if (typeof window === 'undefined') return 8; // Server-side default
+    if (typeof window === "undefined") return 8; // Server-side default
     const width = window.innerWidth;
     if (width < 768) {
       return 4; // Mobile
@@ -167,6 +169,7 @@ const MobileMenu = ({ black }) => {
   const [activeMenu, setActiveMenu] = useState("");
   const { data: categories, isLoading, isError } = useCategories();
   const { data: subcategories } = useSubcategories();
+  const { locale } = useLocale();
   const CATEGORY_LIMIT = useCategoryLimit(); // Responsive category limit
 
   // Group subcategories by categoryId for efficient lookup
@@ -272,7 +275,7 @@ const MobileMenu = ({ black }) => {
                             className={hasSubcategories ? "dropdown" : ""}
                           >
                             <Link href={`/category/${elm?.slug}`}>
-                              {elm.title}
+                              {getLocalizedTitle(elm, locale)}
                             </Link>
                             {hasSubcategories && (
                               <>
@@ -288,8 +291,10 @@ const MobileMenu = ({ black }) => {
                                             subcategoryId.id
                                           }`}
                                         >
-                                          {subcategoryId.title ||
-                                            subcategoryId.name}
+                                          {getLocalizedTitle(
+                                            subcategoryId,
+                                            locale
+                                          )}
                                         </Link>
                                       </li>
                                     )
@@ -326,7 +331,7 @@ const MobileMenu = ({ black }) => {
                             {hiddenCategories.map((elm, i) => (
                               <li key={`more-${i}`}>
                                 <Link href={`/category/${elm?.slug}`}>
-                                  {elm.title}
+                                  {getLocalizedTitle(elm, locale)}
                                 </Link>
                               </li>
                             ))}
@@ -371,6 +376,7 @@ const MobileMenu = ({ black }) => {
 const Header = ({ black }) => {
   const { data: categories, isLoading, isError } = useCategories();
   const { data: subcategories } = useSubcategories();
+  const { locale } = useLocale();
   const CATEGORY_LIMIT = useCategoryLimit(); // Responsive category limit
 
   // Group subcategories by categoryId for efficient lookup
@@ -472,7 +478,7 @@ const Header = ({ black }) => {
                             className={hasSubcategories ? "dropdown" : ""}
                           >
                             <Link href={`/category/${elm?.slug}`}>
-                              {elm.title}
+                              {getLocalizedTitle(elm, locale)}
                             </Link>
                             {hasSubcategories && (
                               <>
@@ -488,8 +494,10 @@ const Header = ({ black }) => {
                                             subcategoryId.id
                                           }`}
                                         >
-                                          {subcategoryId.title ||
-                                            subcategoryId.name}
+                                          {getLocalizedTitle(
+                                            subcategoryId,
+                                            locale
+                                          )}
                                         </Link>
                                       </li>
                                     )
@@ -520,7 +528,7 @@ const Header = ({ black }) => {
                             {hiddenCategories.map((elm, i) => (
                               <li key={`more-${i}`}>
                                 <Link href={`/category/${elm?.slug}`}>
-                                  {elm.title}
+                                  {getLocalizedTitle(elm, locale)}
                                 </Link>
                               </li>
                             ))}
