@@ -102,9 +102,15 @@ const Sidebar = () => {
           </div>
 
           <div className="menu-categories">
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+            <ul
+              style={{
+                listStyle: "none",
+                paddingLeft: 12,
+                margin: 0,
+              }}
+            >
               {visibleCategories?.map((c) => (
-                <li key={c.id} style={{ marginBottom: 12 }}>
+                <li key={c.id} style={{ marginBottom: 12, textAlign: "left" }}>
                   <Link
                     href={`/category/${c.slug}`}
                     onClick={() =>
@@ -139,10 +145,7 @@ const Sidebar = () => {
               ))}
 
               {hiddenCategories.length > 0 && (
-                <li style={{ marginTop: 8 }}>
-                  <div style={{ fontWeight: 600 }}>
-                    More ({hiddenCategories.length})
-                  </div>
+                <li style={{ marginBottom: 12, textAlign: "left" }}>
                   <ul style={{ paddingLeft: 12, marginTop: 6 }}>
                     {hiddenCategories.map((hc) => (
                       <li key={hc.id} style={{ marginBottom: 8 }}>
@@ -468,6 +471,8 @@ const MobileMenu = ({ black }) => {
                           fontSize: "18px",
                           padding: 0,
                           margin: 0,
+                          textAlign: "left",
+                          width: "100%",
                         }}
                       >
                         {visibleCategories?.map((elm, i) => {
@@ -494,6 +499,7 @@ const MobileMenu = ({ black }) => {
                                   padding: "6px 0",
                                   color: "inherit",
                                   textDecoration: "none",
+                                  textAlign: "left",
                                 }}
                               >
                                 {getLocalizedTitle(elm, locale)}
@@ -564,6 +570,7 @@ const MobileMenu = ({ black }) => {
                                 display: "block",
                                 fontWeight: 600,
                                 textDecoration: "none",
+                                textAlign: "left",
                               }}
                             >
                               More{" "}
@@ -749,7 +756,7 @@ const Header = ({ black }) => {
                 ) : (
                   <nav className="main-menu navbar-expand-lg">
                     <div className="navbar-header py-10">
-                      <div className="mobile-logo">
+                      {/* <div className="mobile-logo">
                         <Link
                           href="/"
                           style={{
@@ -761,7 +768,7 @@ const Header = ({ black }) => {
                         >
                           Blend
                         </Link>
-                      </div>
+                      </div> */}
                       {/* Toggle Button */}
                       <button
                         type="button"
