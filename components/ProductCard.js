@@ -152,7 +152,8 @@ const ProductCard = ({ product, index }) => {
                 <i className="fas fa-shopping-basket" aria-hidden="true" />
               ) : (
                 <>
-                  {t("common.addToCart")} <i className="far fa-arrow-alt-right" />
+                  {t("common.addToCart")}{" "}
+                  <i className="far fa-arrow-alt-right" />
                 </>
               )}
             </button>

@@ -78,10 +78,12 @@ const DefaultFooter = () => {
                 </p>
                 <div className="social-style-one mt-15">
                   <Link href="https://www.instagram.com/blend.arm?igsh=MWZ6ZjRmaW45cXpybw==">
-                    <i className="fab fa-instagram-f" />
+                    {/* Use standard Instagram icon class */}
+                    <i className="fab fa-instagram" />
                   </Link>
                   <Link href="https://t.me/blend7_am">
-                    <i className="fab fa-telegram" />
+                    {/* Use Telegram plane icon for better compatibility */}
+                    <i className="fab fa-telegram-plane" />
                   </Link>
                 </div>
               </div>
@@ -466,10 +468,10 @@ const Footer3 = () => {
                 </div>
                 <div className="social-style-one mt-5">
                   <Link href="https://www.instagram.com/blend.arm?igsh=MWZ6ZjRmaW45cXpybw==">
-                    <i className="fab fa-instagram-f" />
+                    <i className="fab fa-instagram" />
                   </Link>
                   <Link href="https://t.me/blend7_am">
-                    <i className="fab fa-telegram" />
+                    <i className="fab fa-telegram-plane" />
                   </Link>
                 </div>
               </div>
@@ -728,10 +730,10 @@ const Footer6 = () => {
                 </div>
                 <div className="social-style-one mt-5">
                   <Link href="https://www.instagram.com/blend.arm?igsh=MWZ6ZjRmaW45cXpybw==">
-                    <i className="fab fa-instagram-f" />
+                    <i className="fab fa-instagram" />
                   </Link>
                   <Link href="https://t.me/blend7_am">
-                    <i className="fab fa-telegram" />
+                    <i className="fab fa-telegram-plane" />
                   </Link>
                 </div>
               </div>
