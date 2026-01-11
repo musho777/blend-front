@@ -188,7 +188,11 @@ const Sidebar = () => {
           {/* Social Icons (kept for parity) */}
           {/* Language switcher inside the hidden drawer */}
           <div style={{ marginTop: 16 }}>
-            <LanguageSwitcher />
+            <MobileLanguageButtons
+              onSelect={() =>
+                document.body.classList.remove("side-content-visible")
+              }
+            />
           </div>
           <div className="social-style-one" style={{ marginTop: 18 }}>
             <Link href="contact">
@@ -233,6 +237,47 @@ const SearchBtn = () => {
           required=""
         />
       </form>
+    </div>
+  );
+};
+
+// Mobile language buttons: show three quick-select buttons for supported locales.
+const MobileLanguageButtons = ({ onSelect } = {}) => {
+  const { locale, setLocale, locales } = useLocale();
+
+  const buttons = [
+    { code: "en", label: "EN", emoji: "🇬🇧" },
+    { code: "ru", label: "RU", emoji: "🇷🇺" },
+    { code: "am", label: "AM", emoji: "🇦🇲" },
+  ];
+
+  return (
+    <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
+      {buttons.map((b) => (
+        <button
+          key={b.code}
+          aria-pressed={locale === b.code}
+          onClick={() => {
+            setLocale(b.code);
+            if (typeof onSelect === "function") onSelect(b.code);
+          }}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "8px 10px",
+            borderRadius: 6,
+            border: locale === b.code ? "2px solid #ffb936" : "1px solid rgba(255,255,255,0.2)",
+            background: locale === b.code ? "rgba(255,185,54,0.08)" : "transparent",
+            color: "inherit",
+            cursor: "pointer",
+            fontWeight: locale === b.code ? 700 : 500,
+          }}
+        >
+          <span style={{ fontSize: 16 }}>{b.emoji}</span>
+          <span>{b.label}</span>
+        </button>
+      ))}
     </div>
   );
 };
@@ -316,7 +361,6 @@ const MobileMenu = ({ black }) => {
               </div>
               <div className="nav-outer ms-lg-5 ps-xxl-4 clearfix">
                 {isTablet ? (
-                  // On tablet, open the same hidden drawer used by mobile by toggling the body class.
                   <div style={{ display: "flex", alignItems: "center" }}></div>
                 ) : (
                   <nav className="main-menu navbar-expand-lg">
@@ -507,7 +551,7 @@ const MobileMenu = ({ black }) => {
                           marginTop: 12,
                         }}
                       >
-                        <LanguageSwitcher />
+                        <MobileLanguageButtons onSelect={() => setToggle(false)} />
                       </div>
                     </div>
                   </nav>
