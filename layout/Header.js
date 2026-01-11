@@ -267,8 +267,12 @@ const MobileLanguageButtons = ({ onSelect } = {}) => {
             gap: 8,
             padding: "8px 10px",
             borderRadius: 6,
-            border: locale === b.code ? "2px solid #ffb936" : "1px solid rgba(255,255,255,0.2)",
-            background: locale === b.code ? "rgba(255,185,54,0.08)" : "transparent",
+            border:
+              locale === b.code
+                ? "2px solid #ffb936"
+                : "1px solid rgba(255,255,255,0.2)",
+            background:
+              locale === b.code ? "rgba(255,185,54,0.08)" : "transparent",
             color: "inherit",
             cursor: "pointer",
             fontWeight: locale === b.code ? 700 : 500,
@@ -551,7 +555,9 @@ const MobileMenu = ({ black }) => {
                           marginTop: 12,
                         }}
                       >
-                        <MobileLanguageButtons onSelect={() => setToggle(false)} />
+                        <MobileLanguageButtons
+                          onSelect={() => setToggle(false)}
+                        />
                       </div>
                     </div>
                   </nav>
