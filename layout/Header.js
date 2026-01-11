@@ -463,7 +463,7 @@ const MobileMenu = ({ black }) => {
                           Blend
                         </Link>
                       </div>
-                      <button
+                      {/* <button
                         type="button"
                         className="navbar-toggle"
                         data-bs-toggle="collapse"
@@ -473,7 +473,7 @@ const MobileMenu = ({ black }) => {
                         <span className="icon-bar" />
                         <span className="icon-bar" />
                         <span className="icon-bar" />
-                      </button>
+                      </button> */}
                     </div>
                     <div
                       className={`navbar-collapse collapse clearfix ${
@@ -774,21 +774,7 @@ const Header = ({ black }) => {
                 ) : (
                   <nav className="main-menu navbar-expand-lg">
                     <div className="navbar-header py-10">
-                      {/* <div className="mobile-logo">
-                        <Link
-                          href="/"
-                          style={{
-                            fontSize: "28px",
-                            fontWeight: "bold",
-                            color: "#ffb936",
-                            textDecoration: "none",
-                          }}
-                        >
-                          Blend
-                        </Link>
-                      </div> */}
-                      {/* Toggle Button */}
-                      <button
+                      {/* <button
                         type="button"
                         className="navbar-toggle"
                         data-bs-toggle="collapse"
@@ -797,7 +783,7 @@ const Header = ({ black }) => {
                         <span className="icon-bar" />
                         <span className="icon-bar" />
                         <span className="icon-bar" />
-                      </button>
+                      </button> */}
                     </div>
                     <div className="navbar-collapse collapse clearfix">
                       <ul
