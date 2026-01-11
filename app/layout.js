@@ -10,7 +10,10 @@ import "./globals.css";
 import QueryProvider from "@/providers/QueryProvider";
 import { CartProvider } from "@/contexts/CartContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { LocaleProvider } from "@/contexts/LocaleContext";
+import I18nProvider from "@/providers/I18nProvider";
 import AgeVerificationModal from "@/components/AgeVerificationModal";
+import amMessages from "@/messages/am.json";
 
 export const metadata = {
   title: "Blend",
@@ -24,8 +27,12 @@ export default function RootLayout({ children }) {
         <QueryProvider>
           <AuthProvider>
             <CartProvider>
-              <AgeVerificationModal />
-              {children}
+              <LocaleProvider>
+                <I18nProvider initialMessages={amMessages}>
+                  <AgeVerificationModal />
+                  {children}
+                </I18nProvider>
+              </LocaleProvider>
             </CartProvider>
           </AuthProvider>
         </QueryProvider>

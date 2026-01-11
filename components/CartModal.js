@@ -1,10 +1,12 @@
 "use client";
+import { useTranslations } from 'next-intl';
 import { Modal } from "react-bootstrap";
 import { useCart } from "@/hooks/useCart";
 import QuantityControl from "./QuantityControl";
 import CheckoutForm from "./CheckoutForm";
 
 const CartModal = () => {
+  const t = useTranslations('cart');
   const {
     cart,
     isModalOpen,
@@ -18,7 +20,7 @@ const CartModal = () => {
   return (
     <Modal show={isModalOpen} onHide={closeCartModal} size="lg" centered>
       <Modal.Header closeButton>
-        <Modal.Title>Shopping Cart</Modal.Title>
+        <Modal.Title>{t('pageTitle')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -32,8 +34,8 @@ const CartModal = () => {
                 marginBottom: "20px",
               }}
             />
-            <h4>Your cart is empty</h4>
-            <p>Add some delicious items to get started!</p>
+            <h4>{t('emptyCart')}</h4>
+            <p>{t('continueShopping')}</p>
           </div>
         ) : (
           <>
@@ -74,7 +76,7 @@ const CartModal = () => {
                         className="mb-0 mt-1"
                         style={{ color: "green", fontSize: "12px" }}
                       >
-                        Only {item.stock} left in stock
+                        {t('onlyLeftInStock', { count: item.stock })}
                       </p>
                     )}
                   </div>
@@ -90,7 +92,7 @@ const CartModal = () => {
                       onClick={() => removeFromCart(item.productId)}
                       style={{ fontSize: "12px", padding: "4px 8px" }}
                     >
-                      <i className="far fa-trash-alt" /> Remove
+                      <i className="far fa-trash-alt" /> {t('remove')}
                     </button>
                   </div>
                 </div>
@@ -102,7 +104,7 @@ const CartModal = () => {
               style={{ background: "#f8f9fa", borderRadius: "4px" }}
             >
               <div className="d-flex justify-content-between mb-2">
-                <span>Subtotal:</span>
+                <span>{t('cartSubtotal')}:</span>
                 <strong>{subtotal.toFixed(2)} AMD</strong>
               </div>
               <div
@@ -110,7 +112,7 @@ const CartModal = () => {
                 style={{ borderTop: "2px solid #dee2e6", fontSize: "18px" }}
               >
                 <span>
-                  <strong>Grand Total:</strong>
+                  <strong>{t('orderTotal')}:</strong>
                 </span>
                 <strong style={{ color: "#ff6b6b" }}>
                   {grandTotal.toFixed(2)} AMD

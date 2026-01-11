@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from 'next-intl';
 import WellFoodLayout from "@/layout/WellFoodLayout";
 import LoadingScreen from "@/components/LoadingScreen";
 import Link from "next/link";
@@ -11,6 +12,7 @@ import QuantityControl from "@/components/QuantityControl";
 import { sliderProps } from "@/utility/sliderProps";
 
 const ProductDetailsPage = ({ params }) => {
+  const t = useTranslations('product');
   const { id } = params;
   const { data, isLoading, error } = useProduct(id);
   const [quantity, setQuantity] = useState(1);
@@ -238,7 +240,7 @@ const ProductDetailsPage = ({ params }) => {
                       onSubmit={handleAddToCart}
                       className="add-to-cart py-25"
                     >
-                      <h5>Quantity</h5>
+                      <h5>{t('quantity')}</h5>
                       <QuantityControl
                         value={quantity}
                         onChange={setQuantity}
@@ -253,7 +255,7 @@ const ProductDetailsPage = ({ params }) => {
                             marginTop: "8px",
                           }}
                         >
-                          Only {product.stock} left in stock!
+                          {t('onlyLeftInStock', { count: product.stock })}
                         </p>
                       )}
                       <button
@@ -270,7 +272,7 @@ const ProductDetailsPage = ({ params }) => {
                             : {}
                         }
                       >
-                        {product?.stock === 0 ? "Out of Stock" : "Add to Cart"}{" "}
+                        {product?.stock === 0 ? t('outOfStock') : t('addToCart')}{" "}
                         <i className="far fa-arrow-alt-right" />
                       </button>
                     </form>
@@ -279,7 +281,7 @@ const ProductDetailsPage = ({ params }) => {
                         product?.categoryName ||
                         product?.category?.title) && (
                         <li>
-                          <h6>Categories</h6> :
+                          <h6>{t('categories')}</h6> :
                           <Link
                             href={`/category/${
                               product?.category?.slug ||
@@ -309,7 +311,7 @@ const ProductDetailsPage = ({ params }) => {
                   <Tab.Pane className="tab-pane fade" eventKey="details">
                     {product?.ingredients && (
                       <div className="mt-20">
-                        <h6>Ingredients:</h6>
+                        <h6>{t('ingredients')}</h6>
                         <p>{product.ingredients}</p>
                       </div>
                     )}
@@ -329,9 +331,9 @@ const ProductDetailsPage = ({ params }) => {
                         data-aos-offset={50}
                       >
                         <span className="sub-title mb-5">
-                          You May Also Like
+                          {t('youMayAlsoLike')}
                         </span>
-                        <h2>Suggested Products</h2>
+                        <h2>{t('suggestedProducts')}</h2>
                       </div>
                     </div>
                   </div>
@@ -483,8 +485,8 @@ const ProductDetailsPage = ({ params }) => {
                               }
                             >
                               {suggestedProduct.stock === 0
-                                ? "Out of Stock"
-                                : "add to cart"}{" "}
+                                ? t('outOfStock')
+                                : t('addToCart')}{" "}
                               <i className="far fa-arrow-alt-right" />
                             </button>
                           )}

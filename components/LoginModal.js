@@ -3,22 +3,24 @@ import { Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useTranslations } from 'next-intl';
 import { useLogin } from "@/hooks/mutations/useAuthMutations";
 import { useState } from "react";
 import SuccessModal from "./SuccessModal";
 
-const loginSchema = yup.object().shape({
-  email: yup
-    .string()
-    .email("Please enter a valid email address")
-    .required("Email is required"),
-  password: yup
-    .string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Password is required"),
-});
-
 const LoginModal = ({ show, onHide, onSwitchToRegister }) => {
+  const t = useTranslations('auth');
+
+  const loginSchema = yup.object().shape({
+    email: yup
+      .string()
+      .email(t('validEmail'))
+      .required(t('emailRequired')),
+    password: yup
+      .string()
+      .min(6, t('passwordMin'))
+      .required(t('passwordRequired')),
+  });
   const {
     register,
     handleSubmit,
@@ -54,7 +56,7 @@ const LoginModal = ({ show, onHide, onSwitchToRegister }) => {
     <>
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          <h4 className="mb-0">Login to Your Account</h4>
+          <h4 className="mb-0">{t('loginTitle')}</h4>
         </Modal.Header>
 
         <Modal.Body className="p-4">
@@ -63,7 +65,7 @@ const LoginModal = ({ show, onHide, onSwitchToRegister }) => {
               <input
                 type="email"
                 className="form-control"
-                placeholder="Email Address *"
+                placeholder={t('emailPlaceholder')}
                 style={{ border: "1px solid #ddd" }}
                 {...register("email")}
               />
@@ -76,7 +78,7 @@ const LoginModal = ({ show, onHide, onSwitchToRegister }) => {
               <input
                 type="password"
                 className="form-control"
-                placeholder="Password *"
+                placeholder={t('passwordPlaceholder')}
                 style={{ border: "1px solid #ddd" }}
                 {...register("password")}
               />
@@ -87,7 +89,7 @@ const LoginModal = ({ show, onHide, onSwitchToRegister }) => {
 
             {loginMutation.isError && (
               <div className="alert alert-danger" role="alert">
-                {loginMutation.error?.message || "Login failed. Please check your credentials."}
+                {loginMutation.error?.message || t('loginFailed')}
               </div>
             )}
 
@@ -97,13 +99,13 @@ const LoginModal = ({ show, onHide, onSwitchToRegister }) => {
                 className="theme-btn w-100"
                 disabled={loginMutation.isPending}
               >
-                {loginMutation.isPending ? "Logging in..." : "Login"} <i className="far fa-arrow-alt-right" />
+                {loginMutation.isPending ? t('loggingIn') : t('login')} <i className="far fa-arrow-alt-right" />
               </button>
             </div>
 
             <div className="text-center mt-3">
               <p className="mb-0">
-                Don't have an account?{" "}
+                {t('noAccount')}{" "}
                 <a
                   href="#"
                   onClick={(e) => {
@@ -113,7 +115,7 @@ const LoginModal = ({ show, onHide, onSwitchToRegister }) => {
                   }}
                   style={{ color: "#ff3d00" }}
                 >
-                  Register here
+                  {t('registerHere')}
                 </a>
               </p>
             </div>
@@ -124,8 +126,8 @@ const LoginModal = ({ show, onHide, onSwitchToRegister }) => {
       <SuccessModal
         show={showSuccess}
         onHide={() => setShowSuccess(false)}
-        title="Login Successful!"
-        message="Welcome back! You have successfully logged in."
+        title={t('loginSuccess')}
+        message={t('loginSuccessMessage')}
       />
     </>
   );

@@ -7,6 +7,7 @@ import { useCategories } from "@/hooks/queries/useCategoriesQuery";
 import { useSubcategories } from "@/hooks/queries/useSubcategoriesQuery";
 import CartIcon from "@/components/CartIcon";
 import AuthButtons from "@/components/AuthButtons";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 // Custom hook for responsive category limit
 const useCategoryLimit = () => {
@@ -351,6 +352,7 @@ const MobileMenu = ({ black }) => {
                 <CartIcon />
               </div>
               <AuthButtons />
+              <LanguageSwitcher />
             </div>
           </div>
           <div className="bg-lines">
@@ -669,6 +671,7 @@ const Header = ({ black }) => {
                 <CartIcon />
               </div>
               <AuthButtons />
+              <LanguageSwitcher />
             </div>
           </div>
           <div className="bg-lines">

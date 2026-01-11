@@ -3,48 +3,50 @@ import { Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useTranslations } from 'next-intl';
 import { useRegister } from "@/hooks/mutations/useAuthMutations";
 import { useState } from "react";
 
-const registerSchema = yup.object().shape({
-  firstName: yup
-    .string()
-    .required("First name is required")
-    .min(2, "First name must be at least 2 characters")
-    .max(50, "First name must not exceed 50 characters"),
-  lastName: yup
-    .string()
-    .required("Last name is required")
-    .min(2, "Last name must be at least 2 characters")
-    .max(50, "Last name must not exceed 50 characters"),
-  email: yup
-    .string()
-    .email("Please enter a valid email address")
-    .required("Email is required"),
-  phone: yup
-    .string()
-    .required("Phone number is required")
-    .matches(
-      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,
-      "Please enter a valid phone number"
-    ),
-  address: yup.string().max(200, "Address must not exceed 200 characters"),
-  password: yup
-    .string()
-    .required("Password is required")
-    .min(6, "Password must be at least 6 characters")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-      "Password must contain at least one uppercase letter, one lowercase letter, and one number"
-    ),
-  confirmPassword: yup
-    .string()
-    .required("Please confirm your password")
-    .min(6, "Confirm password must be at least 6 characters")
-    .oneOf([yup.ref("password")], "Passwords must match"),
-});
-
 const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
+  const t = useTranslations('auth');
+
+  const registerSchema = yup.object().shape({
+    firstName: yup
+      .string()
+      .required(t('firstNameRequired'))
+      .min(2, t('firstNameMin'))
+      .max(50, t('firstNameMax')),
+    lastName: yup
+      .string()
+      .required(t('lastNameRequired'))
+      .min(2, t('lastNameMin'))
+      .max(50, t('lastNameMax')),
+    email: yup
+      .string()
+      .email(t('validEmail'))
+      .required(t('emailRequired')),
+    phone: yup
+      .string()
+      .required(t('phoneRequired'))
+      .matches(
+        /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,
+        t('validPhone')
+      ),
+    address: yup.string().max(200, t('addressMax')),
+    password: yup
+      .string()
+      .required(t('passwordRequired'))
+      .min(6, t('passwordMin'))
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+        t('passwordStrength')
+      ),
+    confirmPassword: yup
+      .string()
+      .required(t('confirmPasswordRequired'))
+      .min(6, t('confirmPasswordMin'))
+      .oneOf([yup.ref("password")], t('passwordsMatch')),
+  });
   const {
     register,
     handleSubmit,
@@ -79,7 +81,7 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
   return (
     <Modal show={show} onHide={handleClose} centered size="lg">
       <Modal.Header closeButton>
-        <h4 className="mb-0">Create Your Account</h4>
+        <h4 className="mb-0">{t('registerTitle')}</h4>
       </Modal.Header>
 
       <Modal.Body className="p-4">
@@ -90,7 +92,7 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="First Name *"
+                  placeholder={t('firstNamePlaceholder')}
                   style={{ border: "1px solid #ddd" }}
                   {...register("firstName")}
                 />
@@ -107,7 +109,7 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Last Name *"
+                  placeholder={t('lastNamePlaceholder')}
                   style={{ border: "1px solid #ddd" }}
                   {...register("lastName")}
                 />
@@ -124,7 +126,7 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
             <input
               type="email"
               className="form-control"
-              placeholder="Email Address *"
+              placeholder={t('emailPlaceholder')}
               style={{ border: "1px solid #ddd" }}
               {...register("email")}
             />
@@ -139,7 +141,7 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
             <input
               type="tel"
               className="form-control"
-              placeholder="Phone Number *"
+              placeholder={t('phonePlaceholder')}
               style={{ border: "1px solid #ddd" }}
               {...register("phone")}
             />
@@ -169,7 +171,7 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
                 <input
                   type="password"
                   className="form-control"
-                  placeholder="Password *"
+                  placeholder={t('passwordPlaceholder')}
                   style={{ border: "1px solid #ddd" }}
                   {...register("password")}
                 />
@@ -186,7 +188,7 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
                 <input
                   type="password"
                   className="form-control"
-                  placeholder="Confirm Password *"
+                  placeholder={t('confirmPasswordPlaceholder')}
                   style={{ border: "1px solid #ddd" }}
                   {...register("confirmPassword")}
                 />
@@ -201,8 +203,7 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
 
           {registerMutation.isError && (
             <div className="alert alert-danger" role="alert">
-              {registerMutation.error?.message ||
-                "Registration failed. Please try again."}
+              {registerMutation.error?.message || t('registerFailed')}
             </div>
           )}
 
@@ -213,15 +214,15 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
               disabled={registerMutation.isPending}
             >
               {registerMutation.isPending
-                ? "Creating Account..."
-                : "Create Account"}{" "}
+                ? t('creatingAccount')
+                : t('createAccount')}{" "}
               <i className="far fa-arrow-alt-right" />
             </button>
           </div>
 
           <div className="text-center mt-3">
             <p className="mb-0">
-              Already have an account?{" "}
+              {t('haveAccount')}{" "}
               <a
                 href="#"
                 onClick={(e) => {
@@ -231,7 +232,7 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
                 }}
                 style={{ color: "#ff3d00" }}
               >
-                Login here
+                {t('loginHere')}
               </a>
             </p>
           </div>

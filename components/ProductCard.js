@@ -1,9 +1,11 @@
 "use client";
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 import { useCart } from "@/hooks/useCart";
 import Tooltip from "@mui/material/Tooltip";
 
 const ProductCard = ({ product, index }) => {
+  const t = useTranslations();
   const { addToCart } = useCart();
   const handleCardClick = () => {
     window.location.href = `/product-details/${product.id || product.slug}`;
@@ -134,7 +136,7 @@ const ProductCard = ({ product, index }) => {
                 : {}
             }
           >
-            {product.stock === 0 ? "Out of Stock" : "add to cart"}{" "}
+            {product.stock === 0 ? t('common.outOfStock') : t('common.addToCart')}{" "}
             <i className="far fa-arrow-alt-right" />
           </button>
         )}

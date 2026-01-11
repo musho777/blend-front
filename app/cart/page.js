@@ -1,24 +1,26 @@
 "use client";
+import { useTranslations } from 'next-intl';
 import PageBanner from "@/components/PageBanner";
 import PlusMinusBtn from "@/components/PlusMinusBtn";
 import WellFoodLayout from "@/layout/WellFoodLayout";
 import Link from "next/link";
 const page = () => {
+  const t = useTranslations('cart');
   return (
     <WellFoodLayout>
-      <PageBanner pageTitle={"Shopping Cart"} />
+      <PageBanner pageTitle={t('pageTitle')} />
       <section className="shopping-cart-area py-130 rel z-1">
         <div className="container">
           <div className="shoping-table mb-50 wow fadeInUp delay-0-2s">
             <table>
               <thead>
                 <tr>
-                  <th>Images</th>
-                  <th>Product</th>
-                  <th>Unit Price</th>
-                  <th>Quantity</th>
-                  <th>Total</th>
-                  <th>remove</th>
+                  <th>{t('images')}</th>
+                  <th>{t('product')}</th>
+                  <th>{t('unitPrice')}</th>
+                  <th>{t('quantity')}</th>
+                  <th>{t('total')}</th>
+                  <th>{t('remove')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -98,9 +100,9 @@ const page = () => {
                   onSubmit={(e) => e.preventDefault()}
                   className="d-sm-flex justify-content-center justify-content-lg-start"
                 >
-                  <input type="text" placeholder="Coupon Code" required="" />
+                  <input type="text" placeholder={t('couponCode')} required="" />
                   <button className="theme-btn flex-none" type="submit">
-                    apply Coupon <i className="fas fa-angle-double-right" />
+                    {t('applyCoupon')} <i className="fas fa-angle-double-right" />
                   </button>
                 </form>
               </div>
@@ -108,10 +110,10 @@ const page = () => {
             <div className="col-lg-6">
               <div className="update-shopping mb-30 text-lg-end wow fadeInRight delay-0-2s">
                 <Link href="shop" className="theme-btn style-two my-5">
-                  shopping <i className="fas fa-angle-double-right" />
+                  {t('shopping')} <i className="fas fa-angle-double-right" />
                 </Link>
                 <Link href="shop" className="theme-btn my-5">
-                  update cart <i className="fas fa-angle-double-right" />
+                  {t('updateCart')} <i className="fas fa-angle-double-right" />
                 </Link>
               </div>
             </div>
@@ -119,28 +121,28 @@ const page = () => {
           <div className="row justify-content-center">
             <div className="col-lg-8">
               <div className="shoping-cart-total pt-20 wow fadeInUp delay-0-2s">
-                <h4 className="form-title mb-25 text-center">Cart Totals</h4>
+                <h4 className="form-title mb-25 text-center">{t('cartTotals')}</h4>
                 <table>
                   <tbody>
                     <tr>
-                      <td>Cart Subtotal</td>
+                      <td>{t('cartSubtotal')}</td>
                       <td>
                         <span className="price">280</span>
                       </td>
                     </tr>
                     <tr>
-                      <td>Shipping Fee</td>
+                      <td>{t('shippingFee')}</td>
                       <td>
                         <span className="price">10.00</span>
                       </td>
                     </tr>
                     <tr>
-                      <td>Vat</td>
+                      <td>{t('vat')}</td>
                       <td>0.00 AMD</td>
                     </tr>
                     <tr>
                       <td>
-                        <strong>Order Total</strong>
+                        <strong>{t('orderTotal')}</strong>
                       </td>
                       <td>
                         <b className="price">290</b>
@@ -152,7 +154,7 @@ const page = () => {
                   href="checkout"
                   className="theme-btn style-two mt-25 w-100"
                 >
-                  Proceed to checkout
+                  {t('proceedToCheckout')}
                 </Link>
               </div>
             </div>

@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from 'next-intl';
 import PageBanner from "@/components/PageBanner";
 import WellFoodLayout from "@/layout/WellFoodLayout";
 import Link from "next/link";
@@ -20,6 +21,7 @@ import {
 } from "@mui/material";
 
 const CategoryPage = () => {
+  const t = useTranslations('category');
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -222,7 +224,7 @@ const CategoryPage = () => {
                   data-aos-duration={1500}
                   data-aos-offset={50}
                 >
-                  <h4 className="widget-title">Search</h4>
+                  <h4 className="widget-title">{t('search')}</h4>
                   <form
                     action="#"
                     className="default-search-form"
@@ -230,7 +232,7 @@ const CategoryPage = () => {
                   >
                     <input
                       type="text"
-                      placeholder="Search here"
+                      placeholder={t('searchPlaceholder')}
                       value={searchInput}
                       onChange={handleSearchChange}
                     />
@@ -284,7 +286,7 @@ const CategoryPage = () => {
                   data-aos-duration={1500}
                   data-aos-offset={50}
                 >
-                  <h4 className="widget-title">Pricing</h4>
+                  <h4 className="widget-title">{t('pricing')}</h4>
                   <Box sx={{ px: 2, py: 3 }}>
                     <Slider
                       value={priceRange}
@@ -351,11 +353,11 @@ const CategoryPage = () => {
                     data-aos-offset={50}
                   >
                     {isLoading
-                      ? "Loading..."
-                      : `Showing ${(meta.page - 1) * meta.limit + 1}–${Math.min(
+                      ? t('loadingProducts')
+                      : `${t('showing')} ${(meta.page - 1) * meta.limit + 1}–${Math.min(
                           meta.page * meta.limit,
                           meta.total
-                        )} of ${meta.total} results for ${
+                        )} ${t('of')} ${meta.total} ${t('results')} ${
                           category?.name || category?.title || decodedSlug
                         }`}
                   </div>
@@ -384,14 +386,14 @@ const CategoryPage = () => {
                           },
                         }}
                       >
-                        <MenuItem value="default">Default Sorting</MenuItem>
-                        <MenuItem value="newest">Newness Sorting</MenuItem>
-                        <MenuItem value="oldest">Oldest Sorting</MenuItem>
+                        <MenuItem value="default">{t('defaultSorting')}</MenuItem>
+                        <MenuItem value="newest">{t('newestSorting')}</MenuItem>
+                        <MenuItem value="oldest">{t('oldestSorting')}</MenuItem>
                         <MenuItem value="price_high_to_low">
-                          High To Low
+                          {t('highToLow')}
                         </MenuItem>
                         <MenuItem value="price_low_to_high">
-                          Low To High
+                          {t('lowToHigh')}
                         </MenuItem>
                       </Select>
                     </FormControl>
