@@ -10,7 +10,7 @@ import {
 import { useRouter } from "next/navigation";
 
 const LOCALE_STORAGE_KEY = "wellfood_locale";
-const DEFAULT_LOCALE = "am";
+const DEFAULT_LOCALE = "en";
 const SUPPORTED_LOCALES = ["en", "ru", "am"];
 
 export const LocaleContext = createContext({
@@ -43,14 +43,11 @@ export function LocaleProvider({ children }) {
       if (savedLocale && SUPPORTED_LOCALES.includes(savedLocale)) {
         setLocaleState(savedLocale);
       } else {
-        // Fallback to browser language detection
-        const browserLang = navigator.language.split("-")[0];
-        const detectedLocale = SUPPORTED_LOCALES.includes(browserLang)
-          ? browserLang
-          : DEFAULT_LOCALE;
-
-        setLocaleState(detectedLocale);
-        localStorage.setItem(LOCALE_STORAGE_KEY, detectedLocale);
+        // For first-time visitors we force the app default locale (English)
+        // instead of auto-detecting the browser language. This ensures
+        // users see English on their first visit regardless of browser prefs.
+        setLocaleState(DEFAULT_LOCALE);
+        localStorage.setItem(LOCALE_STORAGE_KEY, DEFAULT_LOCALE);
       }
     } catch (error) {
       console.error("Failed to load locale from localStorage:", error);
