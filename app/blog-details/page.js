@@ -122,7 +122,7 @@ const page = () => {
                     <h6>Share News</h6>
                     <div className="social-style-one">
                       <Link href="contact">
-                        <i className="fab fa-twitter" />
+                        <i className="fab fa-telegram" />
                       </Link>
                       <Link href="contact">
                         <i className="fab fa-facebook-f" />
@@ -162,7 +162,7 @@ const page = () => {
                           <i className="fab fa-facebook-f" />
                         </Link>
                         <Link href="contact">
-                          <i className="fab fa-twitter" />
+                          <i className="fab fa-telegram" />
                         </Link>
                         <Link href="contact">
                           <i className="fab fa-linkedin-in" />

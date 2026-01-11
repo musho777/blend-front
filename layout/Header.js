@@ -10,18 +10,19 @@ import { getLocalizedTitle } from "@/utils/localization";
 import CartIcon from "@/components/CartIcon";
 import AuthButtons from "@/components/AuthButtons";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useTranslations } from "next-intl";
 
 // Custom hook for responsive category limit
 const useCategoryLimit = () => {
   const [categoryLimit, setCategoryLimit] = useState(() => {
-    if (typeof window === "undefined") return 8; // Server-side default
+    if (typeof window === "undefined") return 4; // Server-side default
     const width = window.innerWidth;
     if (width < 768) {
       return 4; // Mobile
     } else if (width < 1440) {
-      return 6; // Tablet
+      return 4; // Tablet
     } else {
-      return 8; // Desktop - max 8
+      return 4; // Desktop - max 8
     }
   });
 
@@ -31,9 +32,9 @@ const useCategoryLimit = () => {
       if (width < 768) {
         setCategoryLimit(4); // Mobile
       } else if (width < 1440) {
-        setCategoryLimit(6); // Tablet
+        setCategoryLimit(4); // Tablet
       } else {
-        setCategoryLimit(8); // Desktop - max 8
+        setCategoryLimit(4); // Desktop - max 8
       }
     };
 
@@ -114,7 +115,7 @@ const Sidebar = () => {
           {/*Social Icons*/}
           <div className="social-style-one">
             <Link href="contact">
-              <i className="fab fa-twitter" />
+              <i className="fab fa-telegram" />
             </Link>
             <Link href="contact">
               <i className="fab fa-facebook-f" />
@@ -170,6 +171,7 @@ const MobileMenu = ({ black }) => {
   const { data: categories, isLoading, isError } = useCategories();
   const { data: subcategories } = useSubcategories();
   const { locale } = useLocale();
+  const t = useTranslations("header");
   const CATEGORY_LIMIT = useCategoryLimit(); // Responsive category limit
 
   // Group subcategories by categoryId for efficient lookup
@@ -350,7 +352,7 @@ const MobileMenu = ({ black }) => {
               </div>
               <div className="header-number" style={{ fontSize: "18px" }}>
                 <i className="far fa-phone" />
-                Call : <a href="callto:+88012345688">+374 93 613 007</a>
+                {t("call")} : <a href="callto:+88012345688">+374 93 613 007</a>
               </div>
               <SearchBtn />
               <div style={{ marginLeft: "15px" }}>
@@ -377,6 +379,7 @@ const Header = ({ black }) => {
   const { data: categories, isLoading, isError } = useCategories();
   const { data: subcategories } = useSubcategories();
   const { locale } = useLocale();
+  const t = useTranslations("header");
   const CATEGORY_LIMIT = useCategoryLimit(); // Responsive category limit
 
   // Group subcategories by categoryId for efficient lookup
@@ -672,7 +675,7 @@ const Header = ({ black }) => {
               </div>
               <div className="header-number" style={{ fontSize: "18px" }}>
                 <i className="far fa-phone" />
-                Call : <a href="callto:+88012345688">+374 93 613 007</a>
+                {t("call")} : <a href="callto:+88012345688">+374 93 613 007</a>
               </div>
               <SearchBtn />
               <div style={{ marginLeft: "15px" }}>

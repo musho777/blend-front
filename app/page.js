@@ -63,7 +63,9 @@ const page = () => {
                     data-aos-duration={1500}
                     data-aos-offset={50}
                   >
-                    <h1>{t("homepage.hero.title")}</h1>
+                    <h1 style={{ fontSize: locale === 'am' || locale === 'ru' ? '3rem' : undefined }}>
+                      {t("homepage.hero.title")}
+                    </h1>
                     <p>{t("homepage.hero.description")}</p>
                   </div>
                 </div>
@@ -129,7 +131,7 @@ const page = () => {
                         data-aos-duration={1500}
                         data-aos-offset={50}
                       >
-                        <h2>
+                        <h2 style={{ fontSize: locale === 'am' || locale === 'ru' ? '2rem' : undefined }}>
                           {getLocalizedTitle(
                             banners[activeBannerIndex],
                             locale
@@ -236,7 +238,9 @@ const page = () => {
                       data-aos-duration={1500}
                       data-aos-offset={50}
                     >
-                      <h2>{t("homepage.specialOffer.title")}</h2>
+                      <h2 style={{ fontSize: locale === 'am' || locale === 'ru' ? '2rem' : undefined }}>
+                        {t("homepage.specialOffer.title")}
+                      </h2>
                       <p>{t("homepage.specialOffer.description")}</p>
                       <Link href="shop" className="theme-btn">
                         {t("homepage.specialOffer.shopNow")}{" "}

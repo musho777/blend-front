@@ -44,7 +44,7 @@ const page = () => {
                 <h4 className="mt-55 rmt-5">Follow</h4>
                 <div className="social-style-one mt-15 rmt-5">
                   <Link href="contact">
-                    <i className="fab fa-twitter" />
+                    <i className="fab fa-telegram" />
                   </Link>
                   <Link href="contact">
                     <i className="fab fa-facebook-f" />

@@ -1,11 +1,17 @@
 "use client";
 
-import { createContext, useState, useEffect, useCallback, useContext } from 'react';
-import { useRouter } from 'next/navigation';
+import {
+  createContext,
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+} from "react";
+import { useRouter } from "next/navigation";
 
-const LOCALE_STORAGE_KEY = 'wellfood_locale';
-const DEFAULT_LOCALE = 'am';
-const SUPPORTED_LOCALES = ['en', 'ru', 'am'];
+const LOCALE_STORAGE_KEY = "wellfood_locale";
+const DEFAULT_LOCALE = "am";
+const SUPPORTED_LOCALES = ["en", "ru", "am"];
 
 export const LocaleContext = createContext({
   locale: DEFAULT_LOCALE,
@@ -18,7 +24,7 @@ export const LocaleContext = createContext({
 export function useLocale() {
   const context = useContext(LocaleContext);
   if (!context) {
-    throw new Error('useLocale must be used within a LocaleProvider');
+    throw new Error("useLocale must be used within a LocaleProvider");
   }
   return context;
 }
@@ -38,7 +44,7 @@ export function LocaleProvider({ children }) {
         setLocaleState(savedLocale);
       } else {
         // Fallback to browser language detection
-        const browserLang = navigator.language.split('-')[0];
+        const browserLang = navigator.language.split("-")[0];
         const detectedLocale = SUPPORTED_LOCALES.includes(browserLang)
           ? browserLang
           : DEFAULT_LOCALE;
@@ -47,7 +53,7 @@ export function LocaleProvider({ children }) {
         localStorage.setItem(LOCALE_STORAGE_KEY, detectedLocale);
       }
     } catch (error) {
-      console.error('Failed to load locale from localStorage:', error);
+      console.error("Failed to load locale from localStorage:", error);
       setLocaleState(DEFAULT_LOCALE);
     } finally {
       setIsInitialized(true);
@@ -64,12 +70,8 @@ export function LocaleProvider({ children }) {
     try {
       localStorage.setItem(LOCALE_STORAGE_KEY, newLocale);
       setLocaleState(newLocale);
-
-      // Force page refresh to apply new locale
-      // This is necessary because next-intl needs to re-initialize with new messages
-      window.location.reload();
     } catch (error) {
-      console.error('Failed to save locale to localStorage:', error);
+      console.error("Failed to save locale to localStorage:", error);
     }
   }, []);
 
@@ -81,8 +83,6 @@ export function LocaleProvider({ children }) {
   };
 
   return (
-    <LocaleContext.Provider value={value}>
-      {children}
-    </LocaleContext.Provider>
+    <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>
   );
 }

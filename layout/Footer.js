@@ -77,17 +77,11 @@ const DefaultFooter = () => {
                   eveniet voluta repudiandae molestiae recusandae
                 </p>
                 <div className="social-style-one mt-15">
-                  <Link href="contact">
-                    <i className="fab fa-facebook-f" />
+                  <Link href="https://www.instagram.com/blend.arm?igsh=MWZ6ZjRmaW45cXpybw==">
+                    <i className="fab fa-instagram-f" />
                   </Link>
-                  <Link href="contact">
-                    <i className="fab fa-twitter" />
-                  </Link>
-                  <Link href="contact">
-                    <i className="fab fa-linkedin-in" />
-                  </Link>
-                  <Link href="contact">
-                    <i className="fab fa-instagram" />
+                  <Link href="https://t.me/blend7_am">
+                    <i className="fab fa-telegram" />
                   </Link>
                 </div>
               </div>
@@ -179,10 +173,7 @@ const DefaultFooter = () => {
                     </div>
                     <ul>
                       <li>
-                        Monday – Friday: <span>8am – 4pm</span>
-                      </li>
-                      <li>
-                        Saturday: <span>8am – 12am</span>
+                        Monday – Saturday: <span>10:00-22:00</span>
                       </li>
                     </ul>
                     <div className="any-question mt-20">
@@ -255,16 +246,11 @@ const Footer2 = () => {
                   eveniet voluta repudiandae molestiae recusandae
                 </p>
                 <div className="social-style-one mt-15">
-                  <Link href="contact">
-                    <i className="fab fa-facebook-f" />
+                  <Link href="https://t.me/blend7_am">
+                    <i className="fab fa-telegram" />
                   </Link>
-                  <Link href="contact">
-                    <i className="fab fa-twitter" />
-                  </Link>
-                  <Link href="contact">
-                    <i className="fab fa-linkedin-in" />
-                  </Link>
-                  <Link href="contact">
+
+                  <Link href="https://www.instagram.com/blend.arm?igsh=MWZ6ZjRmaW45cXpybw==">
                     <i className="fab fa-instagram" />
                   </Link>
                 </div>
@@ -357,10 +343,7 @@ const Footer2 = () => {
                     </div>
                     <ul>
                       <li>
-                        Monday – Friday: <span>8am – 4pm</span>
-                      </li>
-                      <li>
-                        Saturday: <span>8am – 12am</span>
+                        Monday – Saturday: <span>10:00-22:00</span>
                       </li>
                     </ul>
                     <div className="any-question mt-20">
@@ -426,9 +409,7 @@ const Footer3 = () => {
                 <div className="footer-title">
                   <h5>Location</h5>
                 </div>
-                <p>
-                  1403 Washington Ave, New Orlea ns, LA 70130, United States
-                </p>
+                <p>Komitas 36, Baghramyan 79</p>
               </div>
             </div>
             <div
@@ -467,10 +448,7 @@ const Footer3 = () => {
                 </div>
                 <ul>
                   <li>
-                    Monday – Friday: <span>8am – 4pm</span>
-                  </li>
-                  <li>
-                    Saturday: <span>8am – 12am</span>
+                    Monday – Saturday: <span>10:00-22:00</span>
                   </li>
                 </ul>
               </div>
@@ -487,17 +465,11 @@ const Footer3 = () => {
                   <h5>Follow Us</h5>
                 </div>
                 <div className="social-style-one mt-5">
-                  <Link href="contact">
-                    <i className="fab fa-facebook-f" />
+                  <Link href="https://www.instagram.com/blend.arm?igsh=MWZ6ZjRmaW45cXpybw==">
+                    <i className="fab fa-instagram-f" />
                   </Link>
-                  <Link href="contact">
-                    <i className="fab fa-twitter" />
-                  </Link>
-                  <Link href="contact">
-                    <i className="fab fa-linkedin-in" />
-                  </Link>
-                  <Link href="contact">
-                    <i className="fab fa-instagram" />
+                  <Link href="https://t.me/blend7_am">
+                    <i className="fab fa-telegram" />
                   </Link>
                 </div>
               </div>
@@ -578,9 +550,7 @@ const Footer5 = () => {
                 <div className="footer-title">
                   <h5>Location</h5>
                 </div>
-                <p>
-                  1403 Washington Ave, New Orlea ns, LA 70130, United States
-                </p>
+                <p>Komitas 36, Baghramyan 79</p>
               </div>
             </div>
             <div className="col-xl-2 col-lg-3 col-sm-6">
@@ -619,10 +589,7 @@ const Footer5 = () => {
                 </div>
                 <ul>
                   <li>
-                    Monday – Friday: <span>8am – 4pm</span>
-                  </li>
-                  <li>
-                    Saturday: <span>8am – 12am</span>
+                    Monday – Saturday: <span>10:00-22:00</span>
                   </li>
                 </ul>
               </div>
@@ -639,17 +606,11 @@ const Footer5 = () => {
                   <h5>Follow Us</h5>
                 </div>
                 <div className="social-style-one mt-5">
-                  <Link href="contact">
+                  <Link href="https://www.instagram.com/blend.arm?igsh=MWZ6ZjRmaW45cXpybw==">
                     <i className="fab fa-facebook-f" />
                   </Link>
-                  <Link href="contact">
-                    <i className="fab fa-twitter" />
-                  </Link>
-                  <Link href="contact">
-                    <i className="fab fa-linkedin-in" />
-                  </Link>
-                  <Link href="contact">
-                    <i className="fab fa-instagram" />
+                  <Link href="https://t.me/blend7_am">
+                    <i className="fab fa-telegram" />
                   </Link>
                 </div>
               </div>
@@ -728,9 +689,7 @@ const Footer6 = () => {
                 <div className="footer-title">
                   <h5>Location</h5>
                 </div>
-                <p>
-                  1403 Washington Ave, New Orlea ns, LA 70130, United States
-                </p>
+                <p>Komitas 36, Baghramyan 79</p>
               </div>
             </div>
             <div className="col-xl-2 col-lg-3 col-sm-6">
@@ -757,10 +716,7 @@ const Footer6 = () => {
                 </div>
                 <ul>
                   <li>
-                    Monday – Friday: <span>8am – 4pm</span>
-                  </li>
-                  <li>
-                    Saturday: <span>8am – 12am</span>
+                    Monday – Saturday: <span>10:00-22:00</span>
                   </li>
                 </ul>
               </div>
@@ -771,17 +727,11 @@ const Footer6 = () => {
                   <h5>Follow Us</h5>
                 </div>
                 <div className="social-style-one mt-5">
-                  <Link href="contact">
-                    <i className="fab fa-facebook-f" />
+                  <Link href="https://www.instagram.com/blend.arm?igsh=MWZ6ZjRmaW45cXpybw==">
+                    <i className="fab fa-instagram-f" />
                   </Link>
-                  <Link href="contact">
-                    <i className="fab fa-twitter" />
-                  </Link>
-                  <Link href="contact">
-                    <i className="fab fa-linkedin-in" />
-                  </Link>
-                  <Link href="contact">
-                    <i className="fab fa-instagram" />
+                  <Link href="https://t.me/blend7_am">
+                    <i className="fab fa-telegram" />
                   </Link>
                 </div>
               </div>
