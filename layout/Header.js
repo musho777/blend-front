@@ -110,7 +110,16 @@ const Sidebar = () => {
               }}
             >
               {visibleCategories?.map((c) => (
-                <li key={c.id} style={{ marginBottom: 12, textAlign: "left" }}>
+                <li
+                  key={c.id}
+                  style={{
+                    marginBottom: 12,
+                    marginTop: 12,
+                    textAlign: "left",
+                    borderBottom: "1px solid red",
+                    borderColor: "white",
+                  }}
+                >
                   <Link
                     href={`/category/${c.slug}`}
                     onClick={() =>
@@ -145,10 +154,19 @@ const Sidebar = () => {
               ))}
 
               {hiddenCategories.length > 0 && (
-                <li style={{ marginBottom: 12, textAlign: "left" }}>
-                  <ul style={{ paddingLeft: 12, marginTop: 6 }}>
+                <li style={{ textAlign: "left" }}>
+                  <ul>
                     {hiddenCategories.map((hc) => (
-                      <li key={hc.id} style={{ marginBottom: 8 }}>
+                      <li
+                        key={hc.id}
+                        style={{
+                          marginBottom: 12,
+                          marginTop: 12,
+                          textAlign: "left",
+                          borderBottom: "1px solid red",
+                          borderColor: "white",
+                        }}
+                      >
                         <Link
                           href={`/category/${hc.slug}`}
                           onClick={() =>
