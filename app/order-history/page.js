@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 import WellFoodLayout from "@/layout/WellFoodLayout";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import PageBanner from "@/components/PageBanner";
@@ -11,7 +11,7 @@ import OrderDetailsModal from "@/components/OrderDetailsModal";
 import Link from "next/link";
 
 const OrderHistoryPage = () => {
-  const t = useTranslations('orders');
+  const t = useTranslations("orders");
   const { user } = useAuth();
   const { data: orders, isLoading, isError, error } = useMyOrders();
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -33,17 +33,17 @@ const OrderHistoryPage = () => {
       {!isLoading && (
         <WellFoodLayout>
           <ProtectedRoute>
-            <PageBanner pageName={t('pageTitle')} />
+            <PageBanner pageName={t("pageTitle")} />
             <section className="py-5 mb-4 mb-4">
               <div className="container">
                 <div className="row">
                   <div className="col-12">
-                    <h2 className="mb-4 mt-4">{t('myOrders')}</h2>
+                    <h2 className="mb-4 mt-4">{t("myOrders")}</h2>
 
                     {isError ? (
                       <div className="alert alert-danger" role="alert">
                         <i className="far fa-exclamation-circle me-2" />
-                        {error?.message || t('loadError')}
+                        {error?.message || t("loadError")}
                       </div>
                     ) : !orders || orders.length === 0 ? (
                       <div className="text-center py-5">
@@ -51,12 +51,10 @@ const OrderHistoryPage = () => {
                           className="far fa-shopping-bag"
                           style={{ fontSize: "64px", color: "#ccc" }}
                         />
-                        <h4 className="mt-4">{t('noOrders')}</h4>
-                        <p className="text-muted">
-                          {t('startOrdering')}
-                        </p>
+                        <h4 className="mt-4">{t("noOrders")}</h4>
+                        <p className="text-muted">{t("startOrdering")}</p>
                         <Link href="/" className="theme-btn mt-3">
-                          {t('browseProducts')}{" "}
+                          {t("browseProducts")}{" "}
                           <i className="far fa-arrow-right ms-2" />
                         </Link>
                       </div>
@@ -90,13 +88,12 @@ const OrderHistoryPage = () => {
                                   <div className="d-flex align-items-center justify-content-between justify-content-md-start">
                                     <div>
                                       <small className="text-muted d-block">
-                                        {t('orderId')}
+                                        {t("orderId")}
                                       </small>
                                       <h5 className="mb-0 fw-bold">
                                         #{order.id}
                                       </h5>
                                     </div>
-                                    {console.log(order.status)}
                                     <span
                                       className={`badge ms-2 ms-md-0 ${
                                         order.status === "completed" ||
@@ -120,7 +117,7 @@ const OrderHistoryPage = () => {
                                 {/* Date */}
                                 <div className="col-6 col-md-3 mb-2 mb-md-0">
                                   <small className="text-muted d-block">
-                                    {t('date')}
+                                    {t("date")}
                                   </small>
                                   <span className="d-block">
                                     {formattedDate}
@@ -130,17 +127,20 @@ const OrderHistoryPage = () => {
                                 {/* Items Count */}
                                 <div className="col-6 col-md-2 mb-2 mb-md-0 text-md-center">
                                   <small className="text-muted d-block">
-                                    {t('items')}
+                                    {t("items")}
                                   </small>
                                   <span className="d-block fw-bold">
-                                    {itemCount} {itemCount !== 1 ? t('itemsPlural') : t('itemSingular')}
+                                    {itemCount}{" "}
+                                    {itemCount !== 1
+                                      ? t("itemsPlural")
+                                      : t("itemSingular")}
                                   </span>
                                 </div>
 
                                 {/* Total */}
                                 <div className="col-6 col-md-2 mb-2 mb-md-0 text-md-center">
                                   <small className="text-muted d-block">
-                                    {t('total')}
+                                    {t("total")}
                                   </small>
                                   <span className="d-block fw-bold text-primary">
                                     {Number(totalPrice).toLocaleString()} AMD
@@ -154,7 +154,7 @@ const OrderHistoryPage = () => {
                                     onClick={() => handleViewDetails(order)}
                                   >
                                     <i className="far fa-eye me-1" />
-                                    {t('viewDetails')}
+                                    {t("viewDetails")}
                                   </button>
                                 </div>
                               </div>

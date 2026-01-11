@@ -165,6 +165,123 @@ const SearchBtn = () => {
   );
 };
 
+// Tablet hamburger component usable by both MobileMenu and Header
+const TabletHamburger = ({
+  visibleCategories,
+  hiddenCategories,
+  subcategoriesByCategory,
+  locale,
+}) => {
+  const [open, setOpen] = useState(false);
+  let domNode = useClickOutside(() => setOpen(false));
+
+  return (
+    <div className="tablet-hamburger" ref={domNode}>
+      <button
+        aria-label="Open categories"
+        className="hamburger-toggle"
+        onClick={() => setOpen(!open)}
+        style={{
+          background: "transparent",
+          border: "none",
+          fontSize: "22px",
+          cursor: "pointer",
+          color: "inherit",
+        }}
+      >
+        <i className="fa fa-bars" />
+      </button>
+
+      {open && (
+        <div
+          className="tablet-hamburger-panel"
+          style={{
+            position: "fixed",
+            top: 0,
+            right: 0,
+            height: "100%",
+            width: "320px",
+            maxWidth: "80%",
+            background: "#fff",
+            boxShadow: "-4px 0 12px rgba(0,0,0,0.15)",
+            zIndex: 9999,
+            padding: "24px",
+            overflowY: "auto",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <h4 style={{ margin: 0 }}>Categories</h4>
+            <button
+              onClick={() => setOpen(false)}
+              style={{
+                background: "transparent",
+                border: "none",
+                fontSize: 20,
+              }}
+              aria-label="Close categories"
+            >
+              <i className="fa fa-times" />
+            </button>
+          </div>
+
+          <ul style={{ listStyle: "none", padding: 0, marginTop: 16 }}>
+            {visibleCategories?.map((c, idx) => {
+              const subs = subcategoriesByCategory[c?.id] || [];
+              return (
+                <li key={idx} style={{ marginBottom: 12 }}>
+                  <Link
+                    href={`/category/${c?.slug}`}
+                    onClick={() => setOpen(false)}
+                  >
+                    <div style={{ fontWeight: 600 }}>
+                      {getLocalizedTitle(c, locale)}
+                    </div>
+                  </Link>
+                  {subs.length > 0 && (
+                    <ul style={{ paddingLeft: 12, marginTop: 6 }}>
+                      {subs.map((s) => (
+                        <li key={s.id} style={{ marginBottom: 8 }}>
+                          <Link
+                            href={`/category/${c?.slug}?subcategoryId=${
+                              s.slug || s.id
+                            }`}
+                            onClick={() => setOpen(false)}
+                          >
+                            {getLocalizedTitle(s, locale)}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
+
+            {hiddenCategories.length > 0 && (
+              <li style={{ marginTop: 8 }}>
+                <div style={{ fontWeight: 600 }}>
+                  More ({hiddenCategories.length})
+                </div>
+                <ul style={{ paddingLeft: 12, marginTop: 6 }}>
+                  {hiddenCategories.map((hc, i) => (
+                    <li key={`more-${i}`} style={{ marginBottom: 8 }}>
+                      <Link
+                        href={`/category/${hc?.slug}`}
+                        onClick={() => setOpen(false)}
+                      >
+                        {getLocalizedTitle(hc, locale)}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            )}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+};
 const MobileMenu = ({ black }) => {
   const [toggle, setToggle] = useState(false);
   const [activeMenu, setActiveMenu] = useState("");
@@ -173,6 +290,20 @@ const MobileMenu = ({ black }) => {
   const { locale } = useLocale();
   const t = useTranslations("header");
   const CATEGORY_LIMIT = useCategoryLimit(); // Responsive category limit
+
+  // Detect tablet width (990 - 1280) inside MobileMenu as well
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window === "undefined" ? 0 : window.innerWidth
+  );
+
+  useEffect(() => {
+    const onResize = () => setWindowWidth(window.innerWidth);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const isTablet = windowWidth >= 990 && windowWidth <= 1280;
 
   // Group subcategories by categoryId for efficient lookup
   const subcategoriesByCategory = useMemo(() => {
@@ -229,126 +360,139 @@ const MobileMenu = ({ black }) => {
                 </div>
               </div>
               <div className="nav-outer ms-lg-5 ps-xxl-4 clearfix">
-                <nav className="main-menu navbar-expand-lg">
-                  <div className="navbar-header py-10">
-                    <div className="mobile-logo">
-                      <Link
-                        href="/"
+                {isTablet ? (
+                  <TabletHamburger
+                    visibleCategories={visibleCategories}
+                    hiddenCategories={hiddenCategories}
+                    subcategoriesByCategory={subcategoriesByCategory}
+                    locale={locale}
+                  />
+                ) : (
+                  <nav className="main-menu navbar-expand-lg">
+                    <div className="navbar-header py-10">
+                      <div className="mobile-logo">
+                        <Link
+                          href="/"
+                          style={{
+                            fontSize: "28px",
+                            fontWeight: "bold",
+                            color: "#ffb936",
+                            textDecoration: "none",
+                          }}
+                        >
+                          Blend
+                        </Link>
+                      </div>
+                      <button
+                        type="button"
+                        className="navbar-toggle"
+                        data-bs-toggle="collapse"
+                        data-bs-target=".navbar-collapse"
+                        onClick={() => setToggle(!toggle)}
+                      >
+                        <span className="icon-bar" />
+                        <span className="icon-bar" />
+                        <span className="icon-bar" />
+                      </button>
+                    </div>
+                    <div
+                      className={`navbar-collapse collapse clearfix ${
+                        toggle ? "show" : ""
+                      }`}
+                    >
+                      <ul
+                        className="navigation clearfix"
                         style={{
-                          fontSize: "28px",
-                          fontWeight: "bold",
-                          color: "#ffb936",
-                          textDecoration: "none",
+                          gap: "20px",
+                          display: "flex",
+                          fontSize: "18px",
                         }}
                       >
-                        Blend
-                      </Link>
-                    </div>
-                    <button
-                      type="button"
-                      className="navbar-toggle"
-                      data-bs-toggle="collapse"
-                      data-bs-target=".navbar-collapse"
-                      onClick={() => setToggle(!toggle)}
-                    >
-                      <span className="icon-bar" />
-                      <span className="icon-bar" />
-                      <span className="icon-bar" />
-                    </button>
-                  </div>
-                  <div
-                    className={`navbar-collapse collapse clearfix ${
-                      toggle ? "show" : ""
-                    }`}
-                  >
-                    <ul
-                      className="navigation clearfix"
-                      style={{ gap: "20px", display: "flex", fontSize: "18px" }}
-                    >
-                      {visibleCategories?.map((elm, i) => {
-                        const categorySubcategories =
-                          subcategoriesByCategory[elm?.id] || [];
-                        const hasSubcategories =
-                          categorySubcategories.length > 0;
+                        {visibleCategories?.map((elm, i) => {
+                          const categorySubcategories =
+                            subcategoriesByCategory[elm?.id] || [];
+                          const hasSubcategories =
+                            categorySubcategories.length > 0;
 
-                        return (
-                          <li
-                            key={i}
-                            className={hasSubcategories ? "dropdown" : ""}
-                          >
-                            <Link href={`/category/${elm?.slug}`}>
-                              {getLocalizedTitle(elm, locale)}
-                            </Link>
-                            {hasSubcategories && (
-                              <>
-                                <ul style={activeLi(`category-${elm?.id}`)}>
-                                  {categorySubcategories.map(
-                                    (subcategoryId) => (
-                                      <li key={subcategoryId.id}>
-                                        <Link
-                                          href={`/category/${
-                                            elm?.slug
-                                          }?subcategoryId=${
-                                            subcategoryId.slug ||
-                                            subcategoryId.id
-                                          }`}
-                                        >
-                                          {getLocalizedTitle(
-                                            subcategoryId,
-                                            locale
-                                          )}
-                                        </Link>
-                                      </li>
-                                    )
-                                  )}
-                                </ul>
-                                <div
-                                  className="dropdown-btn"
-                                  onClick={() =>
-                                    activeMenuSet(`category-${elm?.id}`)
-                                  }
-                                >
-                                  <span className="far fa-angle-down" />
-                                </div>
-                              </>
-                            )}
+                          return (
+                            <li
+                              key={i}
+                              className={hasSubcategories ? "dropdown" : ""}
+                            >
+                              <Link href={`/category/${elm?.slug}`}>
+                                {getLocalizedTitle(elm, locale)}
+                              </Link>
+                              {hasSubcategories && (
+                                <>
+                                  <ul style={activeLi(`category-${elm?.id}`)}>
+                                    {categorySubcategories.map(
+                                      (subcategoryId) => (
+                                        <li key={subcategoryId.id}>
+                                          <Link
+                                            href={`/category/${
+                                              elm?.slug
+                                            }?subcategoryId=${
+                                              subcategoryId.slug ||
+                                              subcategoryId.id
+                                            }`}
+                                          >
+                                            {getLocalizedTitle(
+                                              subcategoryId,
+                                              locale
+                                            )}
+                                          </Link>
+                                        </li>
+                                      )
+                                    )}
+                                  </ul>
+                                  <div
+                                    className="dropdown-btn"
+                                    onClick={() =>
+                                      activeMenuSet(`category-${elm?.id}`)
+                                    }
+                                  >
+                                    <span className="far fa-angle-down" />
+                                  </div>
+                                </>
+                              )}
+                            </li>
+                          );
+                        })}
+                        {hiddenCategories.length > 0 && (
+                          <li className="dropdown">
+                            <a
+                              href="#"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                activeMenuSet("more-categories");
+                              }}
+                            >
+                              More{" "}
+                              <span style={{ fontSize: "0.85em" }}>
+                                ({hiddenCategories.length})
+                              </span>
+                            </a>
+                            <ul style={activeLi("more-categories")}>
+                              {hiddenCategories.map((elm, i) => (
+                                <li key={`more-${i}`}>
+                                  <Link href={`/category/${elm?.slug}`}>
+                                    {getLocalizedTitle(elm, locale)}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                            <div
+                              className="dropdown-btn"
+                              onClick={() => activeMenuSet("more-categories")}
+                            >
+                              <span className="far fa-angle-down" />
+                            </div>
                           </li>
-                        );
-                      })}
-                      {hiddenCategories.length > 0 && (
-                        <li className="dropdown">
-                          <a
-                            href="#"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              activeMenuSet("more-categories");
-                            }}
-                          >
-                            More{" "}
-                            <span style={{ fontSize: "0.85em" }}>
-                              ({hiddenCategories.length})
-                            </span>
-                          </a>
-                          <ul style={activeLi("more-categories")}>
-                            {hiddenCategories.map((elm, i) => (
-                              <li key={`more-${i}`}>
-                                <Link href={`/category/${elm?.slug}`}>
-                                  {getLocalizedTitle(elm, locale)}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                          <div
-                            className="dropdown-btn"
-                            onClick={() => activeMenuSet("more-categories")}
-                          >
-                            <span className="far fa-angle-down" />
-                          </div>
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-                </nav>
+                        )}
+                      </ul>
+                    </div>
+                  </nav>
+                )}
               </div>
               <div className="header-number" style={{ fontSize: "18px" }}>
                 <i className="far fa-phone" />
@@ -407,6 +551,19 @@ const Header = ({ black }) => {
     };
   }, [categories, CATEGORY_LIMIT]);
 
+  // Detect tablet width (990 - 1280)
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window === "undefined" ? 0 : window.innerWidth
+  );
+
+  useEffect(() => {
+    const onResize = () => setWindowWidth(window.innerWidth);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  const isTablet = windowWidth >= 990 && windowWidth <= 1280;
+
   useEffect(() => {
     wellfoodUtility.fixedHeader();
   }, []);
@@ -437,111 +594,124 @@ const Header = ({ black }) => {
                 </div>
               </div>
               <div className="nav-outer ms-lg-5 ps-xxl-4 clearfix">
-                <nav className="main-menu navbar-expand-lg">
-                  <div className="navbar-header py-10">
-                    <div className="mobile-logo">
-                      <Link
-                        href="/"
+                {/* If tablet width, show hamburger icon that opens categories; otherwise show normal nav */}
+                {isTablet ? (
+                  <TabletHamburger
+                    visibleCategories={visibleCategories}
+                    hiddenCategories={hiddenCategories}
+                    subcategoriesByCategory={subcategoriesByCategory}
+                    locale={locale}
+                  />
+                ) : (
+                  <nav className="main-menu navbar-expand-lg">
+                    <div className="navbar-header py-10">
+                      <div className="mobile-logo">
+                        <Link
+                          href="/"
+                          style={{
+                            fontSize: "28px",
+                            fontWeight: "bold",
+                            color: "#ffb936",
+                            textDecoration: "none",
+                          }}
+                        >
+                          Blend
+                        </Link>
+                      </div>
+                      {/* Toggle Button */}
+                      <button
+                        type="button"
+                        className="navbar-toggle"
+                        data-bs-toggle="collapse"
+                        data-bs-target=".navbar-collapse"
+                      >
+                        <span className="icon-bar" />
+                        <span className="icon-bar" />
+                        <span className="icon-bar" />
+                      </button>
+                    </div>
+                    <div className="navbar-collapse collapse clearfix">
+                      <ul
+                        className="navigation clearfix"
                         style={{
-                          fontSize: "28px",
-                          fontWeight: "bold",
-                          color: "#ffb936",
-                          textDecoration: "none",
+                          gap: "20px",
+                          display: "flex",
+                          fontSize: "18px",
                         }}
                       >
-                        Blend
-                      </Link>
-                    </div>
-                    {/* Toggle Button */}
-                    <button
-                      type="button"
-                      className="navbar-toggle"
-                      data-bs-toggle="collapse"
-                      data-bs-target=".navbar-collapse"
-                    >
-                      <span className="icon-bar" />
-                      <span className="icon-bar" />
-                      <span className="icon-bar" />
-                    </button>
-                  </div>
-                  <div className="navbar-collapse collapse clearfix">
-                    <ul
-                      className="navigation clearfix"
-                      style={{ gap: "20px", display: "flex", fontSize: "18px" }}
-                    >
-                      {visibleCategories?.map((elm, i) => {
-                        const categorySubcategories =
-                          subcategoriesByCategory[elm?.id] || [];
-                        const hasSubcategories =
-                          categorySubcategories.length > 0;
+                        {visibleCategories?.map((elm, i) => {
+                          const categorySubcategories =
+                            subcategoriesByCategory[elm?.id] || [];
+                          const hasSubcategories =
+                            categorySubcategories.length > 0;
 
-                        return (
-                          <li
-                            key={i}
-                            className={hasSubcategories ? "dropdown" : ""}
-                          >
-                            <Link href={`/category/${elm?.slug}`}>
-                              {getLocalizedTitle(elm, locale)}
-                            </Link>
-                            {hasSubcategories && (
-                              <>
-                                <ul>
-                                  {categorySubcategories.map(
-                                    (subcategoryId) => (
-                                      <li key={subcategoryId.id}>
-                                        <Link
-                                          href={`/category/${
-                                            elm?.slug
-                                          }?subcategoryId=${
-                                            subcategoryId.slug ||
-                                            subcategoryId.id
-                                          }`}
-                                        >
-                                          {getLocalizedTitle(
-                                            subcategoryId,
-                                            locale
-                                          )}
-                                        </Link>
-                                      </li>
-                                    )
-                                  )}
-                                </ul>
-                                <div className="dropdown-btn">
-                                  <span className="far fa-angle-down" />
-                                </div>
-                              </>
-                            )}
+                          return (
+                            <li
+                              key={i}
+                              className={hasSubcategories ? "dropdown" : ""}
+                            >
+                              <Link href={`/category/${elm?.slug}`}>
+                                {getLocalizedTitle(elm, locale)}
+                              </Link>
+                              {hasSubcategories && (
+                                <>
+                                  <ul>
+                                    {categorySubcategories.map(
+                                      (subcategoryId) => (
+                                        <li key={subcategoryId.id}>
+                                          <Link
+                                            href={`/category/${
+                                              elm?.slug
+                                            }?subcategoryId=${
+                                              subcategoryId.slug ||
+                                              subcategoryId.id
+                                            }`}
+                                          >
+                                            {getLocalizedTitle(
+                                              subcategoryId,
+                                              locale
+                                            )}
+                                          </Link>
+                                        </li>
+                                      )
+                                    )}
+                                  </ul>
+                                  <div className="dropdown-btn">
+                                    <span className="far fa-angle-down" />
+                                  </div>
+                                </>
+                              )}
+                            </li>
+                          );
+                        })}
+                        {hiddenCategories.length > 0 && (
+                          <li className="dropdown">
+                            <a
+                              href="#"
+                              onClick={(e) => {
+                                e.preventDefault();
+                              }}
+                            >
+                              More{" "}
+                              <span style={{ fontSize: "0.85em" }}>
+                                ({hiddenCategories.length})
+                              </span>
+                            </a>
+                            <ul>
+                              {hiddenCategories.map((elm, i) => (
+                                <li key={`more-${i}`}>
+                                  <Link href={`/category/${elm?.slug}`}>
+                                    {getLocalizedTitle(elm, locale)}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                            <div className="dropdown-btn">
+                              <span className="far fa-angle-down" />
+                            </div>
                           </li>
-                        );
-                      })}
-                      {hiddenCategories.length > 0 && (
-                        <li className="dropdown">
-                          <a
-                            href="#"
-                            onClick={(e) => {
-                              e.preventDefault();
-                            }}
-                          >
-                            More{" "}
-                            <span style={{ fontSize: "0.85em" }}>
-                              ({hiddenCategories.length})
-                            </span>
-                          </a>
-                          <ul>
-                            {hiddenCategories.map((elm, i) => (
-                              <li key={`more-${i}`}>
-                                <Link href={`/category/${elm?.slug}`}>
-                                  {getLocalizedTitle(elm, locale)}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                          <div className="dropdown-btn">
-                            <span className="far fa-angle-down" />
-                          </div>
-                        </li>
-                      )}
-                      {/* <li className="dropdown">
+                        )}
+                        {/* <li className="dropdown">
                         <a href="#">Home</a>
                         <ul>
                           <li>
@@ -669,9 +839,10 @@ const Header = ({ black }) => {
                       <li>
                         <Link href="contact">Contact</Link>
                       </li> */}
-                    </ul>
-                  </div>
-                </nav>
+                      </ul>
+                    </div>
+                  </nav>
+                )}
               </div>
               <div className="header-number" style={{ fontSize: "18px" }}>
                 <i className="far fa-phone" />

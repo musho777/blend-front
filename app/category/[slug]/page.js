@@ -198,7 +198,6 @@ const CategoryPage = () => {
 
   const handleSortChange = (event) => {
     const value = event.target.value;
-    console.log("Sort changed to:", value);
     setSortBy(value);
     setCurrentPage(1);
   };

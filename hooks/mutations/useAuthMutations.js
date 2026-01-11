@@ -11,14 +11,11 @@ export function useLogin() {
   return useMutation({
     mutationFn: authService.login,
     onSuccess: (data) => {
-      console.log("Login response data:", data);
-
       // Handle different response structures
       const token = data.token || data.accessToken || data.access_token;
       const user = data.user || data.data?.user || data;
 
       if (token && user) {
-        console.log("Storing user and token:", { user, token });
         login(user, token);
       } else {
         console.error("Invalid login response structure:", data);

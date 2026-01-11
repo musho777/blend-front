@@ -19,7 +19,7 @@ const page = () => {
   const { data: banners, isLoading: isBannersLoading } = useBanners();
   const [activeBannerIndex, setActiveBannerIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
-  console.log(banners, "banners[activeBannerIndex]");
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -63,7 +63,14 @@ const page = () => {
                     data-aos-duration={1500}
                     data-aos-offset={50}
                   >
-                    <h1 style={{ fontSize: locale === 'am' || locale === 'ru' ? '3rem' : undefined }}>
+                    <h1
+                      style={{
+                        fontSize:
+                          locale === "am" || locale === "ru"
+                            ? "3rem"
+                            : undefined,
+                      }}
+                    >
                       {t("homepage.hero.title")}
                     </h1>
                     <p>{t("homepage.hero.description")}</p>
@@ -131,7 +138,14 @@ const page = () => {
                         data-aos-duration={1500}
                         data-aos-offset={50}
                       >
-                        <h2 style={{ fontSize: locale === 'am' || locale === 'ru' ? '2rem' : undefined }}>
+                        <h2
+                          style={{
+                            fontSize:
+                              locale === "am" || locale === "ru"
+                                ? "2rem"
+                                : undefined,
+                          }}
+                        >
                           {getLocalizedTitle(
                             banners[activeBannerIndex],
                             locale
@@ -238,7 +252,14 @@ const page = () => {
                       data-aos-duration={1500}
                       data-aos-offset={50}
                     >
-                      <h2 style={{ fontSize: locale === 'am' || locale === 'ru' ? '2rem' : undefined }}>
+                      <h2
+                        style={{
+                          fontSize:
+                            locale === "am" || locale === "ru"
+                              ? "2rem"
+                              : undefined,
+                        }}
+                      >
                         {t("homepage.specialOffer.title")}
                       </h2>
                       <p>{t("homepage.specialOffer.description")}</p>

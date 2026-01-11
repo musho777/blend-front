@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 import { useAuth } from "@/hooks/useAuth";
 import { useLogout } from "@/hooks/mutations/useAuthMutations";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import RegisterModal from "./RegisterModal";
 import OTPVerificationModal from "./OTPVerificationModal";
 
 const AuthButtons = () => {
-  const t = useTranslations('header');
+  const t = useTranslations("header");
   const { isAuthenticated, user } = useAuth();
   const logoutMutation = useLogout();
   const menuRef = useRef(null);
@@ -19,11 +19,6 @@ const AuthButtons = () => {
   const [showOTP, setShowOTP] = useState(false);
   const [otpEmail, setOtpEmail] = useState("");
   const [showUserMenu, setShowUserMenu] = useState(false);
-
-  // Debug: Log auth state
-  useEffect(() => {
-    console.log("AuthButtons - Auth State:", { isAuthenticated, user });
-  }, [isAuthenticated, user]);
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -53,7 +48,11 @@ const AuthButtons = () => {
 
   if (isAuthenticated && user) {
     return (
-      <div className="position-relative" style={{ marginLeft: "15px" }} ref={menuRef}>
+      <div
+        className="position-relative"
+        style={{ marginLeft: "15px" }}
+        ref={menuRef}
+      >
         <button
           className="btn btn-link text-white p-0 d-flex align-items-center"
           onClick={() => setShowUserMenu(!showUserMenu)}
@@ -94,7 +93,7 @@ const AuthButtons = () => {
                 onClick={() => setShowUserMenu(false)}
               >
                 <i className="far fa-receipt me-2" />
-                {t('orderHistory')}
+                {t("orderHistory")}
               </Link>
               <button
                 className="btn btn-link text-dark w-100 text-start p-2"
@@ -102,7 +101,7 @@ const AuthButtons = () => {
                 disabled={logoutMutation.isPending}
               >
                 <i className="far fa-sign-out me-2" />
-                {logoutMutation.isPending ? t('loggingOut') : t('logout')}
+                {logoutMutation.isPending ? t("loggingOut") : t("logout")}
               </button>
             </div>
           </div>

@@ -12,7 +12,6 @@
  * - If locale is 'en', return fieldName
  */
 export function getLocalizedField(item, fieldName, locale) {
-  console.log(locale);
   if (!item) return "";
 
   // For English, always use the base field
@@ -22,7 +21,6 @@ export function getLocalizedField(item, fieldName, locale) {
 
   // For Russian
   if (locale === "ru") {
-    console.log(fieldName);
     const russianField = `${fieldName}Ru`;
     return item[russianField] || item[fieldName] || "";
   }
