@@ -16,6 +16,8 @@ const ProductCard = ({ product, index }) => {
     ? getLocalizedTitle(product.category, locale)
     : product.categoryName || "";
 
+  const isArmenian = locale === "am";
+
   const handleCardClick = () => {
     window.location.href = `/product-details/${product.id || product.slug}`;
   };
@@ -122,30 +124,39 @@ const ProductCard = ({ product, index }) => {
           </span>
         </div>
         {product.stock !== 0 && (
-          <button
-            className="theme-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              if (product.stock !== 0) {
-                addToCart(product, 1);
+          <Tooltip title={isArmenian ? t("common.addToCart") : ""} arrow>
+            <button
+              className="theme-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (product.stock !== 0) {
+                  addToCart(product, 1);
+                }
+              }}
+              disabled={product.stock === 0}
+              style={
+                product.stock === 0
+                  ? {
+                      opacity: 0.5,
+                      cursor: "not-allowed",
+                      backgroundColor: "#999",
+                    }
+                  : {}
               }
-            }}
-            disabled={product.stock === 0}
-            style={
-              product.stock === 0
-                ? {
-                    opacity: 0.5,
-                    cursor: "not-allowed",
-                    backgroundColor: "#999",
-                  }
-                : {}
-            }
-          >
-            {product.stock === 0
-              ? t("common.outOfStock")
-              : t("common.addToCart")}{" "}
-            <i className="far fa-arrow-alt-right" />
-          </button>
+              aria-label={t("common.addToCart")}
+            >
+              {product.stock === 0 ? (
+                t("common.outOfStock")
+              ) : isArmenian ? (
+                // Show basket icon only for Armenian locale to avoid overflow
+                <i className="fas fa-shopping-basket" aria-hidden="true" />
+              ) : (
+                <>
+                  {t("common.addToCart")} <i className="far fa-arrow-alt-right" />
+                </>
+              )}
+            </button>
+          </Tooltip>
         )}
       </div>
     </div>
