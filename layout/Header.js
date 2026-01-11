@@ -47,6 +47,32 @@ const useCategoryLimit = () => {
 };
 
 const Sidebar = () => {
+  const { data: categories } = useCategories();
+  const { data: subcategories } = useSubcategories();
+  const { locale } = useLocale();
+  const CATEGORY_LIMIT = useCategoryLimit();
+
+  // group subcategories
+  const subcategoriesByCategory = useMemo(() => {
+    if (!subcategories) return {};
+    return subcategories.reduce((acc, s) => {
+      const cid = s.categoryId;
+      if (!acc[cid]) acc[cid] = [];
+      acc[cid].push(s);
+      return acc;
+    }, {});
+  }, [subcategories]);
+
+  const { visibleCategories, hiddenCategories } = useMemo(() => {
+    if (!categories || categories.length <= CATEGORY_LIMIT) {
+      return { visibleCategories: categories || [], hiddenCategories: [] };
+    }
+    return {
+      visibleCategories: categories.slice(0, CATEGORY_LIMIT),
+      hiddenCategories: categories.slice(CATEGORY_LIMIT),
+    };
+  }, [categories, CATEGORY_LIMIT]);
+
   return (
     <Fragment>
       {/*Form Back Drop*/}
@@ -58,7 +84,7 @@ const Sidebar = () => {
             .classList.remove("side-content-visible")
         }
       />
-      {/* Hidden Sidebar */}
+      {/* Hidden Sidebar (now shows categories) */}
       <section className="hidden-bar">
         <div className="inner-box text-center">
           <div
@@ -72,48 +98,78 @@ const Sidebar = () => {
             <span className="fa fa-times" />
           </div>
           <div className="title">
-            <h4>Get Appointment</h4>
+            <h4>Categories</h4>
           </div>
-          {/*Appointment Form*/}
-          <div className="appointment-form">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                document
-                  .querySelector("body")
-                  .classList.remove("side-content-visible");
-              }}
-            >
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="text"
-                  defaultValue=""
-                  placeholder="Name"
-                  required=""
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  type="email"
-                  name="email"
-                  defaultValue=""
-                  placeholder="Email Address"
-                  required=""
-                />
-              </div>
-              <div className="form-group">
-                <textarea placeholder="Message" rows={5} defaultValue={""} />
-              </div>
-              <div className="form-group">
-                <button type="submit" className="theme-btn style-two">
-                  Submit now
-                </button>
-              </div>
-            </form>
+
+          <div className="menu-categories">
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {visibleCategories?.map((c) => (
+                <li key={c.id} style={{ marginBottom: 12 }}>
+                  <Link
+                    href={`/category/${c.slug}`}
+                    onClick={() =>
+                      document.body.classList.remove("side-content-visible")
+                    }
+                  >
+                    <div style={{ fontWeight: 600 }}>
+                      {getLocalizedTitle(c, locale)}
+                    </div>
+                  </Link>
+                  {subcategoriesByCategory[c.id] && (
+                    <ul style={{ paddingLeft: 12, marginTop: 6 }}>
+                      {subcategoriesByCategory[c.id].map((s) => (
+                        <li key={s.id} style={{ marginBottom: 8 }}>
+                          <Link
+                            href={`/category/${c.slug}?subcategoryId=${
+                              s.slug || s.id
+                            }`}
+                            onClick={() =>
+                              document.body.classList.remove(
+                                "side-content-visible"
+                              )
+                            }
+                          >
+                            {getLocalizedTitle(s, locale)}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+
+              {hiddenCategories.length > 0 && (
+                <li style={{ marginTop: 8 }}>
+                  <div style={{ fontWeight: 600 }}>
+                    More ({hiddenCategories.length})
+                  </div>
+                  <ul style={{ paddingLeft: 12, marginTop: 6 }}>
+                    {hiddenCategories.map((hc) => (
+                      <li key={hc.id} style={{ marginBottom: 8 }}>
+                        <Link
+                          href={`/category/${hc.slug}`}
+                          onClick={() =>
+                            document.body.classList.remove(
+                              "side-content-visible"
+                            )
+                          }
+                        >
+                          {getLocalizedTitle(hc, locale)}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              )}
+            </ul>
           </div>
-          {/*Social Icons*/}
-          <div className="social-style-one">
+
+          {/* Social Icons (kept for parity) */}
+          {/* Language switcher inside the hidden drawer */}
+          <div style={{ marginTop: 16 }}>
+            <LanguageSwitcher />
+          </div>
+          <div className="social-style-one" style={{ marginTop: 18 }}>
             <Link href="contact">
               <i className="fab fa-telegram" />
             </Link>
@@ -277,6 +333,10 @@ const TabletHamburger = ({
               </li>
             )}
           </ul>
+          {/* Language switcher for tablet/mobile menu drawer */}
+          <div style={{ marginTop: 18 }}>
+            <LanguageSwitcher />
+          </div>
         </div>
       )}
     </div>
@@ -490,6 +550,17 @@ const MobileMenu = ({ black }) => {
                           </li>
                         )}
                       </ul>
+
+                      {/* Language switcher inside the mobile collapse menu */}
+                      <div
+                        style={{
+                          padding: "12px 16px",
+                          borderTop: "1px solid rgba(0,0,0,0.06)",
+                          marginTop: 12,
+                        }}
+                      >
+                        <LanguageSwitcher />
+                      </div>
                     </div>
                   </nav>
                 )}
@@ -502,8 +573,29 @@ const MobileMenu = ({ black }) => {
               <div style={{ marginLeft: "15px" }}>
                 <CartIcon />
               </div>
+              {/* Sidebar / modal drawer opener (hamburger) */}
+              <button
+                aria-label="Open drawer"
+                className="header-drawer-toggle"
+                onClick={() =>
+                  document.body.classList.toggle("side-content-visible")
+                }
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  fontSize: 20,
+                  marginLeft: 12,
+                  cursor: "pointer",
+                  color: "inherit",
+                }}
+              >
+                <i className="fa fa-bars" />
+              </button>
               <AuthButtons />
-              <LanguageSwitcher />
+              {/* Desktop language switcher remains here for large screens */}
+              <div className="d-none d-xl-inline-block">
+                <LanguageSwitcher />
+              </div>
             </div>
           </div>
           <div className="bg-lines">
