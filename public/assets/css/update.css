@@ -4700,7 +4700,7 @@ h6,
 
 .hidden-bar .inner-box {
   position: relative;
-  padding: 100px 40px 50px;
+  padding: 100px 0px 0px;
 }
 @media only screen and (max-width: 375px) {
   .hidden-bar .inner-box {

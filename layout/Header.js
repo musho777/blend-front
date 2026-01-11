@@ -349,9 +349,8 @@ const MobileMenu = ({ black }) => {
   const { data: subcategories } = useSubcategories();
   const { locale } = useLocale();
   const t = useTranslations("header");
-  const CATEGORY_LIMIT = useCategoryLimit(); // Responsive category limit
+  const CATEGORY_LIMIT = useCategoryLimit();
 
-  // Detect tablet width (990 - 1280) inside MobileMenu as well
   const [windowWidth, setWindowWidth] = useState(
     typeof window === "undefined" ? 0 : window.innerWidth
   );
@@ -463,9 +462,12 @@ const MobileMenu = ({ black }) => {
                       <ul
                         className="navigation clearfix"
                         style={{
-                          gap: "20px",
+                          gap: "12px",
                           display: "flex",
+                          flexDirection: "column",
                           fontSize: "18px",
+                          padding: 0,
+                          margin: 0,
                         }}
                       >
                         {visibleCategories?.map((elm, i) => {
@@ -478,16 +480,40 @@ const MobileMenu = ({ black }) => {
                             <li
                               key={i}
                               className={hasSubcategories ? "dropdown" : ""}
+                              style={{
+                                padding: "12px 0",
+                                borderBottom: "1px solid rgba(0,0,0,0.06)",
+                                listStyle: "none",
+                              }}
                             >
-                              <Link href={`/category/${elm?.slug}`}>
+                              <Link
+                                href={`/category/${elm?.slug}`}
+                                style={{
+                                  display: "block",
+                                  fontWeight: 600,
+                                  padding: "6px 0",
+                                  color: "inherit",
+                                  textDecoration: "none",
+                                }}
+                              >
                                 {getLocalizedTitle(elm, locale)}
                               </Link>
                               {hasSubcategories && (
                                 <>
-                                  <ul style={activeLi(`category-${elm?.id}`)}>
+                                  <ul
+                                    style={{
+                                      ...activeLi(`category-${elm?.id}`),
+                                      paddingLeft: 16,
+                                      marginTop: 6,
+                                      listStyle: "none",
+                                    }}
+                                  >
                                     {categorySubcategories.map(
                                       (subcategoryId) => (
-                                        <li key={subcategoryId.id}>
+                                        <li
+                                          key={subcategoryId.id}
+                                          style={{ marginBottom: 8 }}
+                                        >
                                           <Link
                                             href={`/category/${
                                               elm?.slug
@@ -495,6 +521,7 @@ const MobileMenu = ({ black }) => {
                                               subcategoryId.slug ||
                                               subcategoryId.id
                                             }`}
+                                            style={{ display: "block" }}
                                           >
                                             {getLocalizedTitle(
                                               subcategoryId,
@@ -519,12 +546,24 @@ const MobileMenu = ({ black }) => {
                           );
                         })}
                         {hiddenCategories.length > 0 && (
-                          <li className="dropdown">
+                          <li
+                            className="dropdown"
+                            style={{
+                              padding: "12px 0",
+                              borderBottom: "1px solid rgba(0,0,0,0.06)",
+                              listStyle: "none",
+                            }}
+                          >
                             <a
                               href="#"
                               onClick={(e) => {
                                 e.preventDefault();
                                 activeMenuSet("more-categories");
+                              }}
+                              style={{
+                                display: "block",
+                                fontWeight: 600,
+                                textDecoration: "none",
                               }}
                             >
                               More{" "}
@@ -532,10 +571,23 @@ const MobileMenu = ({ black }) => {
                                 ({hiddenCategories.length})
                               </span>
                             </a>
-                            <ul style={activeLi("more-categories")}>
+                            <ul
+                              style={{
+                                ...activeLi("more-categories"),
+                                paddingLeft: 16,
+                                marginTop: 6,
+                                listStyle: "none",
+                              }}
+                            >
                               {hiddenCategories.map((elm, i) => (
-                                <li key={`more-${i}`}>
-                                  <Link href={`/category/${elm?.slug}`}>
+                                <li
+                                  key={`more-${i}`}
+                                  style={{ marginBottom: 8 }}
+                                >
+                                  <Link
+                                    href={`/category/${elm?.slug}`}
+                                    style={{ display: "block" }}
+                                  >
                                     {getLocalizedTitle(elm, locale)}
                                   </Link>
                                 </li>
