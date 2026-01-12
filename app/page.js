@@ -54,6 +54,14 @@ const page = () => {
               backgroundImage: "url(/assets/images/background/hero.jpg)",
             }}
           >
+            <span
+              style={{ position: "absolute" }}
+              className="marquee-wrap style-two text-white"
+            >
+              <span className="marquee-inner left">BLEND</span>
+              <span className="marquee-inner left">BLEND</span>
+              <span className="marquee-inner left">BLEND</span>
+            </span>
             <div className="container">
               <div className="row align-items-center">
                 <div className="col-lg-6">

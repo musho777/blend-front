@@ -4944,6 +4944,9 @@ h6,
   display: block;
   margin-bottom: 22px;
 }
+.hero-content h1 {
+  font-size: 95px;
+}
 @media only screen and (max-width: 479px) {
   .hero-content .sub-title {
     font-size: 20px;
