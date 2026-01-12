@@ -1,11 +1,36 @@
 "use client";
 import { Modal } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useTranslations } from 'next-intl';
 import { useRegister } from "@/hooks/mutations/useAuthMutations";
-import { useState } from "react";
+import { useState, forwardRef } from "react";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+
+// Custom input component to limit digits
+const CustomPhoneInput = forwardRef((props, ref) => {
+  const handleKeyPress = (e) => {
+    const value = e.target.value || '';
+    const digitsOnly = value.replace(/\D/g, '');
+    const newChar = e.key;
+
+    // If the new character is a digit and we already have 11 digits, prevent input
+    if (/\d/.test(newChar) && digitsOnly.length >= 11) {
+      e.preventDefault();
+    }
+  };
+
+  return (
+    <input
+      {...props}
+      ref={ref}
+      onKeyPress={handleKeyPress}
+    />
+  );
+});
+CustomPhoneInput.displayName = "CustomPhoneInput";
 
 const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
   const t = useTranslations('auth');
@@ -28,10 +53,12 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
     phone: yup
       .string()
       .required(t('phoneRequired'))
-      .matches(
-        /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,
-        t('validPhone')
-      ),
+      .test('phone-length', t('phoneLength') || 'Phone number must be exactly 11 digits', function(value) {
+        if (!value) return false;
+        // Remove all non-digit characters (including +, spaces, hyphens)
+        const digitsOnly = value.replace(/\D/g, '');
+        return digitsOnly.length === 11;
+      }),
     address: yup.string().max(200, t('addressMax')),
     password: yup
       .string()
@@ -52,6 +79,7 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm({
     resolver: yupResolver(registerSchema),
   });
@@ -138,12 +166,40 @@ const RegisterModal = ({ show, onHide, onSwitchToLogin, onSuccess }) => {
           </div>
 
           <div className="form-group">
-            <input
-              type="tel"
-              className="form-control"
-              placeholder={t('phonePlaceholder')}
-              style={{ border: "1px solid #ddd" }}
-              {...register("phone")}
+            <Controller
+              name="phone"
+              control={control}
+              render={({ field }) => (
+                <PhoneInput
+                  {...field}
+                  onChange={(value) => {
+                    if (!value) {
+                      field.onChange("");
+                      return;
+                    }
+
+                    // Extract only digits and limit to 11
+                    const digitsOnly = value.replace(/\D/g, '');
+
+                    // If more than 11 digits, truncate to 11
+                    if (digitsOnly.length > 11) {
+                      const truncatedDigits = digitsOnly.slice(0, 11);
+                      const newValue = value.startsWith('+') ? '+' + truncatedDigits : truncatedDigits;
+                      field.onChange(newValue);
+                      return;
+                    }
+
+                    field.onChange(value);
+                  }}
+                  international
+                  defaultCountry="US"
+                  placeholder={t('phonePlaceholder')}
+                  className="form-control"
+                  style={{ border: "1px solid #ddd" }}
+                  inputComponent={CustomPhoneInput}
+                  smartCaret={false}
+                />
+              )}
             />
             {errors.phone && (
               <small className="text-danger d-block mt-1">

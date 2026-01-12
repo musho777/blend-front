@@ -1,10 +1,35 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef } from "react";
 import { Accordion, Modal } from "react-bootstrap";
 import { useCart } from "@/hooks/useCart";
 import { useCreateOrder } from "@/hooks/mutations/useOrderMutation";
 import { useAuth } from "@/hooks/useAuth";
 import { useTranslations } from "next-intl";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+
+// Custom input component to limit digits
+const CustomPhoneInput = forwardRef((props, ref) => {
+  const handleKeyPress = (e) => {
+    const value = e.target.value || '';
+    const digitsOnly = value.replace(/\D/g, '');
+    const newChar = e.key;
+
+    // If the new character is a digit and we already have 11 digits, prevent input
+    if (/\d/.test(newChar) && digitsOnly.length >= 11) {
+      e.preventDefault();
+    }
+  };
+
+  return (
+    <input
+      {...props}
+      ref={ref}
+      onKeyPress={handleKeyPress}
+    />
+  );
+});
+CustomPhoneInput.displayName = "CustomPhoneInput";
 
 const CheckoutForm = () => {
   const t = useTranslations("checkout");
@@ -22,6 +47,7 @@ const CheckoutForm = () => {
 
   const [paymentMethod, setPaymentMethod] = useState("cash_on_delivery");
   const [error, setError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   // Auto-fill form fields when user is authenticated
@@ -42,10 +68,47 @@ const CheckoutForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handlePhoneChange = (value) => {
+    if (!value) {
+      setFormData((prev) => ({ ...prev, phone: "" }));
+      setPhoneError("");
+      return;
+    }
+
+    // Extract only digits and limit to 11
+    const digitsOnly = value.replace(/\D/g, '');
+
+    // If more than 11 digits, truncate to 11
+    if (digitsOnly.length > 11) {
+      const truncatedDigits = digitsOnly.slice(0, 11);
+      // Reconstruct the phone number with country code
+      const newValue = value.startsWith('+') ? '+' + truncatedDigits : truncatedDigits;
+      setFormData((prev) => ({ ...prev, phone: newValue }));
+      setPhoneError("");
+      return;
+    }
+
+    setFormData((prev) => ({ ...prev, phone: value }));
+
+    // Validate phone number length
+    if (digitsOnly.length !== 11) {
+      setPhoneError(t("phoneLength") || "Phone number must be exactly 11 digits");
+    } else {
+      setPhoneError("");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setShowSuccessModal(false);
+
+    // Validate phone number before submission
+    const digitsOnly = formData.phone.replace(/\D/g, '');
+    if (digitsOnly.length !== 11) {
+      setPhoneError(t("phoneLength") || "Phone number must be exactly 11 digits");
+      return;
+    }
 
     try {
       const orderData = {
@@ -116,18 +179,23 @@ const CheckoutForm = () => {
         <div className="row">
           <div className="col-md-6">
             <div className="form-group">
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                className="form-control"
-                placeholder={t("phonePlaceholder")}
+              <PhoneInput
+                international
+                defaultCountry="US"
                 value={formData.phone}
-                onChange={handleChange}
-                pattern="[0-9+\s\-()]+"
-                style={{ border: "1px solid #ddd" }}
+                onChange={handlePhoneChange}
+                placeholder={t("phonePlaceholder")}
+                className="form-control"
+                style={{ border: phoneError ? "1px solid #dc3545" : "1px solid #ddd" }}
+                inputComponent={CustomPhoneInput}
+                smartCaret={false}
                 required
               />
+              {phoneError && (
+                <small className="text-danger d-block mt-1">
+                  {phoneError}
+                </small>
+              )}
             </div>
           </div>
           <div className="col-md-6">

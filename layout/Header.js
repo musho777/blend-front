@@ -551,7 +551,7 @@ const MobileMenu = ({ black }) => {
               </div>
               <div className="header-number" style={{ fontSize: "18px" }}>
                 <i className="far fa-phone" />
-                {t("call")} : <a href="callto:+88012345688">+374 93 613 007</a>
+                {t("call")} : <a href="callto:+37493613007">+374 93 613 007</a>
               </div>
               <SearchBtn />
               <div style={{ marginLeft: "15px" }}>
@@ -920,7 +920,7 @@ const Header = ({ black }) => {
               </div>
               <div className="header-number" style={{ fontSize: "18px" }}>
                 <i className="far fa-phone" />
-                {t("call")} : <a href="callto:+88012345688">+374 93 613 007</a>
+                {t("call")} : <a href="callto:+37493613007">+374 93 613 007</a>
               </div>
               <SearchBtn />
               <div style={{ marginLeft: "15px" }}>

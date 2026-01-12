@@ -159,6 +159,7 @@
     "lastNameMax": "Last name must not exceed 50 characters",
     "phoneRequired": "Phone number is required",
     "validPhone": "Please enter a valid phone number",
+    "phoneLength": "Phone number must be exactly 11 digits",
     "addressMax": "Address must not exceed 200 characters",
     "passwordStrength": "Password must contain at least one uppercase letter, one lowercase letter, and one number",
     "confirmPasswordRequired": "Please confirm your password",
@@ -206,7 +207,8 @@
     "placeOrder": "Place Order",
     "processing": "Processing...",
     "orderSuccess": "Order Placed Successfully!",
-    "orderSuccessMessage": "Thank you for your order. We'll prepare it right away!"
+    "orderSuccessMessage": "Thank you for your order. We'll prepare it right away!",
+    "phoneLength": "Phone number must be exactly 11 digits"
   },
   "privacyPolicy": {
     "pageTitle": "Privacy Policy",

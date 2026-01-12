@@ -1,7 +1,32 @@
 "use client";
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import { Modal } from "react-bootstrap";
 import { useCreateBooking } from "@/hooks";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+
+// Custom input component to limit digits
+const CustomPhoneInput = forwardRef((props, ref) => {
+  const handleKeyPress = (e) => {
+    const value = e.target.value || '';
+    const digitsOnly = value.replace(/\D/g, '');
+    const newChar = e.key;
+
+    // If the new character is a digit and we already have 11 digits, prevent input
+    if (/\d/.test(newChar) && digitsOnly.length >= 11) {
+      e.preventDefault();
+    }
+  };
+
+  return (
+    <input
+      {...props}
+      ref={ref}
+      onKeyPress={handleKeyPress}
+    />
+  );
+});
+CustomPhoneInput.displayName = "CustomPhoneInput";
 
 const BookTableForm = () => {
   const [formData, setFormData] = useState({
@@ -147,6 +172,38 @@ const BookTableForm = () => {
 export default BookTableForm;
 
 export const BookTableForm2 = () => {
+  const [phone, setPhone] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+
+  const handlePhoneChange = (value) => {
+    if (!value) {
+      setPhone("");
+      setPhoneError("");
+      return;
+    }
+
+    // Extract only digits and limit to 11
+    const digitsOnly = value.replace(/\D/g, '');
+
+    // If more than 11 digits, truncate to 11
+    if (digitsOnly.length > 11) {
+      const truncatedDigits = digitsOnly.slice(0, 11);
+      const newValue = value.startsWith('+') ? '+' + truncatedDigits : truncatedDigits;
+      setPhone(newValue);
+      setPhoneError("");
+      return;
+    }
+
+    setPhone(value);
+
+    // Validate phone number length
+    if (digitsOnly.length !== 11) {
+      setPhoneError("Phone number must be exactly 11 digits");
+    } else {
+      setPhoneError("");
+    }
+  };
+
   return (
     <div
       className="booking-table-form rmt-50"
@@ -209,18 +266,26 @@ export const BookTableForm2 = () => {
           </div>
           <div className="col-md-12">
             <div className="form-group">
-              <label htmlFor="number">
+              <label htmlFor="number" style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
                 <i className="far fa-phone" />
               </label>
-              <input
-                type="text"
-                id="number"
-                name="number"
-                className="form-control"
-                defaultValue=""
+              <PhoneInput
+                international
+                defaultCountry="US"
+                value={phone}
+                onChange={handlePhoneChange}
                 placeholder="Phone"
-                required=""
+                className="form-control"
+                style={{ border: phoneError ? "1px solid #dc3545" : "1px solid #ddd" }}
+                inputComponent={CustomPhoneInput}
+                smartCaret={false}
+                required
               />
+              {phoneError && (
+                <small className="text-danger d-block mt-1">
+                  {phoneError}
+                </small>
+              )}
             </div>
           </div>
           <div className="col-md-12">
