@@ -82,7 +82,8 @@
     "onlyLeftInStock": "Մնացել է միայն {count}",
     "addedToCart": "{product} ապրանքը {category} կատեգորիայից ավելացվել է զամբյուղ!",
     "addedToCartNoCategory": "{product} ապրանքը ավելացվել է զամբյուղ!",
-    "addToCartError": "Չհաջողվեց ավելացնել ապրանքը զամբյուղ"
+    "addToCartError": "Չհաջողվեց ավելացնել ապրանքը զամբյուղ",
+    "stockLimitReached": "Պահեստի սահմանը հասել է! Հասանելի է միայն {stock}։"
   },
   "category": {
     "search": "Որոնել",

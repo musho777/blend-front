@@ -130,7 +130,11 @@ const ProductCard = ({ product, index }) => {
                         });
                     toast.success(message);
                   } else {
-                    toast.error(tCart("addToCartError"));
+                    toast.error(
+                      tCart("stockLimitReached", {
+                        stock: product.stock,
+                      })
+                    );
                   }
                 } else {
                   toast.error(tCart("addToCartError"));

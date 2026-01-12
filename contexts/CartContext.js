@@ -64,6 +64,28 @@ export function CartProvider({ children }) {
       return false;
     }
 
+    // Check if item already exists in cart
+    const existingItem = cart.items.find(
+      (item) => item.productId === product.id
+    );
+
+    if (existingItem) {
+      const currentQuantity = existingItem.quantity;
+      const newQuantity = currentQuantity + quantity;
+
+      // Check if already at stock limit
+      if (currentQuantity >= availableStock) {
+        console.warn(`Cannot add more. Stock limit of ${availableStock} reached.`);
+        return false;
+      }
+
+      // Check if new quantity would exceed stock
+      if (newQuantity > availableStock) {
+        console.warn(`Cannot add ${quantity} items. Only ${availableStock - currentQuantity} more available in stock.`);
+        return false;
+      }
+    }
+
     setCart((prev) => {
       const existingItemIndex = prev.items.findIndex(
         (item) => item.productId === product.id
@@ -75,22 +97,11 @@ export function CartProvider({ children }) {
         const currentQuantity = updatedItems[existingItemIndex].quantity;
         const newQuantity = currentQuantity + quantity;
 
-        // Check if new quantity exceeds stock
-        if (newQuantity > availableStock) {
-          console.warn(`Cannot add ${quantity} items. Only ${availableStock - currentQuantity} more available in stock.`);
-          // Add only what's available
-          updatedItems[existingItemIndex] = {
-            ...updatedItems[existingItemIndex],
-            quantity: availableStock,
-            stock: availableStock,
-          };
-        } else {
-          updatedItems[existingItemIndex] = {
-            ...updatedItems[existingItemIndex],
-            quantity: newQuantity,
-            stock: availableStock,
-          };
-        }
+        updatedItems[existingItemIndex] = {
+          ...updatedItems[existingItemIndex],
+          quantity: newQuantity,
+          stock: availableStock,
+        };
 
         return {
           items: updatedItems,
@@ -98,18 +109,11 @@ export function CartProvider({ children }) {
         };
       } else {
         // Add new item
-        // Ensure quantity doesn't exceed stock
-        const validQuantity = Math.min(quantity, availableStock);
-
-        if (validQuantity < quantity) {
-          console.warn(`Only ${availableStock} items available in stock.`);
-        }
-
         const newItem = {
           productId: product.id,
           name: product.name || product.title,
           price: product.price,
-          quantity: validQuantity,
+          quantity: quantity,
           imageUrl: product.imageUrls?.[0] || "",
           slug: product.slug || "",
           stock: availableStock,

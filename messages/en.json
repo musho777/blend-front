@@ -82,7 +82,8 @@
     "onlyLeftInStock": "Only {count} left in stock",
     "addedToCart": "Added {product} from {category} to cart!",
     "addedToCartNoCategory": "Added {product} to cart!",
-    "addToCartError": "Failed to add item to cart"
+    "addToCartError": "Failed to add item to cart",
+    "stockLimitReached": "Stock limit reached! Only {stock} available."
   },
   "category": {
     "search": "Search",

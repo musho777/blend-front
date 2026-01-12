@@ -82,7 +82,8 @@
     "onlyLeftInStock": "Осталось только {count}",
     "addedToCart": "Добавлено {product} из {category} в корзину!",
     "addedToCartNoCategory": "Добавлено {product} в корзину!",
-    "addToCartError": "Не удалось добавить товар в корзину"
+    "addToCartError": "Не удалось добавить товар в корзину",
+    "stockLimitReached": "Достигнут лимит запаса! Доступно только {stock}."
   },
   "category": {
     "search": "Поиск",
