@@ -58,9 +58,24 @@ const page = () => {
               style={{ position: "absolute" }}
               className="marquee-wrap style-two text-white"
             >
-              <span className="marquee-inner left">BLEND</span>
-              <span className="marquee-inner left">BLEND</span>
-              <span className="marquee-inner left">BLEND</span>
+              <span
+                className="marquee-inner left"
+                style={{ animation: "marquee_left 7s linear infinite" }}
+              >
+                BLEND
+              </span>
+              <span
+                className="marquee-inner left"
+                style={{ animation: "marquee_left 7s linear infinite" }}
+              >
+                BLEND
+              </span>
+              <span
+                className="marquee-inner left"
+                style={{ animation: "marquee_left 7s linear infinite" }}
+              >
+                BLEND
+              </span>
             </span>
             <div className="container">
               <div className="row align-items-center">
