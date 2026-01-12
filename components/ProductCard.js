@@ -9,6 +9,7 @@ import Tooltip from "@mui/material/Tooltip";
 
 const ProductCard = ({ product, index }) => {
   const t = useTranslations();
+  const tCart = useTranslations("cart");
   const { addToCart } = useCart();
   const { locale } = useLocale();
 
@@ -74,20 +75,6 @@ const ProductCard = ({ product, index }) => {
               />
             </div>
           )}
-          {localizedCategoryName && (
-            <Link
-              href={`/category/${
-                product.category?.slug ||
-                product.categorySlug ||
-                product.category?.id ||
-                product.categoryId
-              }`}
-              className="category-badge"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {localizedCategoryName}
-            </Link>
-          )}
         </div>
         <div className="content">
           {product.rating && (
@@ -134,19 +121,19 @@ const ProductCard = ({ product, index }) => {
                   const success = addToCart(product, 1);
                   if (success) {
                     const message = localizedCategoryName
-                      ? t("cart.addedToCart", {
+                      ? tCart("addedToCart", {
                           product: localizedTitle,
                           category: localizedCategoryName,
                         })
-                      : t("cart.addedToCartNoCategory", {
+                      : tCart("addedToCartNoCategory", {
                           product: localizedTitle,
                         });
                     toast.success(message);
                   } else {
-                    toast.error(t("cart.addToCartError"));
+                    toast.error(tCart("addToCartError"));
                   }
                 } else {
-                  toast.error(t("cart.addToCartError"));
+                  toast.error(tCart("addToCartError"));
                 }
               }}
               disabled={product.stock === 0}

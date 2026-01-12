@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import Counter from "@/components/Counter";
 import OfferCard from "@/components/OfferCard";
@@ -9,6 +9,7 @@ import WellFoodLayout from "@/layout/WellFoodLayout";
 import Link from "next/link";
 import { useBestSellers } from "@/hooks/queries/useBestSellersQuery";
 import { useBanners } from "@/hooks/queries/useBannersQuery";
+import { useCategories } from "@/hooks/queries/useCategoriesQuery";
 import { useLocale } from "@/contexts/LocaleContext";
 import { getLocalizedTitle, getLocalizedField } from "@/utils/localization";
 
@@ -17,8 +18,24 @@ const page = () => {
   const { locale } = useLocale();
   const { data: bestSellers, isLoading, error } = useBestSellers();
   const { data: banners, isLoading: isBannersLoading } = useBanners();
+  const { data: categories } = useCategories();
   const [activeBannerIndex, setActiveBannerIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
+
+  // Enrich products with category information
+  const enrichedBestSellers = useMemo(() => {
+    if (!bestSellers || !categories) return bestSellers;
+
+    return bestSellers.map((product) => {
+      if (!product.categoryId) return product;
+
+      const category = categories.find((cat) => cat.id === product.categoryId);
+      return {
+        ...product,
+        category: category || null,
+      };
+    });
+  }, [bestSellers, categories]);
 
   useEffect(() => {
     setMounted(true);
@@ -447,8 +464,8 @@ const page = () => {
                   </div>
                 )}
 
-                {bestSellers && bestSellers.length > 0
-                  ? bestSellers.map((product, index) => (
+                {enrichedBestSellers && enrichedBestSellers.length > 0
+                  ? enrichedBestSellers.map((product, index) => (
                       <ProductCard
                         key={product.id || index}
                         index={index}

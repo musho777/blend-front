@@ -80,8 +80,8 @@
     "emptyCart": "Ձեր զամբյուղը դատարկ է",
     "continueShopping": "Շարունակել գնումները",
     "onlyLeftInStock": "Մնացել է միայն {count}",
-    "addedToCart": "'{product}' ապրանքը {category} կատեգորիայից ավելացվել է զամբյուղ!",
-    "addedToCartNoCategory": "'{product}' ապրանքը ավելացվել է զամբյուղ!",
+    "addedToCart": "{product} ապրանքը {category} կատեգորիայից ավելացվել է զամբյուղ!",
+    "addedToCartNoCategory": "{product} ապրանքը ավելացվել է զամբյուղ!",
     "addToCartError": "Չհաջողվեց ավելացնել ապրանքը զամբյուղ"
   },
   "category": {

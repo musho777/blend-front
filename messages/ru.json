@@ -80,8 +80,8 @@
     "emptyCart": "Ваша корзина пуста",
     "continueShopping": "Продолжить покупки",
     "onlyLeftInStock": "Осталось только {count}",
-    "addedToCart": "Добавлено '{product}' из {category} в корзину!",
-    "addedToCartNoCategory": "Добавлено '{product}' в корзину!",
+    "addedToCart": "Добавлено {product} из {category} в корзину!",
+    "addedToCartNoCategory": "Добавлено {product} в корзину!",
     "addToCartError": "Не удалось добавить товар в корзину"
   },
   "category": {
