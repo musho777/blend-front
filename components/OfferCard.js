@@ -159,7 +159,10 @@ const OfferCard = () => {
                   <span className="title">‎ </span>
                   <div className="image">
                     <img
-                      src={card.image}
+                      src={
+                        `${card.imageUrls[0]}` ||
+                        "assets/images/dishes/dish1.png"
+                      }
                       alt={card.alt}
                       width={300}
                       height={300}
