@@ -79,7 +79,10 @@
     "proceedToCheckout": "Proceed to Checkout",
     "emptyCart": "Your cart is empty",
     "continueShopping": "Continue Shopping",
-    "onlyLeftInStock": "Only {count} left in stock"
+    "onlyLeftInStock": "Only {count} left in stock",
+    "addedToCart": "Added '{product}' from {category} to cart!",
+    "addedToCartNoCategory": "Added '{product}' to cart!",
+    "addToCartError": "Failed to add item to cart"
   },
   "category": {
     "search": "Search",

@@ -13,6 +13,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { LocaleProvider } from "@/contexts/LocaleContext";
 import I18nProvider from "@/providers/I18nProvider";
 import AgeVerificationModal from "@/components/AgeVerificationModal";
+import { Toaster } from "react-hot-toast";
 import amMessages from "@/messages/am.json";
 
 export const metadata = {
@@ -30,6 +31,24 @@ export default function RootLayout({ children }) {
               <LocaleProvider>
                 <I18nProvider initialMessages={amMessages}>
                   <AgeVerificationModal />
+                  <Toaster
+                    position="top-right"
+                    reverseOrder={false}
+                    toastOptions={{
+                      duration: 3000,
+                      style: {
+                        background: "#333",
+                        color: "#fff",
+                      },
+                      success: {
+                        duration: 3000,
+                        iconTheme: {
+                          primary: "#10b981",
+                          secondary: "#fff",
+                        },
+                      },
+                    }}
+                  />
                   {children}
                 </I18nProvider>
               </LocaleProvider>

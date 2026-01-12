@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import toast from "react-hot-toast";
 import { useCart } from "@/hooks/useCart";
 import { useLocale } from "@/contexts/LocaleContext";
 import { getLocalizedTitle } from "@/utils/localization";
@@ -130,7 +131,22 @@ const ProductCard = ({ product, index }) => {
               onClick={(e) => {
                 e.stopPropagation();
                 if (product.stock !== 0) {
-                  addToCart(product, 1);
+                  const success = addToCart(product, 1);
+                  if (success) {
+                    const message = localizedCategoryName
+                      ? t("cart.addedToCart", {
+                          product: localizedTitle,
+                          category: localizedCategoryName,
+                        })
+                      : t("cart.addedToCartNoCategory", {
+                          product: localizedTitle,
+                        });
+                    toast.success(message);
+                  } else {
+                    toast.error(t("cart.addToCartError"));
+                  }
+                } else {
+                  toast.error(t("cart.addToCartError"));
                 }
               }}
               disabled={product.stock === 0}
