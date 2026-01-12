@@ -192,6 +192,22 @@
     "total": "Ընդամենը",
     "viewDetails": "Դիտել մանրամասները"
   },
+  "checkout": {
+    "title": "Ձևակերպման տեղեկություններ",
+    "firstNamePlaceholder": "Անուն *",
+    "lastNamePlaceholder": "Ազգանուն *",
+    "phonePlaceholder": "Հեռախոսի համար *",
+    "emailPlaceholder": "Էլ. փոստի հասցե *",
+    "addressPlaceholder": "Հասցե *",
+    "selectPaymentMethod": "Ընտրեք վճարման եղանակը",
+    "cashOnDelivery": "Կանխիկ առաքման ժամանակ",
+    "creditCard": "Վարկային/Դեբետային քարտ",
+    "bankTransfer": "Բանկային փոխանցում",
+    "placeOrder": "Կատարել պատվեր",
+    "processing": "Մշակվում է...",
+    "orderSuccess": "Պատվերը հաջողությամբ կատարվեց!",
+    "orderSuccessMessage": "Շնորհակալություն ձեր պատվերի համար։ Մենք այն կպատրաստենք անմիջապես!"
+  },
   "privacyPolicy": {
     "pageTitle": "Գաղտնիության քաղաքականություն",
     "lastUpdated": "Վերջին թարմացում՝ 11 հունվարի 2026",

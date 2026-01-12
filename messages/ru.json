@@ -192,6 +192,22 @@
     "total": "Итого",
     "viewDetails": "Просмотреть детали"
   },
+  "checkout": {
+    "title": "Информация для оформления",
+    "firstNamePlaceholder": "Имя *",
+    "lastNamePlaceholder": "Фамилия *",
+    "phonePlaceholder": "Номер телефона *",
+    "emailPlaceholder": "Адрес электронной почты *",
+    "addressPlaceholder": "Адрес *",
+    "selectPaymentMethod": "Выберите способ оплаты",
+    "cashOnDelivery": "Наличными при доставке",
+    "creditCard": "Кредитная/Дебетовая карта",
+    "bankTransfer": "Банковский перевод",
+    "placeOrder": "Оформить заказ",
+    "processing": "Обработка...",
+    "orderSuccess": "Заказ успешно размещен!",
+    "orderSuccessMessage": "Спасибо за ваш заказ. Мы начнем его готовить прямо сейчас!"
+  },
   "privacyPolicy": {
     "pageTitle": "Политика конфиденциальности",
     "lastUpdated": "Последнее обновление: 11 января 2026",

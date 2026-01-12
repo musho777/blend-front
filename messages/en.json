@@ -192,6 +192,22 @@
     "total": "Total",
     "viewDetails": "View Details"
   },
+  "checkout": {
+    "title": "Checkout Information",
+    "firstNamePlaceholder": "First Name *",
+    "lastNamePlaceholder": "Last Name *",
+    "phonePlaceholder": "Phone Number *",
+    "emailPlaceholder": "Email Address *",
+    "addressPlaceholder": "Address *",
+    "selectPaymentMethod": "Select Payment Method",
+    "cashOnDelivery": "Cash on Delivery",
+    "creditCard": "Credit/Debit Card",
+    "bankTransfer": "Bank Transfer",
+    "placeOrder": "Place Order",
+    "processing": "Processing...",
+    "orderSuccess": "Order Placed Successfully!",
+    "orderSuccessMessage": "Thank you for your order. We'll prepare it right away!"
+  },
   "privacyPolicy": {
     "pageTitle": "Privacy Policy",
     "lastUpdated": "Last Updated: January 11, 2026",

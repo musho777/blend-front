@@ -4,8 +4,10 @@ import { Accordion, Modal } from "react-bootstrap";
 import { useCart } from "@/hooks/useCart";
 import { useCreateOrder } from "@/hooks/mutations/useOrderMutation";
 import { useAuth } from "@/hooks/useAuth";
+import { useTranslations } from "next-intl";
 
 const CheckoutForm = () => {
+  const t = useTranslations("checkout");
   const { cart, subtotal, grandTotal, clearCart, closeCartModal } = useCart();
   const createOrder = useCreateOrder();
   const { user, isAuthenticated } = useAuth();
@@ -73,7 +75,7 @@ const CheckoutForm = () => {
 
   return (
     <div className="checkout-form-wrapper">
-      <h5 className="mb-20">Checkout Information</h5>
+      <h5 className="mb-20">{t("title")}</h5>
 
       {error && <div className="alert alert-danger mb-20">{error}</div>}
 
@@ -86,7 +88,7 @@ const CheckoutForm = () => {
                 id="name"
                 name="name"
                 className="form-control"
-                placeholder="First Name *"
+                placeholder={t("firstNamePlaceholder")}
                 value={formData.name}
                 onChange={handleChange}
                 style={{ border: "1px solid #ddd" }}
@@ -101,7 +103,7 @@ const CheckoutForm = () => {
                 id="surname"
                 name="surname"
                 className="form-control"
-                placeholder="Last Name *"
+                placeholder={t("lastNamePlaceholder")}
                 value={formData.surname}
                 onChange={handleChange}
                 style={{ border: "1px solid #ddd" }}
@@ -119,7 +121,7 @@ const CheckoutForm = () => {
                 id="phone"
                 name="phone"
                 className="form-control"
-                placeholder="Phone Number *"
+                placeholder={t("phonePlaceholder")}
                 value={formData.phone}
                 onChange={handleChange}
                 pattern="[0-9+\s\-()]+"
@@ -135,7 +137,7 @@ const CheckoutForm = () => {
                 id="email"
                 name="email"
                 className="form-control"
-                placeholder="Email Address *"
+                placeholder={t("emailPlaceholder")}
                 value={formData.email}
                 onChange={handleChange}
                 style={{ border: "1px solid #ddd" }}
@@ -151,7 +153,7 @@ const CheckoutForm = () => {
             id="address"
             name="address"
             className="form-control"
-            placeholder="Address *"
+            placeholder={t("addressPlaceholder")}
             value={formData.address}
             onChange={handleChange}
             style={{ border: "1px solid #ddd" }}
@@ -160,7 +162,7 @@ const CheckoutForm = () => {
         </div>
 
         <div className="payment-method mb-30">
-          <h6 className="mb-15">Select Payment Method</h6>
+          <h6 className="mb-15">{t("selectPaymentMethod")}</h6>
           <div className="payment-options">
             <div
               className="custom-control custom-radio mb-10"
@@ -182,11 +184,11 @@ const CheckoutForm = () => {
                 htmlFor="cash_on_delivery"
                 eventKey="cash_on_delivery"
               >
-                Cash on Delivery
+                {t("cashOnDelivery")}
               </Accordion.Toggle>
             </div>
 
-            <div className="custom-control custom-radio mb-10">
+            {/* <div className="custom-control custom-radio mb-10">
               <input
                 type="radio"
                 className="custom-control-input"
@@ -203,9 +205,9 @@ const CheckoutForm = () => {
                 htmlFor="credit_card"
                 eventKey="credit_card"
               >
-                Credit/Debit Card
+                {t("creditCard")}
               </Accordion.Toggle>
-            </div>
+            </div> */}
 
             <div className="custom-control custom-radio mb-10">
               <input
@@ -224,7 +226,7 @@ const CheckoutForm = () => {
                 htmlFor="bank_transfer"
                 eventKey="bank_transfer"
               >
-                Bank Transfer
+                {t("bankTransfer")}
               </Accordion.Toggle>
             </div>
           </div>
@@ -235,7 +237,7 @@ const CheckoutForm = () => {
           className="theme-btn w-100"
           disabled={createOrder.isLoading}
         >
-          {createOrder.isLoading ? "Processing..." : "Place Order"}{" "}
+          {createOrder.isLoading ? t("processing") : t("placeOrder")}{" "}
           <i className="far fa-arrow-alt-right" />
         </button>
       </form>
@@ -252,10 +254,8 @@ const CheckoutForm = () => {
           >
             <i className="far fa-check-circle" />
           </div>
-          <h4 className="mb-2">Order Placed Successfully!</h4>
-          <p className="text-muted">
-            Thank you for your order. We'll prepare it right away!
-          </p>
+          <h4 className="mb-2">{t("orderSuccess")}</h4>
+          <p className="text-muted">{t("orderSuccessMessage")}</p>
         </Modal.Body>
       </Modal>
     </div>
