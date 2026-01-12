@@ -2,6 +2,7 @@ import PageBanner from "@/components/PageBanner";
 import WellFoodLayout from "@/layout/WellFoodLayout";
 import Link from "next/link";
 const page = () => {
+  console.log("djf");
   return (
     <WellFoodLayout>
       <PageBanner pageTitle={"Blog details"} />
