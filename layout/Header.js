@@ -194,20 +194,6 @@ const Sidebar = () => {
               }
             />
           </div>
-          <div className="social-style-one" style={{ marginTop: 18 }}>
-            <Link href="contact">
-              <i className="fab fa-telegram" />
-            </Link>
-            <Link href="contact">
-              <i className="fab fa-facebook-f" />
-            </Link>
-            <Link href="contact">
-              <i className="fab fa-instagram" />
-            </Link>
-            <a href="#">
-              <i className="fab fa-pinterest-p" />
-            </a>
-          </div>
         </div>
       </section>
       {/*End Hidden Sidebar */}
