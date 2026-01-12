@@ -263,17 +263,6 @@ const ProductDetailsPage = ({ params }) => {
                         max={product?.stock || 99}
                         disabled={product?.stock === 0}
                       />
-                      {product?.stock > 0 && product?.stock <= 10 && (
-                        <p
-                          style={{
-                            color: "#ff6b6b",
-                            fontSize: "14px",
-                            marginTop: "8px",
-                          }}
-                        >
-                          {t("onlyLeftInStock", { count: product.stock })}
-                        </p>
-                      )}
                       <button
                         type="submit"
                         className="theme-btn"
@@ -333,7 +322,6 @@ const ProductDetailsPage = ({ params }) => {
                 </Tab.Content>
               </Tab.Container>
 
-              {/* Suggested Products Slider */}
               {suggestions && suggestions.length > 0 && (
                 <div className="suggested-products-area pt-60 pb-60">
                   <div className="row justify-content-center">
@@ -353,6 +341,9 @@ const ProductDetailsPage = ({ params }) => {
                   </div>
                   <Slider
                     {...sliderProps.pizzaActive}
+                    autoplay={true}
+                    autoplaySpeed={2500}
+                    infinite={true}
                     className="suggested-products-slider"
                   >
                     {suggestions.map((suggestedProduct, index) => {
