@@ -411,7 +411,10 @@ const Footer3 = () => {
                 <div className="footer-title">
                   <h5>Location</h5>
                 </div>
-                <p>Komitas 36, Baghramyan 79</p>
+                <p>
+                  Komitas 36
+                  <br /> Baghramyan 79
+                </p>
               </div>
             </div>
             <div
@@ -552,7 +555,9 @@ const Footer5 = () => {
                 <div className="footer-title">
                   <h5>Location</h5>
                 </div>
-                <p>Komitas 36, Baghramyan 79</p>
+                <p>
+                  Komitas 36 <br /> Baghramyan 79
+                </p>
               </div>
             </div>
             <div className="col-xl-2 col-lg-3 col-sm-6">
@@ -691,7 +696,9 @@ const Footer6 = () => {
                 <div className="footer-title">
                   <h5>Location</h5>
                 </div>
-                <p>Komitas 36, Baghramyan 79</p>
+                <p>
+                  Komitas 36 <br /> Baghramyan 79
+                </p>
               </div>
             </div>
             <div className="col-xl-2 col-lg-3 col-sm-6">
