@@ -207,3 +207,17 @@ img {
 [data-aos] {
   pointer-events: auto;
 }
+
+/* Payment Method Responsive Styles */
+.payment-options {
+  display: flex;
+  gap: 0px;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .payment-options {
+    flex-direction: row;
+    gap: 15px;
+  }
+}

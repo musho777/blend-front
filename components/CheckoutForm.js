@@ -161,7 +161,7 @@ const CheckoutForm = () => {
 
         <div className="payment-method mb-30">
           <h6 className="mb-15">Select Payment Method</h6>
-          <div style={{ display: "flex", gap: 30 }}>
+          <div className="payment-options">
             <div
               className="custom-control custom-radio mb-10"
               style={{ gap: "10px" }}
