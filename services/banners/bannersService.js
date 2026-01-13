@@ -3,6 +3,6 @@ import { ENDPOINTS } from "../api/endpoints";
 
 export const bannersService = {
   getBanners: async () => {
-    return apiClient(ENDPOINTS.BANNERS.LIST);
+    return apiClient(`${ENDPOINTS.BANNERS.LIST}?activeOnly=true`);
   },
 };
