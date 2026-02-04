@@ -140,7 +140,7 @@ const Sidebar = () => {
                             }`}
                             onClick={() =>
                               document.body.classList.remove(
-                                "side-content-visible"
+                                "side-content-visible",
                               )
                             }
                           >
@@ -171,7 +171,7 @@ const Sidebar = () => {
                           href={`/category/${hc.slug}`}
                           onClick={() =>
                             document.body.classList.remove(
-                              "side-content-visible"
+                              "side-content-visible",
                             )
                           }
                         >
@@ -283,7 +283,7 @@ const MobileMenu = ({ black }) => {
   const CATEGORY_LIMIT = useCategoryLimit();
 
   const [windowWidth, setWindowWidth] = useState(
-    typeof window === "undefined" ? 0 : window.innerWidth
+    typeof window === "undefined" ? 0 : window.innerWidth,
   );
 
   useEffect(() => {
@@ -341,7 +341,7 @@ const MobileMenu = ({ black }) => {
                     style={{
                       fontSize: "36px",
                       fontWeight: "bold",
-                      color: "#ffb936",
+                      color: "white",
                       textDecoration: "none",
                     }}
                   >
@@ -361,7 +361,7 @@ const MobileMenu = ({ black }) => {
                           style={{
                             fontSize: "28px",
                             fontWeight: "bold",
-                            color: "#ffb936",
+                            color: "white",
                             textDecoration: "none",
                           }}
                         >
@@ -454,11 +454,11 @@ const MobileMenu = ({ black }) => {
                                           >
                                             {getLocalizedTitle(
                                               subcategoryId,
-                                              locale
+                                              locale,
                                             )}
                                           </Link>
                                         </li>
-                                      )
+                                      ),
                                     )}
                                   </ul>
                                   <div
@@ -629,7 +629,7 @@ const Header = ({ black }) => {
 
   // Detect tablet width (990 - 1280)
   const [windowWidth, setWindowWidth] = useState(
-    typeof window === "undefined" ? 0 : window.innerWidth
+    typeof window === "undefined" ? 0 : window.innerWidth,
   );
 
   useEffect(() => {
@@ -661,7 +661,7 @@ const Header = ({ black }) => {
                     style={{
                       fontSize: "36px",
                       fontWeight: "bold",
-                      color: "#ffb936",
+                      color: "white",
                       textDecoration: "none",
                     }}
                   >
@@ -743,11 +743,11 @@ const Header = ({ black }) => {
                                           >
                                             {getLocalizedTitle(
                                               subcategoryId,
-                                              locale
+                                              locale,
                                             )}
                                           </Link>
                                         </li>
-                                      )
+                                      ),
                                     )}
                                   </ul>
                                   <div className="dropdown-btn">
@@ -920,7 +920,7 @@ const Header = ({ black }) => {
               </div>
               <div className="header-number" style={{ fontSize: "18px" }}>
                 <i className="far fa-phone" />
-                {t("call")} : <a href="callto:+37493613007">+374 93 613 007</a>
+                {t("call")} : <a href="callto:+37433045714">+374 93 613 007</a>
               </div>
               <SearchBtn />
               <div style={{ marginLeft: "15px" }}>
