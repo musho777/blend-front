@@ -140,7 +140,67 @@ const page = () => {
             </div>
           </section>
 
-          <OfferCard />
+          <section className="testimonials-area bgc-black pt-105 rpt-85 pb-130 rpb-100 rel z-1">
+            <div className="container">
+              <div className="row justify-content-center">
+                <div className="col-xl-7 col-lg-8">
+                  <div className="section-title text-white text-center mb-50">
+                    <span className="sub-title mb-5">
+                      {t("homepage.bestSellers.subtitle")}
+                    </span>
+                    <h2>{t("homepage.bestSellers.title")}</h2>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row">
+                {isLoading && (
+                  <div className="text-white text-center py-5">
+                    <p>{t("homepage.bestSellers.loading")}</p>
+                  </div>
+                )}
+
+                {enrichedBestSellers && enrichedBestSellers.length > 0
+                  ? enrichedBestSellers.map((product, index) => (
+                      <ProductCard
+                        key={product.id || index}
+                        index={index}
+                        product={product}
+                      />
+                    ))
+                  : !isLoading &&
+                    !error && (
+                      <div className="text-white text-center py-5">
+                        <p>{t("homepage.bestSellers.noProducts")}</p>
+                      </div>
+                    )}
+              </div>
+            </div>
+          </section>
+          <div className="headline-area bgc-black  rpt-90 rel z-2">
+            <span className="marquee-wrap white-text">
+              <span className="marquee-inner left">
+                <span className="marquee-item">
+                  {t("homepage.marqueeItems.hookah")}
+                </span>
+                <span className="marquee-item">
+                  <i className="flaticon-star" />
+                </span>
+                <span className="marquee-item">
+                  {t("homepage.marqueeItems.premiumSmoke")}
+                </span>
+                <span className="marquee-item">
+                  <i className="flaticon-star" />
+                </span>
+                <span className="marquee-item">
+                  {t("homepage.marqueeItems.clouds")}
+                </span>
+                <span className="marquee-item">
+                  <i className="flaticon-star" />
+                </span>
+              </span>
+            </span>
+          </div>
 
           {/* SPECIAL OFFER */}
           <section
@@ -348,6 +408,46 @@ const page = () => {
             </div>
           </section>
 
+          {/* <section className="testimonials-area bgc-black pt-105 rpt-85 pb-130 rpb-100 rel z-1">
+            <div className="container">
+              <div className="row justify-content-center">
+                <div className="col-xl-7 col-lg-8">
+                  <div className="section-title text-white text-center mb-50">
+                    <span className="sub-title mb-5">
+                      {t("homepage.bestSellers.subtitle")}
+                    </span>
+                    <h2>{t("homepage.bestSellers.title")}</h2>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row">
+                {isLoading && (
+                  <div className="text-white text-center py-5">
+                    <p>{t("homepage.bestSellers.loading")}</p>
+                  </div>
+                )}
+
+                {enrichedBestSellers && enrichedBestSellers.length > 0
+                  ? enrichedBestSellers.map((product, index) => (
+                      <ProductCard
+                        key={product.id || index}
+                        index={index}
+                        product={product}
+                      />
+                    ))
+                  : !isLoading &&
+                    !error && (
+                      <div className="text-white text-center py-5">
+                        <p>{t("homepage.bestSellers.noProducts")}</p>
+                      </div>
+                    )}
+              </div>
+            </div>
+          </section> */}
+
+          <OfferCard />
+
           {/* WHY CHOOSE US */}
           <section className="why-choose-area bgc-lighter pt-240 rpt-150 pb-100 rpb-70 rel z-1">
             <span className="marquee-wrap style-two">
@@ -421,69 +521,8 @@ const page = () => {
           </section>
 
           {/* MARQUEE */}
-          <div className="headline-area bgc-black pt-120 rpt-90 rel z-2">
-            <span className="marquee-wrap white-text">
-              <span className="marquee-inner left">
-                <span className="marquee-item">
-                  {t("homepage.marqueeItems.hookah")}
-                </span>
-                <span className="marquee-item">
-                  <i className="flaticon-star" />
-                </span>
-                <span className="marquee-item">
-                  {t("homepage.marqueeItems.premiumSmoke")}
-                </span>
-                <span className="marquee-item">
-                  <i className="flaticon-star" />
-                </span>
-                <span className="marquee-item">
-                  {t("homepage.marqueeItems.clouds")}
-                </span>
-                <span className="marquee-item">
-                  <i className="flaticon-star" />
-                </span>
-              </span>
-            </span>
-          </div>
 
           {/* BEST SELLERS */}
-          <section className="testimonials-area bgc-black pt-105 rpt-85 pb-130 rpb-100 rel z-1">
-            <div className="container">
-              <div className="row justify-content-center">
-                <div className="col-xl-7 col-lg-8">
-                  <div className="section-title text-white text-center mb-50">
-                    <span className="sub-title mb-5">
-                      {t("homepage.bestSellers.subtitle")}
-                    </span>
-                    <h2>{t("homepage.bestSellers.title")}</h2>
-                  </div>
-                </div>
-              </div>
-
-              <div className="row">
-                {isLoading && (
-                  <div className="text-white text-center py-5">
-                    <p>{t("homepage.bestSellers.loading")}</p>
-                  </div>
-                )}
-
-                {enrichedBestSellers && enrichedBestSellers.length > 0
-                  ? enrichedBestSellers.map((product, index) => (
-                      <ProductCard
-                        key={product.id || index}
-                        index={index}
-                        product={product}
-                      />
-                    ))
-                  : !isLoading &&
-                    !error && (
-                      <div className="text-white text-center py-5">
-                        <p>{t("homepage.bestSellers.noProducts")}</p>
-                      </div>
-                    )}
-              </div>
-            </div>
-          </section>
         </WellFoodLayout>
       )}
     </>
