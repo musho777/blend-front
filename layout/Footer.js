@@ -152,8 +152,8 @@ const DefaultFooter = () => {
                         States
                       </li>
                       <li>
-                        <a href="mailto:blend@gmail.com">
-                          <u>blend@gmail.com</u>
+                        <a href="mailto:blendtobacco@hotmail.com">
+                          <u>blendtobacco@hotmail.com</u>
                         </a>
                       </li>
                       <li>
@@ -322,8 +322,8 @@ const Footer2 = () => {
                         States
                       </li>
                       <li>
-                        <a href="mailto:blend@gmail.com">
-                          <u>blend@gmail.com</u>
+                        <a href="mailto:blendtobacco@hotmail.com">
+                          <u>blendtobacco@hotmail.com</u>
                         </a>
                       </li>
                       <li>
@@ -430,8 +430,8 @@ const Footer3 = () => {
                 </div>
                 <ul>
                   <li>
-                    <a href="mailto:blend@gmail.com">
-                      <u>blend@gmail.com</u>
+                    <a href="mailto:blendtobacco@hotmail.com">
+                      <u>blendtobacco@hotmail.com</u>
                     </a>
                   </li>
                   <li>
@@ -573,8 +573,8 @@ const Footer5 = () => {
                 </div>
                 <ul>
                   <li>
-                    <a href="mailto:blend@gmail.com">
-                      <u>blend@gmail.com</u>
+                    <a href="mailto:blendtobacco@hotmail.com">
+                      <u>blendtobacco@hotmail.com</u>
                     </a>
                   </li>
                   <li>
@@ -708,8 +708,8 @@ const Footer6 = () => {
                 </div>
                 <ul>
                   <li>
-                    <a href="mailto:blend@gmail.com">
-                      <u>blend@gmail.com</u>
+                    <a href="mailto:blendtobacco@hotmail.com">
+                      <u>blendtobacco@hotmail.com</u>
                     </a>
                   </li>
                   <li>
