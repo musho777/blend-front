@@ -9,6 +9,7 @@ import {
   useCategories,
   useCategoryById,
 } from "@/hooks/queries/useCategoriesQuery";
+import { useSubcategories } from "@/hooks/queries/useSubcategoriesQuery";
 import { useProductsByCategory } from "@/hooks/queries/useProductsByCategoryQuery";
 import { useLocale } from "@/contexts/LocaleContext";
 import { getLocalizedTitle } from "@/utils/localization";
@@ -57,18 +58,30 @@ const CategoryPage = () => {
 
   const decodedSlug = decodeURIComponent(categorySlug);
   const { data: categories, isLoading: categoriesLoading } = useCategories();
+  const { data: subcategories } = useSubcategories();
   const currentCategory = useMemo(() => {
     if (!categories) return null;
     return categories.find(
       (cat) =>
         cat.title?.toLowerCase() === decodedSlug.toLowerCase() ||
         cat.slug?.toLowerCase() === decodedSlug.toLowerCase() ||
-        cat.name?.toLowerCase() === decodedSlug.toLowerCase()
+        cat.name?.toLowerCase() === decodedSlug.toLowerCase(),
     );
   }, [categories, decodedSlug]);
 
+  // Group subcategories by category
+  const subcategoriesByCategory = useMemo(() => {
+    if (!subcategories) return {};
+    return subcategories.reduce((acc, s) => {
+      const cid = s.categoryId;
+      if (!acc[cid]) acc[cid] = [];
+      acc[cid].push(s);
+      return acc;
+    }, {});
+  }, [subcategories]);
+
   const { data: categoryData, isLoading: categoryLoading } = useCategoryById(
-    currentCategory?.id
+    currentCategory?.id,
   );
 
   const {
@@ -83,7 +96,7 @@ const CategoryPage = () => {
     debouncedSearch,
     sortBy,
     debouncedPriceRange[0] > 0 ? debouncedPriceRange[0] : null,
-    debouncedPriceRange[1] < 1000000 ? debouncedPriceRange[1] : null
+    debouncedPriceRange[1] < 1000000 ? debouncedPriceRange[1] : null,
   );
 
   const isLoading = categoriesLoading || categoryLoading || productsLoading;
@@ -206,6 +219,29 @@ const CategoryPage = () => {
     setPriceRange(newValue);
   };
 
+  const handleSubcategoryClick = (subId) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (subId === subcategoryId) {
+      // If clicking the same subcategory, remove filter
+      params.delete("subcategoryId");
+    } else {
+      // Set new subcategory
+      params.set("subcategoryId", subId);
+    }
+
+    // Reset to page 1
+    params.delete("page");
+
+    const queryString = params.toString();
+    const newURL = queryString
+      ? `${window.location.pathname}?${queryString}`
+      : window.location.pathname;
+
+    router.push(newURL);
+    setCurrentPage(1);
+  };
+
   return (
     <WellFoodLayout>
       <PageBanner
@@ -214,8 +250,8 @@ const CategoryPage = () => {
           category?.image
             ? `${category.image}`
             : category?.imageUrl
-            ? `${category.imageUrl}`
-            : undefined
+              ? `${category.imageUrl}`
+              : undefined
         }
       />
       <section className="shop-area py-130 rpy-100">
@@ -334,6 +370,66 @@ const CategoryPage = () => {
                     </Box>
                   </Box>
                 </div>
+                {currentCategory?.id &&
+                  subcategoriesByCategory[currentCategory.id] &&
+                  subcategoriesByCategory[currentCategory.id].length > 0 && (
+                    <div
+                      className="widget widget-category"
+                      data-aos="fade-up"
+                      data-aos-delay={50}
+                      data-aos-duration={1500}
+                      data-aos-offset={50}
+                    >
+                      <h4 className="widget-title">{t("subcategories")}</h4>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 20,
+                        }}
+                      >
+                        {subcategoriesByCategory[currentCategory.id].map(
+                          (sub) => {
+                            const isActive =
+                              subcategoryId === sub.id.toString();
+                            return (
+                              <div
+                                key={sub.id}
+                                className={isActive ? "active" : ""}
+                              >
+                                <button
+                                  onClick={() => handleSubcategoryClick(sub.id)}
+                                  style={{
+                                    background: "none",
+                                    border: "none",
+                                    padding: 0,
+                                    width: "100%",
+                                    textAlign: "left",
+                                    cursor: "pointer",
+                                    color: isActive ? "#c9a164" : "#666",
+                                    fontWeight: isActive ? "600" : "normal",
+                                    transition: "all 0.3s ease",
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    if (!isActive) {
+                                      e.currentTarget.style.color = "#c9a164";
+                                    }
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    if (!isActive) {
+                                      e.currentTarget.style.color = "#666";
+                                    }
+                                  }}
+                                >
+                                  {getLocalizedTitle(sub, locale)}
+                                </button>
+                              </div>
+                            );
+                          },
+                        )}
+                      </div>
+                    </div>
+                  )}
                 <div
                   className="widget widget-products"
                   data-aos="fade-up"
@@ -362,9 +458,9 @@ const CategoryPage = () => {
                       : `${t("showing")} ${
                           (meta.page - 1) * meta.limit + 1
                         }–${Math.min(meta.page * meta.limit, meta.total)} ${t(
-                          "of"
+                          "of",
                         )} ${meta.total} ${t(
-                          "results"
+                          "results",
                         )} ${localizedCategoryTitle}`}
                   </div>
                   <div
