@@ -46,7 +46,7 @@ const page = () => {
 
     const interval = setInterval(() => {
       setActiveBannerIndex((prevIndex) =>
-        prevIndex === banners.length - 1 ? 0 : prevIndex + 1
+        prevIndex === banners.length - 1 ? 0 : prevIndex + 1,
       );
     }, 15000);
 
@@ -122,12 +122,15 @@ const page = () => {
                   data-aos-duration={1500}
                   data-aos-offset={50}
                 >
-                  <div className="hero-images rmt-60">
+                  <div
+                    className="hero-images"
+                    style={{ display: "flex", justifyContent: "center" }}
+                  >
                     <img
-                      src="/assets/images/hero/hero-right.webp"
+                      src="/assets/images/hero/hero-right.png"
                       alt="Hero"
-                      width={600}
-                      height={600}
+                      width={400}
+                      height={400}
                       loading="eager"
                       style={{ maxWidth: "100%", height: "auto" }}
                     />
@@ -188,14 +191,14 @@ const page = () => {
                         >
                           {getLocalizedTitle(
                             banners[activeBannerIndex],
-                            locale
+                            locale,
                           ) || t("homepage.specialOffer.title")}
                         </h2>
                         <p>
                           {getLocalizedField(
                             banners[activeBannerIndex],
                             "text",
-                            locale
+                            locale,
                           ) || t("homepage.specialOffer.description")}
                         </p>
                         {banners[activeBannerIndex].url && (
@@ -223,7 +226,7 @@ const page = () => {
                           alt={
                             getLocalizedTitle(
                               banners[activeBannerIndex],
-                              locale
+                              locale,
                             ) || "Offer Image"
                           }
                           width={500}
