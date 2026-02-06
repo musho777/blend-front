@@ -4,16 +4,25 @@ export const wellfoodUtility = {
     Aos.init();
   },
   fixedHeader() {
+    let ticking = false;
+    const siteHeader = document.querySelector(".main-header");
+
+    if (!siteHeader) return;
+
+    const updateHeader = () => {
+      const windowpos = document.documentElement.scrollTop;
+      if (windowpos >= 100) {
+        siteHeader.classList.add("fixed-header");
+      } else {
+        siteHeader.classList.remove("fixed-header");
+      }
+      ticking = false;
+    };
+
     window.addEventListener("scroll", function () {
-      // Header Style and Scroll to Top
-      if (document.querySelectorAll(".main-header").length) {
-        var windowpos = document.documentElement.scrollTop;
-        var siteHeader = document.querySelector(".main-header");
-        if (windowpos >= 100) {
-          siteHeader.classList.add("fixed-header");
-        } else {
-          siteHeader.classList.remove("fixed-header");
-        }
+      if (!ticking) {
+        requestAnimationFrame(updateHeader);
+        ticking = true;
       }
     });
   },

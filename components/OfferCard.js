@@ -1,5 +1,5 @@
 "use client";
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import Slider from "react-slick";
 import { sliderProps } from "@/utility/sliderProps";
 import { useOffers } from "@/hooks/queries/useOffersQuery";
@@ -71,11 +71,16 @@ const OfferCard = () => {
   //     window.location.href = `/category/${card.slug || card.id}`;
   //   }
   // };
-  const handleCardClick = (card) => {
+  const handleCardClick = useCallback((card) => {
     if (card.id || card.slug) {
       window.location.href = `/product-details/${card.id || card.slug}`;
     }
-  };
+  }, []);
+
+  // Style constants
+  const cursorPointerStyle = { cursor: "pointer" };
+  const cursorDefaultStyle = { cursor: "default" };
+  const imageStyle = { width: "100%", height: "auto" };
 
   if (offersData?.length === 0) return null;
   return (
@@ -91,7 +96,7 @@ const OfferCard = () => {
 
             return (
               <div
-                key={index}
+                key={card.id || card._id || index}
                 className="col"
                 data-aos="fade-up"
                 data-aos-delay={card.delay || index * 50}
@@ -101,9 +106,7 @@ const OfferCard = () => {
                 <div
                   className={`offer-card-item ${cardStyle}`}
                   onClick={() => handleCardClick(card)}
-                  style={{
-                    cursor: card.id || card.slug ? "pointer" : "default",
-                  }}
+                  style={card.id || card.slug ? cursorPointerStyle : cursorDefaultStyle}
                 >
                   <span className="title">‎ </span>
                   <div className="image">
@@ -115,8 +118,8 @@ const OfferCard = () => {
                       alt={card.alt}
                       width={300}
                       height={300}
-                      loading="eager"
-                      style={{ width: "100%", height: "auto" }}
+                      loading="lazy"
+                      style={imageStyle}
                     />
                   </div>
                   <span className="title">‎ </span>
@@ -144,7 +147,7 @@ const OfferCard = () => {
               card.style || (index % 2 === 0 ? "" : "style-two");
 
             return (
-              <div key={index}>
+              <div key={card.id || card._id || index}>
                 <div
                   className={`offer-card-item ${cardStyle}`}
                   data-aos="fade-up"
@@ -152,9 +155,7 @@ const OfferCard = () => {
                   data-aos-duration={1500}
                   data-aos-offset={50}
                   onClick={() => handleCardClick(card)}
-                  style={{
-                    cursor: card.id || card.slug ? "pointer" : "default",
-                  }}
+                  style={card.id || card.slug ? cursorPointerStyle : cursorDefaultStyle}
                 >
                   <span className="title">‎ </span>
                   <div className="image">
@@ -166,8 +167,8 @@ const OfferCard = () => {
                       alt={card.alt}
                       width={300}
                       height={300}
-                      loading="eager"
-                      style={{ width: "100%", height: "auto" }}
+                      loading="lazy"
+                      style={imageStyle}
                     />
                   </div>
                   <span className="title">‎ </span>

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import Counter from "@/components/Counter";
 import OfferCard from "@/components/OfferCard";
@@ -53,8 +53,38 @@ const page = () => {
     return () => clearInterval(interval);
   }, [banners]);
 
-  const handleDotClick = (index) => {
+  const handleDotClick = useCallback((index) => {
     setActiveBannerIndex(index);
+  }, []);
+
+  const getBannerDotStyle = useCallback((index, isActive) => ({
+    width: "12px",
+    height: "12px",
+    borderRadius: "50%",
+    backgroundColor: isActive ? "#ff6b6b" : "#ffffff",
+    cursor: "pointer",
+    transition: "all 0.3s ease",
+    opacity: isActive ? 1 : 0.5,
+  }), []);
+
+  // Style constants for performance
+  const heroBackgroundStyle = {
+    backgroundImage: "url(/assets/images/background/hero.jpg)",
+  };
+  const heroImagesContainerStyle = { display: "flex", justifyContent: "center" };
+  const heroImageStyle = { maxWidth: "100%", height: "auto" };
+  const offerBackgroundStyle = {
+    backgroundImage: "url(/assets/images/background/offer-dot-bg.png)",
+  };
+  const bannerImageContainerStyle = { display: "flex", justifyContent: "flex-end" };
+  const bannerImageStyle = { maxWidth: "100%", height: "auto" };
+  const bannerIndicatorsContainerStyle = {
+    display: "flex",
+    justifyContent: "center",
+    gap: "10px",
+  };
+  const offerBadgeBackgroundStyle = {
+    backgroundImage: "url(/assets/images/shapes/offer-circle-shape.png)",
   };
 
   const showLoading = !mounted || isLoading || isBannersLoading;
@@ -67,9 +97,7 @@ const page = () => {
           {/* HERO SECTION */}
           <section
             className="hero-area bgs-cover pt-180 rpt-150 pb-100 rel z-1"
-            style={{
-              backgroundImage: "url(/assets/images/background/hero.jpg)",
-            }}
+            style={heroBackgroundStyle}
           >
             <span
               style={{ position: "absolute" }}
@@ -124,7 +152,7 @@ const page = () => {
                 >
                   <div
                     className="hero-images"
-                    style={{ display: "flex", justifyContent: "center" }}
+                    style={heroImagesContainerStyle}
                   >
                     <img
                       src="/assets/images/hero/hero-right.png"
@@ -132,7 +160,8 @@ const page = () => {
                       width={400}
                       height={400}
                       loading="eager"
-                      style={{ maxWidth: "100%", height: "auto" }}
+                      fetchpriority="high"
+                      style={heroImageStyle}
                     />
                   </div>
                 </div>
@@ -205,10 +234,7 @@ const page = () => {
           {/* SPECIAL OFFER */}
           <section
             className="offer-area bgc-black pt-160 rpt-100 pb-150 rpb-120 rel z-1"
-            style={{
-              backgroundImage:
-                "url(/assets/images/background/offer-dot-bg.png)",
-            }}
+            style={offerBackgroundStyle}
           >
             <span className="marquee-wrap style-two text-white">
               <span className="marquee-inner left">
@@ -275,7 +301,7 @@ const page = () => {
                       key={`image-${activeBannerIndex}`}
                     >
                       <div
-                        style={{ display: "flex", justifyContent: "flex-end" }}
+                        style={bannerImageContainerStyle}
                         data-aos="fade-right"
                         data-aos-delay={50}
                         data-aos-duration={1500}
@@ -292,15 +318,13 @@ const page = () => {
                           width={500}
                           height={500}
                           loading="eager"
-                          style={{ maxWidth: "100%", height: "auto" }}
+                          fetchpriority="high"
+                          style={bannerImageStyle}
                         />
                         {banners[activeBannerIndex].price && (
                           <div
                             className="offer-badge"
-                            style={{
-                              backgroundImage:
-                                "url(/assets/images/shapes/offer-circle-shape.png)",
-                            }}
+                            style={offerBadgeBackgroundStyle}
                           >
                             <span>
                               {t("common.only")} <br />
@@ -318,28 +342,13 @@ const page = () => {
                   {banners.length > 1 && (
                     <div
                       className="row mt-4"
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        gap: "10px",
-                      }}
+                      style={bannerIndicatorsContainerStyle}
                     >
-                      {banners.map((_, index) => (
+                      {banners.map((banner, index) => (
                         <div
-                          key={index}
+                          key={banner.id || banner._id || index}
                           onClick={() => handleDotClick(index)}
-                          style={{
-                            width: "12px",
-                            height: "12px",
-                            borderRadius: "50%",
-                            backgroundColor:
-                              index === activeBannerIndex
-                                ? "#ff6b6b"
-                                : "#ffffff",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease",
-                            opacity: index === activeBannerIndex ? 1 : 0.5,
-                          }}
+                          style={getBannerDotStyle(index, index === activeBannerIndex)}
                         />
                       ))}
                     </div>
