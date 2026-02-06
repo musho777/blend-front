@@ -39,7 +39,7 @@ const page = () => {
                   </a>
                   <div className="header-number">
                     <i className="far fa-phone" />
-                    Call : <a href="callto:+37493613007">+374 93 613 007</a>
+                    Call : <a href="callto:+37493613007">+(374) 33 045714</a>
                   </div>
                 </div>
               </div>

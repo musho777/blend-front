@@ -24,6 +24,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="preload"
+          href="/assets/images/hero/hero-right.png"
+          as="image"
+          fetchpriority="high"
+        />
+      </head>
       <body>
         <QueryProvider>
           <AuthProvider>
