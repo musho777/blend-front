@@ -57,26 +57,35 @@ const page = () => {
     setActiveBannerIndex(index);
   }, []);
 
-  const getBannerDotStyle = useCallback((index, isActive) => ({
-    width: "12px",
-    height: "12px",
-    borderRadius: "50%",
-    backgroundColor: isActive ? "#ff6b6b" : "#ffffff",
-    cursor: "pointer",
-    transition: "all 0.3s ease",
-    opacity: isActive ? 1 : 0.5,
-  }), []);
+  const getBannerDotStyle = useCallback(
+    (index, isActive) => ({
+      width: "12px",
+      height: "12px",
+      borderRadius: "50%",
+      backgroundColor: isActive ? "#ff6b6b" : "#ffffff",
+      cursor: "pointer",
+      transition: "all 0.3s ease",
+      opacity: isActive ? 1 : 0.5,
+    }),
+    [],
+  );
 
   // Style constants for performance
   const heroBackgroundStyle = {
     backgroundImage: "url(/assets/images/background/hero.jpg)",
   };
-  const heroImagesContainerStyle = { display: "flex", justifyContent: "center" };
+  const heroImagesContainerStyle = {
+    display: "flex",
+    justifyContent: "center",
+  };
   const heroImageStyle = { maxWidth: "100%", height: "auto" };
   const offerBackgroundStyle = {
     backgroundImage: "url(/assets/images/background/offer-dot-bg.png)",
   };
-  const bannerImageContainerStyle = { display: "flex", justifyContent: "flex-end" };
+  const bannerImageContainerStyle = {
+    display: "flex",
+    justifyContent: "flex-end",
+  };
   const bannerImageStyle = { maxWidth: "100%", height: "auto" };
   const bannerIndicatorsContainerStyle = {
     display: "flex",
@@ -100,7 +109,15 @@ const page = () => {
             style={heroBackgroundStyle}
           >
             <span
-              style={{ position: "absolute" }}
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "0",
+                right: "0",
+                transform: "translateY(-50%)",
+                width: "100%",
+                pointerEvents: "none",
+              }}
               className="marquee-wrap style-two text-white"
             >
               <span
@@ -131,7 +148,7 @@ const page = () => {
                     data-aos-duration={1500}
                     data-aos-offset={50}
                   >
-                    <h1
+                    {/* <h1
                       style={{
                         fontSize:
                           locale === "am" || locale === "ru"
@@ -140,8 +157,8 @@ const page = () => {
                       }}
                     >
                       {t("homepage.hero.title")}
-                    </h1>
-                    <p>{t("homepage.hero.description")}</p>
+                    </h1> */}
+                    {/* <p>{t("homepage.hero.description")}</p> */}
                   </div>
                 </div>
                 <div
@@ -150,10 +167,7 @@ const page = () => {
                   data-aos-duration={1500}
                   data-aos-offset={50}
                 >
-                  <div
-                    className="hero-images"
-                    style={heroImagesContainerStyle}
-                  >
+                  <div className="hero-images" style={heroImagesContainerStyle}>
                     <img
                       src="/assets/images/hero/hero-right.png"
                       alt="Hero"
@@ -348,7 +362,10 @@ const page = () => {
                         <div
                           key={banner.id || banner._id || index}
                           onClick={() => handleDotClick(index)}
-                          style={getBannerDotStyle(index, index === activeBannerIndex)}
+                          style={getBannerDotStyle(
+                            index,
+                            index === activeBannerIndex,
+                          )}
                         />
                       ))}
                     </div>
