@@ -73,6 +73,8 @@ const Sidebar = () => {
     };
   }, [categories, CATEGORY_LIMIT]);
 
+  console.log(hiddenCategories);
+
   return (
     <Fragment>
       {/*Form Back Drop*/}
@@ -153,35 +155,50 @@ const Sidebar = () => {
                 </li>
               ))}
 
-              {hiddenCategories.length > 0 && (
-                <li style={{ textAlign: "left" }}>
-                  <ul>
-                    {hiddenCategories.map((hc) => (
-                      <li
-                        key={hc.id}
-                        style={{
-                          marginBottom: 12,
-                          marginTop: 12,
-                          textAlign: "left",
-                          borderBottom: "1px solid red",
-                          borderColor: "white",
-                        }}
-                      >
-                        <Link
-                          href={`/category/${hc.slug}`}
-                          onClick={() =>
-                            document.body.classList.remove(
-                              "side-content-visible",
-                            )
-                          }
-                        >
-                          {getLocalizedTitle(hc, locale)}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              )}
+              {hiddenCategories.length > 0 &&
+                hiddenCategories.map((hc) => (
+                  <li
+                    key={hc.id}
+                    style={{
+                      marginBottom: 12,
+                      marginTop: 12,
+                      textAlign: "left",
+                      borderBottom: "1px solid red",
+                      borderColor: "white",
+                    }}
+                  >
+                    <Link
+                      href={`/category/${hc.slug}`}
+                      onClick={() =>
+                        document.body.classList.remove("side-content-visible")
+                      }
+                    >
+                      <div style={{ fontWeight: 600 }}>
+                        {getLocalizedTitle(hc, locale)}
+                      </div>
+                    </Link>
+                    {subcategoriesByCategory[hc.id] && (
+                      <ul style={{ paddingLeft: 12, marginTop: 6 }}>
+                        {subcategoriesByCategory[hc.id].map((s) => (
+                          <li key={s.id} style={{ marginBottom: 8 }}>
+                            <Link
+                              href={`/category/${hc.slug}?subcategoryId=${
+                                s.slug || s.id
+                              }`}
+                              onClick={() =>
+                                document.body.classList.remove(
+                                  "side-content-visible",
+                                )
+                              }
+                            >
+                              {getLocalizedTitle(s, locale)}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
             </ul>
           </div>
 
@@ -509,19 +526,85 @@ const MobileMenu = ({ black }) => {
                                 listStyle: "none",
                               }}
                             >
-                              {hiddenCategories.map((elm, i) => (
-                                <li
-                                  key={`more-${i}`}
-                                  style={{ marginBottom: 8 }}
-                                >
-                                  <Link
-                                    href={`/category/${elm?.slug}`}
-                                    style={{ display: "block" }}
+                              {hiddenCategories.map((elm, i) => {
+                                const categorySubcategories =
+                                  subcategoriesByCategory[elm?.id] || [];
+                                const hasSubcategories =
+                                  categorySubcategories.length > 0;
+
+                                return (
+                                  <li
+                                    key={`more-${i}`}
+                                    style={{ marginBottom: 8 }}
+                                    className={
+                                      hasSubcategories ? "dropdown" : ""
+                                    }
                                   >
-                                    {getLocalizedTitle(elm, locale)}
-                                  </Link>
-                                </li>
-                              ))}
+                                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                                      <Link
+                                        href={`/category/${elm?.slug}`}
+                                        style={{
+                                          flex: 1,
+                                          fontWeight: hasSubcategories
+                                            ? 600
+                                            : 400,
+                                        }}
+                                      >
+                                        {getLocalizedTitle(elm, locale)}
+                                      </Link>
+                                      {hasSubcategories && (
+                                        <div
+                                          className="dropdown-btn"
+                                          onClick={() =>
+                                            activeMenuSet(
+                                              `more-category-${elm?.id}`,
+                                            )
+                                          }
+                                          style={{ cursor: "pointer", display: "inline-block", marginLeft: "10px" }}
+                                        >
+                                          <span className="far fa-angle-down" />
+                                        </div>
+                                      )}
+                                    </div>
+                                    {hasSubcategories && (
+                                      <ul
+                                        style={{
+                                          ...activeLi(
+                                            `more-category-${elm?.id}`,
+                                          ),
+                                          paddingLeft: 16,
+                                          marginTop: 6,
+                                          listStyle: "none",
+                                        }}
+                                      >
+                                        {categorySubcategories.map(
+                                          (subcategoryId) => (
+                                            <li
+                                              key={subcategoryId.id}
+                                              style={{ marginBottom: 8 }}
+                                            >
+                                              <Link
+                                                href={`/category/${
+                                                  elm?.slug
+                                                }?subcategoryId=${
+                                                  subcategoryId.slug ||
+                                                  subcategoryId.id
+                                                }`}
+                                                style={{ display: "block" }}
+                                              >
+                                                {getLocalizedTitle(
+                                                  subcategoryId,
+                                                  locale,
+                                                )}
+                                              </Link>
+                                            </li>
+                                          ),
+                                        )}
+                                      </ul>
+                                    )}
+                                  </li>
+                                );
+                              })}
                             </ul>
                             <div
                               className="dropdown-btn"
@@ -601,12 +684,13 @@ const Header = ({ black }) => {
   const { locale } = useLocale();
   const t = useTranslations("header");
   const CATEGORY_LIMIT = useCategoryLimit(); // Responsive category limit
+  const [activeMoreSubmenu, setActiveMoreSubmenu] = useState("");
 
   // Group subcategories by categoryId for efficient lookup
   const subcategoriesByCategory = useMemo(() => {
     if (!subcategories) return {};
 
-    return subcategories.reduce((acc, subcategoryId) => {
+    const grouped = subcategories.reduce((acc, subcategoryId) => {
       const categoryId = subcategoryId.categoryId;
       if (!acc[categoryId]) {
         acc[categoryId] = [];
@@ -614,6 +698,11 @@ const Header = ({ black }) => {
       acc[categoryId].push(subcategoryId);
       return acc;
     }, {});
+
+    console.log("Desktop Header - subcategoriesByCategory:", grouped);
+    console.log("Desktop Header - hiddenCategories will be checked against this mapping");
+
+    return grouped;
   }, [subcategories]);
 
   // Split categories into visible and hidden
@@ -772,13 +861,91 @@ const Header = ({ black }) => {
                               </span>
                             </a>
                             <ul>
-                              {hiddenCategories.map((elm, i) => (
-                                <li key={`more-${i}`}>
-                                  <Link href={`/category/${elm?.slug}`}>
-                                    {getLocalizedTitle(elm, locale)}
-                                  </Link>
-                                </li>
-                              ))}
+                              {hiddenCategories.map((elm, i) => {
+                                const categorySubcategories =
+                                  subcategoriesByCategory[elm?.id] || [];
+                                const hasSubcategories =
+                                  categorySubcategories.length > 0;
+                                const isOpen = activeMoreSubmenu === `more-cat-${elm?.id}`;
+
+                                console.log(`Category "${getLocalizedTitle(elm, locale)}" (ID: ${elm?.id}):`, {
+                                  hasSubcategories,
+                                  subcategoriesCount: categorySubcategories.length,
+                                  subcategories: categorySubcategories,
+                                  isOpen
+                                });
+
+                                return (
+                                  <li
+                                    key={`more-${i}`}
+                                    className={
+                                      hasSubcategories ? `dropdown ${isOpen ? 'open' : ''}` : ""
+                                    }
+                                    style={{
+                                      position: 'relative',
+                                      display: 'block',
+                                      width: '100%',
+                                    }}
+                                  >
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                      <Link href={`/category/${elm?.slug}`} style={{ flex: 1 }}>
+                                        {getLocalizedTitle(elm, locale)}
+                                      </Link>
+                                      {hasSubcategories && (
+                                        <div
+                                          className="dropdown-btn"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            console.log("Arrow clicked for category:", elm?.id, "Current isOpen:", isOpen);
+                                            setActiveMoreSubmenu(
+                                              isOpen ? "" : `more-cat-${elm?.id}`
+                                            );
+                                          }}
+                                          style={{ cursor: 'pointer', display: 'inline-block', marginLeft: '10px' }}
+                                        >
+                                          <span className="far fa-angle-down" />
+                                        </div>
+                                      )}
+                                    </div>
+                                    {hasSubcategories && (
+                                      <ul
+                                        style={{
+                                          display: isOpen ? 'block' : 'none',
+                                          opacity: isOpen ? 1 : 0,
+                                          visibility: isOpen ? 'visible' : 'hidden',
+                                          position: 'static',
+                                          transform: 'none',
+                                          width: '100%',
+                                          marginTop: '5px',
+                                          paddingLeft: '15px',
+                                          clear: 'both',
+                                        }}
+                                      >
+                                        {categorySubcategories.map(
+                                          (subcategoryId) => (
+                                            <li key={subcategoryId.id}>
+                                              <Link
+                                                href={`/category/${
+                                                  elm?.slug
+                                                }?subcategoryId=${
+                                                  subcategoryId.slug ||
+                                                  subcategoryId.id
+                                                }`}
+                                              >
+                                                {getLocalizedTitle(
+                                                  subcategoryId,
+                                                  locale,
+                                                )}
+                                              </Link>
+                                            </li>
+                                          ),
+                                        )}
+                                      </ul>
+                                    )}
+                                  </li>
+                                );
+                              })}
                             </ul>
                             <div className="dropdown-btn">
                               <span className="far fa-angle-down" />
