@@ -268,8 +268,7 @@ const page = () => {
                   <p>{t("homepage.specialOffer.loadingOffers")}</p>
                 </div>
               ) : (
-                banners &&
-                banners.length > 0 && (
+                banners?.length > 0 && (
                   <>
                     <div className="row align-items-center">
                       <div
@@ -354,7 +353,7 @@ const page = () => {
                       </div>
                     </div>
 
-                    {banners.length > 1 && (
+                    {banners?.length > 1 && (
                       <div
                         className="row mt-4"
                         style={bannerIndicatorsContainerStyle}
