@@ -267,169 +267,112 @@ const page = () => {
                 <div className="text-white text-center py-5">
                   <p>{t("homepage.specialOffer.loadingOffers")}</p>
                 </div>
-              ) : banners && banners.length > 0 ? (
-                <>
-                  <div className="row align-items-center">
-                    <div
-                      className="col-lg-6"
-                      key={`content-${activeBannerIndex}`}
-                    >
+              ) : (
+                banners &&
+                banners.length > 0 && (
+                  <>
+                    <div className="row align-items-center">
                       <div
-                        className="offer-content text-white rmb-55"
-                        data-aos="fade-left"
-                        data-aos-delay={50}
-                        data-aos-duration={1500}
-                        data-aos-offset={50}
+                        className="col-lg-6"
+                        key={`content-${activeBannerIndex}`}
                       >
-                        <h2
-                          style={{
-                            fontSize:
-                              locale === "am" || locale === "ru"
-                                ? "2rem"
-                                : undefined,
-                          }}
+                        <div
+                          className="offer-content text-white rmb-55"
+                          data-aos="fade-left"
+                          data-aos-delay={50}
+                          data-aos-duration={1500}
+                          data-aos-offset={50}
                         >
-                          {getLocalizedTitle(
-                            banners[activeBannerIndex],
-                            locale,
-                          ) || t("homepage.specialOffer.title")}
-                        </h2>
-                        <p>
-                          {getLocalizedField(
-                            banners[activeBannerIndex],
-                            "text",
-                            locale,
-                          ) || t("homepage.specialOffer.description")}
-                        </p>
-                        {banners[activeBannerIndex].url && (
-                          <Link href="shop" className="theme-btn">
-                            {t("homepage.specialOffer.moreInfo")}{" "}
-                            <i className="far fa-arrow-alt-right" />
-                          </Link>
-                        )}
-                      </div>
-                    </div>
-
-                    <div
-                      className="col-lg-6 "
-                      key={`image-${activeBannerIndex}`}
-                    >
-                      <div
-                        style={bannerImageContainerStyle}
-                        data-aos="fade-right"
-                        data-aos-delay={50}
-                        data-aos-duration={1500}
-                        data-aos-offset={50}
-                      >
-                        <img
-                          src={banners[activeBannerIndex].image}
-                          alt={
-                            getLocalizedTitle(
+                          <h2
+                            style={{
+                              fontSize:
+                                locale === "am" || locale === "ru"
+                                  ? "2rem"
+                                  : undefined,
+                            }}
+                          >
+                            {getLocalizedTitle(
                               banners[activeBannerIndex],
                               locale,
-                            ) || "Offer Image"
-                          }
-                          width={500}
-                          height={500}
-                          loading="eager"
-                          fetchpriority="high"
-                          style={bannerImageStyle}
-                        />
-                        {banners[activeBannerIndex].price && (
-                          <div
-                            className="offer-badge"
-                            style={offerBadgeBackgroundStyle}
-                          >
-                            <span>
-                              {t("common.only")} <br />
-                              <span className="price">
-                                ${banners[activeBannerIndex].price}
-                              </span>
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Banner Indicators */}
-                  {banners.length > 1 && (
-                    <div
-                      className="row mt-4"
-                      style={bannerIndicatorsContainerStyle}
-                    >
-                      {banners.map((banner, index) => (
-                        <div
-                          key={banner.id || banner._id || index}
-                          onClick={() => handleDotClick(index)}
-                          style={getBannerDotStyle(
-                            index,
-                            index === activeBannerIndex,
+                            ) || t("homepage.specialOffer.title")}
+                          </h2>
+                          <p>
+                            {getLocalizedField(
+                              banners[activeBannerIndex],
+                              "text",
+                              locale,
+                            ) || t("homepage.specialOffer.description")}
+                          </p>
+                          {banners[activeBannerIndex].url && (
+                            <Link href="shop" className="theme-btn">
+                              {t("homepage.specialOffer.moreInfo")}{" "}
+                              <i className="far fa-arrow-alt-right" />
+                            </Link>
                           )}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </>
-              ) : (
-                <div className="row align-items-center">
-                  <div className="col-lg-6">
-                    <div
-                      className="offer-content text-white rmb-55"
-                      data-aos="fade-left"
-                      data-aos-delay={50}
-                      data-aos-duration={1500}
-                      data-aos-offset={50}
-                    >
-                      <h2
-                        style={{
-                          fontSize:
-                            locale === "am" || locale === "ru"
-                              ? "2rem"
-                              : undefined,
-                        }}
-                      >
-                        {t("homepage.specialOffer.title")}
-                      </h2>
-                      <p>{t("homepage.specialOffer.description")}</p>
-                      <Link href="shop" className="theme-btn">
-                        {t("homepage.specialOffer.shopNow")}{" "}
-                        <i className="far fa-arrow-alt-right" />
-                      </Link>
-                    </div>
-                  </div>
+                        </div>
+                      </div>
 
-                  <div className="col-lg-6">
-                    <div
-                      className="offer-image"
-                      data-aos="fade-right"
-                      data-aos-delay={50}
-                      data-aos-duration={1500}
-                      data-aos-offset={50}
-                    >
-                      <img
-                        src="/assets/images/offer/offer-img.png"
-                        alt="Offer Image"
-                        width={500}
-                        height={500}
-                        loading="eager"
-                        style={{ maxWidth: "100%", height: "auto" }}
-                      />
                       <div
-                        className="offer-badge"
-                        style={{
-                          backgroundImage:
-                            "url(/assets/images/shapes/offer-circle-shape.png)",
-                        }}
+                        className="col-lg-6 "
+                        key={`image-${activeBannerIndex}`}
                       >
-                        <span>
-                          {t("common.only")} <br />
-                          <span className="price">$59</span>
-                        </span>
+                        <div
+                          style={bannerImageContainerStyle}
+                          data-aos="fade-right"
+                          data-aos-delay={50}
+                          data-aos-duration={1500}
+                          data-aos-offset={50}
+                        >
+                          <img
+                            src={banners[activeBannerIndex].image}
+                            alt={
+                              getLocalizedTitle(
+                                banners[activeBannerIndex],
+                                locale,
+                              ) || "Offer Image"
+                            }
+                            width={500}
+                            height={500}
+                            loading="eager"
+                            fetchpriority="high"
+                            style={bannerImageStyle}
+                          />
+                          {banners[activeBannerIndex].price && (
+                            <div
+                              className="offer-badge"
+                              style={offerBadgeBackgroundStyle}
+                            >
+                              <span>
+                                {t("common.only")} <br />
+                                <span className="price">
+                                  ${banners[activeBannerIndex].price}
+                                </span>
+                              </span>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
+
+                    {banners.length > 1 && (
+                      <div
+                        className="row mt-4"
+                        style={bannerIndicatorsContainerStyle}
+                      >
+                        {banners.map((banner, index) => (
+                          <div
+                            key={banner.id || banner._id || index}
+                            onClick={() => handleDotClick(index)}
+                            style={getBannerDotStyle(
+                              index,
+                              index === activeBannerIndex,
+                            )}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </>
+                )
               )}
             </div>
           </section>
