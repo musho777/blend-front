@@ -20,11 +20,14 @@ const page = () => {
   const { data: banners, isLoading: isBannersLoading } = useBanners();
   const { data: categories } = useCategories();
   const [activeBannerIndex, setActiveBannerIndex] = useState(0);
-  const [mounted, setMounted] = useState(false);
 
   // Enrich products with category information
+  // Don't block rendering if categories haven't loaded yet
   const enrichedBestSellers = useMemo(() => {
-    if (!bestSellers || !categories) return bestSellers;
+    if (!bestSellers) return null;
+
+    // If categories haven't loaded yet, return products without category info
+    if (!categories) return bestSellers;
 
     return bestSellers.map((product) => {
       if (!product.categoryId) return product;
@@ -36,10 +39,6 @@ const page = () => {
       };
     });
   }, [bestSellers, categories]);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     if (!banners || banners.length <= 1) return;
@@ -96,7 +95,8 @@ const page = () => {
     backgroundImage: "url(/assets/images/shapes/offer-circle-shape.png)",
   };
 
-  const showLoading = !mounted || isLoading || isBannersLoading;
+  // Show loading only if critical data is still loading on initial mount
+  const showLoading = isLoading || isBannersLoading;
 
   return (
     <>
