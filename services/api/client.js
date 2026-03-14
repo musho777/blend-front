@@ -16,6 +16,11 @@ export async function apiClient(endpoint, options = {}) {
   const url = `${API_BASE_URL}${endpoint}`;
   const token = getAuthToken();
 
+  // Add timeout for Safari/5G stability (default 30 seconds)
+  const timeout = options.timeout || 30000;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -23,10 +28,12 @@ export async function apiClient(endpoint, options = {}) {
       ...options.headers,
     },
     ...options,
+    signal: controller.signal,
   };
 
   try {
     const response = await fetch(url, config);
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -47,6 +54,19 @@ export async function apiClient(endpoint, options = {}) {
 
     return response.json();
   } catch (error) {
+    clearTimeout(timeoutId);
+
+    // Better error messages for network issues
+    if (error.name === 'AbortError') {
+      console.error("API Client Timeout:", endpoint);
+      throw new Error('Request timeout - please check your connection and try again');
+    }
+
+    if (!navigator.onLine) {
+      console.error("API Client Offline:", endpoint);
+      throw new Error('No internet connection - please check your network');
+    }
+
     console.error("API Client Error:", error);
     throw error;
   }

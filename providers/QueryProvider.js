@@ -12,10 +12,11 @@ export default function QueryProvider({ children }) {
           queries: {
             staleTime: 1000 * 60 * 5, // 5 minutes - menu items don't change frequently
             gcTime: 1000 * 60 * 10, // 10 minutes (formerly cacheTime)
-            retry: 1, // Retry failed requests once
+            retry: 3, // Retry failed requests 3 times (better for unstable 5G)
+            retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000), // Exponential backoff: 1s, 2s, 4s
             refetchOnWindowFocus: false, // Better UX for food ordering apps
             refetchOnMount: true,
-            refetchOnReconnect: true,
+            refetchOnReconnect: (query) => query.state.dataUpdateCount === 0, // Only refetch on reconnect if no data yet
           },
           mutations: {
             retry: 0, // Don't retry mutations to prevent duplicate orders
