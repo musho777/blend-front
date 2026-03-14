@@ -13,6 +13,8 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { LocaleProvider } from "@/contexts/LocaleContext";
 import I18nProvider from "@/providers/I18nProvider";
 import AgeVerificationModal from "@/components/AgeVerificationModal";
+import NetworkStatusIndicator from "@/components/NetworkStatusIndicator";
+import DebugPanel from "@/components/DebugPanel";
 import { Toaster } from "react-hot-toast";
 import amMessages from "@/messages/am.json";
 
@@ -39,6 +41,8 @@ export default function RootLayout({ children }) {
               <LocaleProvider>
                 <I18nProvider initialMessages={amMessages}>
                   <AgeVerificationModal />
+                  <NetworkStatusIndicator />
+                  <DebugPanel />
                   <Toaster
                     position="top-right"
                     reverseOrder={false}
